@@ -1,0 +1,66 @@
+.header-section {
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.header-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.header-section p {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.form-section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border-radius: 7px;
+    border: 2px solid #DFE3E5;
+    font-size: 1rem;
+    color: #555;
+}
+
+textarea.form-control {
+    resize: vertical;
+    height: 150px;
+}
+
+.btn-submit {
+    display: inline-block;
+    background-color: #6063f7;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 7px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-submit:hover {
+    background-color: #5058e4;
+}

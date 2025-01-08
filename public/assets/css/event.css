@@ -1,0 +1,258 @@
+* {
+    font-family: montserrat;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+.navbar-brand {
+    font-size: 25px;
+}
+
+.navbar-brand img {
+    width: 15%;
+}
+
+.custom-nav {
+    background-color: white;
+    color: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.custom-nav a {
+    padding-left: 20px;
+}
+
+.custom-nav button {
+    border: 2px solid #dc3545;
+}
+
+.custom-nav .bx-log-out {
+    display: flex;
+    font-size: 20px;
+}
+
+.row {
+    padding-top: 70px;
+}
+
+.custom-sidebar {
+    background-color: white;
+    min-height: 100vh;
+    position: fixed;
+}
+
+.sidebar-link {
+    padding: 10px;
+    display: block;
+    color: black;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Untuk animasi halus */
+}
+
+.sidebar-link:hover {
+    background-color: #e9ecef;
+    color: black;
+    transform: translateX(5px); /* Geser sedikit ke kanan */
+    border-radius: 7px;
+}
+
+.sidebar-label {
+    padding-left: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.content {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+}
+
+.card-container {
+    display: flex; /* Mengatur card untuk berjejer */
+    gap: 20px; /* Menambahkan jarak antar card */
+    justify-content: center; /* Mengatur card agar berada di tengah */
+    margin-top: 50px;
+}
+
+.card {
+    width: 300px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+
+.card {
+    color: black;
+}
+
+.card h2 {
+    font-size: 17px;
+}
+
+.card p {
+    color: grey;
+}
+
+.menunggu p {
+    color: red;
+}
+
+.card-content {
+    align-self: end; /* Menempatkan teks di bawah */
+    justify-self: start; /* Menempatkan teks di kiri */
+    z-index: 1;
+}
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+p {
+    margin: 5px 0 0;
+    font-size: 18px;
+}
+
+
+
+.content h1 {
+    font-size: 25px;
+    color: #6c757d;
+}
+
+.category {
+    background-color: white;
+    padding: 50px 20px 50px 20px; 
+    margin-top: 50px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.add-new {
+    display: flex;
+    background-color: #219446;
+    color: white;
+    width: 110px;
+    height: 40px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+}
+
+.category form {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+form input {
+    border-radius: 7px;
+    border: 2px solid #DFE3E5;
+    height: 45px;
+    width: 300px;
+    padding-left: 10px;
+    margin-right: 20px;
+}
+
+form select {
+    border-radius: 7px;
+    border: 2px solid #DFE3E5;
+    height: 45px;
+    width: 220px;
+    padding-left: 10px;
+    color: #C3C3C3;
+    margin-right: 20px;
+}
+
+form ::placeholder {
+    color: #C3C3C3;
+}
+
+.search button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 45px;
+    border-radius: 7px;
+    border: none;
+    background-color: #6063f7;
+    color: white;
+}
+
+form button .bx-search-alt-2 {
+    font-size: 25px !important;
+}
+
+table {
+    white-space: nowrap; /* Mencegah isi tabel membungkus ke baris baru */
+    width: 100%; /* Membuat tabel menggunakan 100% lebar div */
+    table-layout: auto; /* Mengizinkan tabel untuk menyesuaikan lebarnya secara otomatis */
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 12px 30px; /* Menambahkan jarak di dalam sel tabel */
+    text-align: left; /* Menyelaraskan teks ke kiri (opsional, bisa diatur sesuai kebutuhan) */
+    border-bottom: 2px solid #DFE3E5;
+}
+
+table .detail{
+    background-color: #219446;
+    border: none;
+    width: 150px;
+    font-size: 15px;
+}
+
+.action-buttons {
+    display: flex; /* Menggunakan flexbox untuk mengatur elemen di dalamnya */
+    align-items: center; /* Pusatkan secara vertikal */
+}
+
+tbody a {
+    background-color: #18A0FB;
+    color: white;
+    display: flex; /* Ubah dari inline-block menjadi flex */
+    justify-content: center; /* Pusatkan secara horizontal */
+    align-items: center; /* Pusatkan secara vertikal */
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+    text-align: center; /* Pastikan teks di pusat */
+    font-size: 20px;
+    margin-right: 10px;
+    border-radius: 7px;
+}
+
+tbody button {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    font-size: 20px !important;
+    border-radius: 7px !important;
+}

@@ -1,0 +1,982 @@
+:root {
+    --primary-color: #6063f7;
+    --secondary-color: #18A0FB;
+    --danger-color: #dc3545;
+    --text-color: #6c757d;
+    --background-color: #F5F5F5;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-icon {
+    color: #6c757d; /* Atur warna ikon */
+}
+
+.small-text {
+    font-size: 15px; /* Sesuaikan ukuran font */
+}
+
+
+/* .navbar-brand img {
+    width: 60px;
+} */
+
+.navbar {
+    background-color: #fff; /* Warna navbar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu {
+    padding: 0.5rem;
+}
+
+.dropdown-menu .dropdown-item {
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;  /* Pastikan logo dan tombol sejajar vertikal */
+    justify-content: space-between;  /* Spasi antara logo dan tombol */
+}
+
+.navbar-brand img {
+    width: 200px;  /* Sesuaikan dengan ukuran yang diinginkan */
+    height: auto;  /* Menjaga aspek rasio gambar */
+}
+
+.navbar button {
+    border: 2px solid #dc3545;
+    padding: 5px 10px;
+}
+
+
+.custom-nav {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+}
+
+.sidebar-link {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    color: #000;
+    transition: all 0.3s ease;
+}
+
+.sidebar-link:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+    border-radius: 5px;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.card {
+    width: 280px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+    text-align: center;
+}
+
+.table {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tablecontent table td {
+    padding: 15px;
+    border-bottom: 1px solid #e7eaeb;
+}
+
+.tablecontent .detail {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 10px 20px;
+    width: 120px;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+* {
+    font-family: montserrat;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+.navbar-brand {
+    font-size: 25px;
+}
+
+/* .navbar-brand img {
+    width: 60px;
+} */
+
+.custom-nav {
+    background-color: white;
+    color: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.custom-nav a {
+    padding-left: 20px;
+}
+
+.custom-nav button {
+    border: 2px solid #dc3545;
+}
+
+.custom-nav .bx-log-out {
+    display: flex;
+    font-size: 20px;
+}
+
+/* .custom-sidebar {
+    background-color: white;
+    min-height: 100vh;
+} */
+
+.custom-sidebar {
+    background-color: #fff;
+    min-height: 100vh;
+    padding-top: 1rem;
+    margin-top: -18px; /* Mengurangi jarak antara sidebar dan navbar */
+    position: fixed;
+
+}
+
+.row {
+    padding-top: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Menambahkan jarak antar card */
+}
+
+
+.custom-sidebar .nav-link {
+    padding: 0.75rem;
+    color: var(--text-color);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.custom-sidebar .nav-link:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 5px;
+}
+
+
+.sidebar-link {
+    padding: 10px;
+    display: block;
+    color: black;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Untuk animasi halus */
+}
+
+.sidebar-link:hover {
+    background-color: #e9ecef;
+    color: black;
+    transform: translateX(5px); /* Geser sedikit ke kanan */
+    border-radius: 7px;
+}
+
+.sidebar-label {
+    padding-left: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.sidebar-link .d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link .ms-2 {
+    margin-left: 8px; /* Menambahkan sedikit jarak antara ikon dan teks */
+}
+
+.sidebar-link i {
+    margin-right: 13px; /* Menambahkan jarak antara ikon dan teks */
+    font-size: 20px; /* Atur ukuran ikon sesuai keinginan */
+}
+
+.content {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+}
+
+.card-container {
+    display: flex; /* Mengatur card untuk berjejer */
+    gap: 20px; /* Menambahkan jarak antar card */
+    justify-content: center; /* Mengatur card agar berada di tengah */
+    margin-top: 50px;
+}
+
+.card-a {
+    height: auto;
+}
+
+.card {
+    width: 300px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+
+.card {
+    color: black;
+}
+
+.card h2 {
+    font-size: 17px;
+}
+
+.card p {
+    color: grey;
+}
+
+.card .text-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card i {
+    margin-bottom: 15px;
+}
+
+.card h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.menunggu p {
+    color: red;
+}
+
+.card-content {
+    align-self: end; /* Menempatkan teks di bawah */
+    justify-self: start; /* Menempatkan teks di kiri */
+    z-index: 1;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+p {
+    margin: 5px 0 0;
+    font-size: 18px;
+}
+
+
+
+.content h1 {
+    font-size: 25px;
+    color: #6c757d;
+}
+
+.category {
+    background-color: white;
+    padding: 50px 20px 50px 20px; 
+    margin-top: 50px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.add-new {
+    display: flex;
+    background-color: #219446;
+    color: white;
+    width: 110px;
+    height: 40px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+}
+
+.category form {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+form input {
+    border-radius: 7px;
+    border: 2px solid #DFE3E5;
+    height: 45px;
+    width: 300px;
+    padding-left: 10px;
+    margin-right: 20px;
+}
+
+form select {
+    border-radius: 7px;
+    border: 2px solid #DFE3E5;
+    height: 45px;
+    width: 220px;
+    padding-left: 10px;
+    color: #C3C3C3;
+    margin-right: 20px;
+}
+
+form ::placeholder {
+    color: #C3C3C3;
+}
+
+form button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 45px;
+    border-radius: 7px;
+    border: none;
+    background-color: #6063f7;
+    color: white;
+}
+
+form button .bx-search-alt-2 {
+    font-size: 25px !important;
+}
+
+table {
+    white-space: nowrap; /* Mencegah isi tabel membungkus ke baris baru */
+    width: 100%; /* Membuat tabel menggunakan 100% lebar div */
+    table-layout: auto; /* Mengizinkan tabel untuk menyesuaikan lebarnya secara otomatis */
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 12px 30px; /* Menambahkan jarak di dalam sel tabel */
+    text-align: left; /* Menyelaraskan teks ke kiri (opsional, bisa diatur sesuai kebutuhan) */
+    border-bottom: 2px solid #DFE3E5;
+}
+
+.action-buttons {
+    display: flex; /* Menggunakan flexbox untuk mengatur elemen di dalamnya */
+    align-items: center; /* Pusatkan secara vertikal */
+}
+
+tbody a {
+    background-color: #18A0FB;
+    color: white;
+    display: flex; /* Ubah dari inline-block menjadi flex */
+    justify-content: center; /* Pusatkan secara horizontal */
+    align-items: center; /* Pusatkan secara vertikal */
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+    text-align: center; /* Pastikan teks di pusat */
+    font-size: 20px;
+    margin-right: 10px;
+    border-radius: 7px;
+}
+
+tbody button {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    font-size: 20px !important;
+    border-radius: 7px !important;
+}
+
+/* General Table Section */
+.table-section {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.table-header h5 {
+    margin: 0;
+}
+
+/* Table Styling */
+.table {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f5fc; /* Efek hover pada baris tabel */
+    cursor: pointer;
+}
+
+.table-primary {
+    background-color: #A6AEBF;
+    color: white;
+}
+
+.table-content .btn {
+    font-size: 0.875rem;
+    padding: 5px 10px;
+}
+
+.table-content .btn i {
+    font-size: 1rem;
+}
+
+.table-responsive {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-card {
+    background-color: white;
+    color: #333;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 0; /* Menghapus margin bawah */
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Membuat kartu menyesuaikan tinggi */
+}
+
+.event-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Header Section */
+.header-section {
+    background-color: white;
+    color: #333;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 0; /* Menghapus margin bawah */
+}
+
+
+.header-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.header-section p {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.col-md-6 {
+    width: auto;
+}
+
+
+/* Stats Section */
+.stats-section {
+    margin-top: -50px; /* Mengurangi jarak atas */
+    margin-bottom: 0; /* Jika perlu, sesuaikan margin bawah */
+}
+
+.recent-activities-section {
+    margin-top: -20px; /* Mengurangi jarak atas pada bagian aktivitas */
+}
+
+
+.stats-section .card {
+    background-color: #fff;
+    border: 0;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 450px;
+    height: 100px;
+}
+
+.stats-section .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stats-section .card i {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.stats-section .card h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stats-section .card p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Recent Activities Table */
+.recent-activities-section h3 {
+    color: #343a40;
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.table-responsive {
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    background-color: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #4e73df;
+    color: #fff;
+    font-weight: bold;
+    padding: 1rem;
+    border: 0;
+}
+
+.table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.table-content .btn {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+}
+
+.sidebar-link.active {
+    background-color: #007bff; /* Biru */
+    color: #fff;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.sidebar-link.active .custom-icon {
+    color: #fff;
+}
+
+.btn-small-text {
+    font-size: 7px; /* Sesuaikan ukuran teks */
+    padding: 6px 10px; /* Sesuaikan padding tombol */
+}
+
+.modal-content {
+    border: none;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #003d80);
+}
+
+.profile-dropdown .dropdown-toggle {
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.profile-dropdown .dropdown-toggle:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.profile-dropdown .dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    padding: 0.5rem 0;
+    min-width: 300px;
+    border-radius: 8px;
+}
+
+.profile-dropdown .dropdown-menu .profile-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.profile-dropdown .dropdown-menu .profile-header .profile-icon {
+    font-size: 2.5rem;
+    color: #4c4c4c4c;
+    margin-right: 1rem;
+}
+
+.profile-dropdown .dropdown-menu .profile-header .profile-info {
+    flex-grow: 1;
+}
+
+.profile-dropdown .dropdown-menu .profile-header .profile-info p {
+    margin-bottom: 0; /* Removed margin-bottom */
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.profile-dropdown .dropdown-menu .profile-header .profile-info small {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.profile-dropdown .dropdown-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.profile-dropdown .dropdown-menu .dropdown-item i {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.profile-dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: #f1f3f5;
+}
+
+.form-label {
+    margin-bottom: 0.4rem; /* Mengurangi jarak antara label dan input */
+}
+
+.form-control {
+    padding: 0.5rem 0.75rem; /* Sesuaikan padding input */
+    font-size: 0.9rem; /* Ukuran teks */
+}
+
+.row .col-md-6 {
+    padding: 0 1rem; /* Atur jarak antar kolom */
+}
+
+.container {
+    padding-top: 1rem; /* Sesuaikan jarak keseluruhan */
+}
+
+.custom-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Menambahkan jarak antara card dalam satu kolom */
+    margin-left: 5px;    /* Jarak antar card di sisi kiri */
+    margin-right: 5px;   /* Jarak antar card di sisi kanan */
+}
+.custom-card:hover {
+    transform: scale(1.05);
+}
+.custom-card img {
+    height: 160px;
+    object-fit: cover;
+}
+.price-tag {
+    background-color: rgba(0, 123, 255, 0.9);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 4px 12px;
+    font-weight: bold;
+    border-top-right-radius: 8px;
+}
+.icon-section {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+}
+.icon-card {
+    border: none;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.icon-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.icon-card .icon-container {
+    background-color: #e9ecef;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-bottom: 12px;
+}
+.icon-card h5 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Simple Container */
+.simple-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 0;
+}
+
+/* Event Cards - Flexbox Style */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/* Event Card */
+.event-card-simple {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    width: 100%; /* Ensure card takes full width of column */
+    margin-bottom: 30px; /* Mengurangi margin bawah pada card */
+}
+
+.event-card-simple:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-card-body {
+    padding: 20px;
+}
+
+.event-card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center; /* Mengatur teks agar di-center */
+    word-wrap: break-word; /* Agar teks yang panjang terputus ke baris berikutnya */
+    display: block;
+    white-space: normal; /* Membolehkan teks terbungkus ke bawah */
+    line-height: 1.4; /* Menjaga jarak antar baris */
+}
+
+.event-card-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.event-card-details {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.event-card-details li {
+    margin-bottom: 5px;
+}
+
+/* Button */
+.btn-simple {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.btn-simple:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Grid - 3 Cards Per Row */
+@media (min-width: 768px) {
+    .col {
+        flex: 1 1 30%; /* 3 cards per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .col {
+        flex: 1 1 100%; /* 1 card per row on smaller screens */
+    }
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Profile Header Section */
+.profile-header {
+    /* background: linear-gradient(135deg, #ffffff, #000000); */
+    background: white;
+    padding: 50px 0;
+    color: #4c4c4c;
+}
+
+.profile-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.profile-header p {
+    font-size: 1.1rem;
+}
+
+/* Profile Form Container */
+.profile-form-container {
+    /* max-width: 100% !important; */
+    max-width: none;
+    width: 800px !important; /* Gunakan nilai tetap untuk memastikan lebar */
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+form {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+form label {
+    font-weight: bold;
+    color: #333;
+}
+
+form input,
+form textarea {
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+.profile-img img {
+    max-width: 150px;
+    border: 5px solid #ddd;
+    padding: 5px;
+}
+
+form .btn {
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form .btn:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,54 @@
+.custom-footer {
+    background-color: #001A6E;
+    padding: 10px 0;
+    margin-top: 20px; /* Tambahkan jarak ke bawah */
+    /* margin: 0; */
+    font-size: 14px;
+    color: #ffffff;
+    /* border-radius: 15px; Menambahkan border-radius pada seluruh footer */
+    margin-left: 200px; /* Sesuaikan dengan lebar sidebar */
+    height: 100px; /* Atur tinggi sesuai keinginan */
+    /* line-height: 50px; Pastikan teks vertikal tengah jika menggunakan height */
+  }
+
+  .content {
+    margin-bottom: 0px; /* Menambah jarak ke bawah konten */
+}
+  
+  /* .footer-logo {
+    max-height: 40px;
+  } */
+  
+  .footer-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .social-icon {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-left: 12px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    color: #0d6efd;
+  }
+  
+  @media (max-width: 767.98px) {
+    .footer-text {
+      font-size: 0.8rem;
+    }
+  
+    .social-icon {
+      font-size: 1rem;
+      margin-left: 10px;
+    }
+  }
+
+  
