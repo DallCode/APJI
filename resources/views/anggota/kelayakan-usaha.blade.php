@@ -25,31 +25,114 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $kelayakanFinansial = \App\Models\KelayakanFinansial::where(
+                                    'id_pengguna',
+                                    auth()->user()->dataPengguna->id_pengguna ?? null,
+                                )->first();
+                            @endphp
+
+                            @php
+                                $kelayakanOperasional = \App\Models\KelayakanOperasional::where(
+                                    'id_pengguna',
+                                    auth()->user()->dataPengguna->id_pengguna ?? null,
+                                )->first();
+                            @endphp
+
+                            @php
+                                $kelayakanPemasaran = \App\Models\KelayakanPemasaran::where(
+                                    'id_pengguna',
+                                    auth()->user()->dataPengguna->id_pengguna ?? null,
+                                )->first();
+                            @endphp
+
                             <tr>
                                 <td>1</td>
                                 <td>Kelayakan Finansial</td>
                                 <td class="text-center">
-                                    <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px" data-bs-toggle="modal" data-bs-target="#modalFinansial">
-                                        <i class="bi bi-eye me-1"></i> Ajukan
-                                    </a>
-                                </td>
+                                    @if (!$kelayakanFinansial)
+                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                            <i class="bi bi-eye me-1"></i> Ajukan
+                                        </a>
+                                    @elseif($kelayakanFinansial->status === 'menunggu')
+                                        <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                            disabled>
+                                            Menunggu
+                                        </button>
+                                    @elseif($kelayakanFinansial->status === 'diterima')
+                                        <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $kelayakanFinansial->catatan_admin }}">
+                                            Diterima
+                                        </button>
+                                    @elseif($kelayakanFinansial->status === 'ditolak')
+                                        <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $kelayakanFinansial->catatan_admin }}">
+                                            Ditolak
+                                        </button>
+                                    @endif
+                                </td>    
                             </tr>
+
+
                             <tr>
                                 <td>2</td>
                                 <td>Kelayakan Operasional</td>
                                 <td class="text-center">
-                                    <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px" data-bs-toggle="modal" data-bs-target="#modalOperasional">
-                                        <i class="bi bi-eye me-1"></i> Ajukan
-                                    </a>
+                                    @if (!$kelayakanOperasional)
+                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                            <i class="bi bi-eye me-1"></i> Ajukan
+                                        </a>
+                                    @elseif($kelayakanOperasional->status === 'menunggu')
+                                        <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                            disabled>
+                                            Menunggu
+                                        </button>
+                                    @elseif($kelayakanOperasional->status === 'diterima')
+                                        <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $kelayakanOperasional->catatan_admin }}">
+                                            Diterima
+                                        </button>
+                                    @elseif($kelayakanOperasional->status === 'ditolak')
+                                        <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $kelayakanOperasional->catatan_admin }}">
+                                            Ditolak
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>Kelayakan Pemasaran</td>
                                 <td class="text-center">
-                                    <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px" data-bs-toggle="modal" data-bs-target="#modalPemasaran">
-                                        <i class="bi bi-eye me-1"></i> Ajukan
-                                    </a>
+                                    @if (!$kelayakanPemasaran)
+                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                            <i class="bi bi-eye me-1"></i> Ajukan
+                                        </a>
+                                    @elseif($kelayakanPemasaran->status === 'menunggu')
+                                        <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                            disabled>
+                                            Menunggu
+                                        </button>
+                                    @elseif($kelayakanPemasaran->status === 'diterima')
+                                        <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $kelayakanPemasaran->catatan_admin }}">
+                                            Diterima
+                                        </button>
+                                    @elseif($kelayakanPemasaran->status === 'ditolak')
+                                        <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $kelayakanPemasaran->catatan_admin }}">
+                                            Ditolak
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
@@ -145,6 +228,23 @@
             </div>
 
         </main>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modalPesanAdmin = document.getElementById('modalPesanAdmin');
+                if (modalPesanAdmin) {
+                    modalPesanAdmin.addEventListener('show.bs.modal', function (event) {
+                        const button = event.relatedTarget; // Tombol yang memicu modal
+                        const pesan = button.getAttribute('data-pesan'); // Ambil data-pesan dari tombol
+                        const modalBody = modalPesanAdmin.querySelector('#pesanAdminContent');
+                        
+                        // Tampilkan pesan di modal
+                        modalBody.textContent = pesan || 'Tidak ada pesan.';
+                    });
+                }
+            });
+        </script>
+
     </div>
     <!-- Footer -->
 {{-- @include('components.footer-user') --}}

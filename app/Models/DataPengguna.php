@@ -28,5 +28,6 @@ class DataPengguna extends Model
     ];
 
     public $timestamps = false; // Sesuaikan jika tabel memiliki kolom created_at dan updated_at
+    
 }
 

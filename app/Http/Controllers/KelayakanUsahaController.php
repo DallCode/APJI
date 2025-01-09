@@ -21,11 +21,13 @@ class KelayakanUsahaController extends Controller
         
 
         KelayakanFinansial::create([
+            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna, // Gunakan ID user yang sedang login
             'nama_usaha' => $request->nama_usaha,
             'laporan_keuangan' => $path,
+            'status' => 'menunggu',
         ]);
 
-        return redirect()->route('anggota.kelayakan-usaha')->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
+        return redirect()->route('anggota.kelayakanUsaha')->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
     }
     
@@ -34,10 +36,17 @@ class KelayakanUsahaController extends Controller
         $request->validate([
             'nama_usaha' => 'required|string|max:255',
             'deskripsi_operasional' => 'required|string',
+            'status' => 'menunggu',
+        ]);
+
+        KelayakanOperasional::create([
+            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna, // Gunakan ID user yang sedang login
+            'nama_usaha' => $request->nama_usaha,
+            'deskripsi_operasional' => $request->deskripsi_operasional, 
         ]);
         
-        KelayakanOperasional::create($request->all());
-           
+        // KelayakanOperasional::create($request->all());
+        
         return redirect()->route('anggota.kelayakan-usaha')->with('success', 'Pengajuan Kelayakan Operasional berhasil diajukan.');
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Operasional berhasil diajukan.');
     }
@@ -47,9 +56,16 @@ class KelayakanUsahaController extends Controller
         $request->validate([
             'nama_usaha' => 'required|string|max:255',
             'strategi_pemasaran' => 'required|string',
+            'status' => 'menunggu',
         ]);
         
-        KelayakanPemasaran::create($request->all());
+        KelayakanPemasaran::create([
+            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna, // Gunakan ID user yang sedang login
+            'nama_usaha' => $request->nama_usaha,
+            'strategi_pemasaran' => $request->strategi_pemasaran,
+        ]);
+
+        // KelayakanPemasaran::create($request->all());
         
         return redirect()->route('anggota.kelayakan-usaha')->with('success', 'Pengajuan Kelayakan Pemasaran berhasil diajukan.');
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Pemasaran berhasil diajukan.');

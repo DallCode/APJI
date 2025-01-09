@@ -12,7 +12,14 @@ class KelayakanPemasaran extends Model
     protected $table = 'kelayakan_pemasaran';
 
     protected $fillable = [
+        'id_pengguna',
         'nama_usaha',
         'strategi_pemasaran',
     ];
+
+    // Relasi ke pengajuan_sertifikat
+    public function pengguna()
+    {
+        return $this->belongsTo(DataPengguna::class, 'id_pengguna', 'id_pengguna');
+    }
 }

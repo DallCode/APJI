@@ -42,6 +42,7 @@ class PengajuanSertifikatController extends Controller
     
     public function storeHalal(Request $request)
     {
+        // return $request;
         $request->validate([
             'nama_usaha' => 'required|string|max:255',
             'alamat_usaha' => 'required|string',
@@ -59,7 +60,7 @@ class PengajuanSertifikatController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
+        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }
 
     public function createKoki()
@@ -69,21 +70,23 @@ class PengajuanSertifikatController extends Controller
     
     public function storeKoki(Request $request)
     {
+        // return $request;
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'pengalaman_kerja' => 'required|string',
             'pendidikan_terakhir' => 'required|string',
         ]);
+        // dd(auth()->user());
 
         PengajuanKoki::create([
-            'id_pengajuan' => uniqid(), // Buat ID unik
+            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna, // Gunakan ID user yang sedang login
             'nama_lengkap' => $request->nama_lengkap,
             'pengalaman_kerja' => $request->pengalaman_kerja,
             'pendidikan_terakhir' => $request->pendidikan_terakhir,
             'status' => 'menunggu', //default
         ]);
 
-        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diajukan.');
+        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }
 
     public function createAsisten()
@@ -108,12 +111,12 @@ class PengajuanSertifikatController extends Controller
 
         // Simpan pengajuan ke database
         PengajuanAsistenKoki::create([
-            'id_pengajuan' => uniqid(),
+            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna, // Gunakan ID user yang sedang login
             'nama_lengkap' => $request->nama_lengkap,
             'keahlian_khusus' => $request->keahlian_khusus,
             'surat_pengantar' => $filePath,
         ]);
 
-        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diajukan.');
+        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }
 }

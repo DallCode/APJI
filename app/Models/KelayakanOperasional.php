@@ -12,7 +12,14 @@ class KelayakanOperasional extends Model
     protected $table = 'kelayakan_operasional';
 
     protected $fillable = [
+        'id_pengguna',
         'nama_usaha',
         'deskripsi_operasional',
     ];
+
+    // Relasi ke pengajuan_sertifikat
+    public function pengguna()
+    {
+        return $this->belongsTo(DataPengguna::class, 'id_pengguna', 'id_pengguna');
+    }
 }

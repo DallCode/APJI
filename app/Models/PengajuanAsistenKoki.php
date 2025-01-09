@@ -12,7 +12,7 @@ class PengajuanAsistenKoki extends Model
     // Kolom yang dapat diisi secara massal
     protected $fillable = [
         'id_detail',
-        'id_pengajuan',
+        'id_pengguna',
         'nama_lengkap',
         'keahlian_khusus',
         'surat_pengantar',
@@ -21,6 +21,12 @@ class PengajuanAsistenKoki extends Model
     // Jika tabel ini memiliki kolom created_at dan updated_at, maka ini tetap true.
     public $timestamps = false; // Atur menjadi true jika tabel memiliki timestamps.
 
+    // Relasi ke pengajuan_sertifikat
+    public function pengguna()
+    {
+        return $this->belongsTo(DataPengguna::class, 'id_pengguna', 'id_pengguna');
+    }
+    
      // Relasi ke pengajuan_sertifikat
     //  public function pengajuan()
     //  {

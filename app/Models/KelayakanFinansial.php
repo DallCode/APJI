@@ -12,7 +12,14 @@ class KelayakanFinansial extends Model
     protected $table = 'kelayakan_finansial';
 
     protected $fillable = [
+        'id_pengguna',
         'nama_usaha',
         'laporan_keuangan',
     ];
+
+     // Relasi ke pengajuan_sertifikat
+     public function pengguna()
+     {
+         return $this->belongsTo(DataPengguna::class, 'id_pengguna', 'id_pengguna');
+     }
 }

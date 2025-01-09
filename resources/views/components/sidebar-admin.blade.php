@@ -55,17 +55,17 @@
           <div class="collapse" id="KelayakanMenu">
             <ul class="nav flex-column ms-3">
               <li class="nav-item">
-                <a class="sidebar-link {{ Request()->is('halal') ? 'active' : '' }}" href="/finansial">
+                <a class="sidebar-link {{ Request()->is('finansial') ? 'active' : '' }}" href="/finansial">
                   <i class='bx bx-wallet-circle'></i> Finansial
                 </a>
               </li>
               <li class="nav-item">
-                <a class="sidebar-link {{ Request()->is('koki') ? 'active' : '' }}" href="/operasional">
+                <a class="sidebar-link {{ Request()->is('operasional') ? 'active' : '' }}" href="/operasional">
                   <i class='bx bx-cogs'></i> Operasional
                 </a>
               </li>
               <li class="nav-item">
-                <a class="sidebar-link {{ Request()->is('asisten-koki') ? 'active' : '' }}" href="/pemasaran">
+                <a class="sidebar-link {{ Request()->is('pemasaran') ? 'active' : '' }}" href="/pemasaran">
                   <i class='bx bx-line-chart'></i> Pemasaran
                 </a>
               </li>

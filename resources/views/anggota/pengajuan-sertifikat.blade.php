@@ -66,6 +66,20 @@
                                     )->first();
                                 @endphp
 
+                                @php
+                                    $pengajuanKoki = \App\Models\PengajuanKoki::where(
+                                        'id_pengguna',
+                                        auth()->user()->dataPengguna->id_pengguna ?? null,
+                                    )->first();
+                                @endphp
+
+                                @php
+                                    $pengajuanAsistenKoki = \App\Models\PengajuanAsistenKoki::where(
+                                        'id_pengguna',
+                                        auth()->user()->dataPengguna->id_pengguna ?? null,
+                                    )->first();
+                                @endphp
+
                                 <tr>
                                     <td>1</td>
                                     <td>Sertifikat Halal</td>
@@ -101,20 +115,58 @@
                                     <td>2</td>
                                     <td>Sertifikat Koki</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#modalKoki">
-                                            <i class="bi bi-eye me-1"></i> Ajukan
-                                        </a>
+                                        @if (!$pengajuanKoki)
+                                            <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
+                                                data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                                <i class="bi bi-eye me-1"></i> Ajukan
+                                            </a>
+                                        @elseif($pengajuanKoki->status === 'menunggu')
+                                            <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                                disabled>
+                                                Menunggu
+                                            </button>
+                                        @elseif($pengajuanKoki->status === 'diterima')
+                                            <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                                data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                                data-pesan="{{ $pengajuanKoki->catatan_admin }}">
+                                                Diterima
+                                            </button>
+                                        @elseif($pengajuankoki->status === 'ditolak')
+                                            <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                                data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                                data-pesan="{{ $pengajuanKoki>catatan_admin }}">
+                                                Ditolak
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Sertifikat asisten Koki</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#modalAsistenKoki">
-                                            <i class="bi bi-eye me-1"></i> Ajukan
-                                        </a>
+                                        @if (!$pengajuanAsistenKoki)
+                                            <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
+                                                data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                                <i class="bi bi-eye me-1"></i> Ajukan
+                                            </a>
+                                        @elseif($pengajuanAsistenKoki->status === 'menunggu')
+                                            <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                                disabled>
+                                                Menunggu
+                                            </button>
+                                        @elseif($pengajuanAsistenKoki->status === 'diterima')
+                                            <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                                data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                                data-pesan="{{ $pengajuanAsistenKoki->catatan_admin }}">
+                                                Diterima
+                                            </button>
+                                        @elseif($pengajuanAsistenKoki->status === 'ditolak')
+                                            <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                                data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                                data-pesan="{{ $pengajuanAsistenKoki->catatan_admin }}">
+                                                Ditolak
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             </tbody>
