@@ -25,7 +25,8 @@ class AnggotaController extends Controller
 
     public function dashboard()
     {
-        return view('anggota.dashboard-anggota');
+        $Event = Event::all(); // Ambil semua data event dari tabel
+        return view('anggota.dashboard-anggota', compact('Event'));
     }
 
     public function kelayakanUsaha()

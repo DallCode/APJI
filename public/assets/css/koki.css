@@ -271,3 +271,20 @@ tbody button {
     margin: 0;
     font-size: 18px;
 }
+
+.bx-check-circle {
+    font-size: 15px;
+    padding-top: 5px;
+}
+
+.bx-x-circle {
+    font-size: 15px;
+    padding-top: 5px;
+}
+
+footer {
+    margin-right: 30px;
+    border-radius: 0 10px 0 0;
+    padding-left: 250px;
+    height: 80px;
+}

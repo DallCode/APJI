@@ -8,6 +8,8 @@ class DataPengguna extends Model
 {
     protected $table = 'data_pengguna';
 
+    protected $primaryKey = 'id_pengguna';
+
     protected $fillable = [
         'id_pengguna',
         'email',

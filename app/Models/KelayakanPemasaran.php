@@ -11,10 +11,13 @@ class KelayakanPemasaran extends Model
 
     protected $table = 'kelayakan_pemasaran';
 
+    protected $primaryKey = 'id_pemasaran';
+
     protected $fillable = [
         'id_pengguna',
         'nama_usaha',
         'strategi_pemasaran',
+        'file',
     ];
 
     // Relasi ke pengajuan_sertifikat

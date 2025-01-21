@@ -46,11 +46,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     // Halaman-halaman lain untuk admin
     Route::get('/halal', [PengajuanSertifikatController::class, 'halal'])->name('halal');
+    Route::post('/halal/{id_detail}/update', [PengajuanSertifikatController::class, 'updateHalal'])->name('updateHalal');
+    Route::post('/halal/{id_detail}/reject', [PengajuanSertifikatController::class, 'rejectHalal'])->name('rejectHalal');
     Route::get('/koki', [PengajuanSertifikatController::class, 'koki'])->name('koki');
+    Route::post('/koki/{id_detail}/update', [PengajuanSertifikatController::class, 'updateKoki'])->name('updateKoki');
+    Route::post('/koki/{id_detail}/reject', [PengajuanSertifikatController::class, 'rejectKoki'])->name('rejectKoki');
     Route::get('/asisten-koki', [PengajuanSertifikatController::class, 'asisten'])->name('asisten');
+    Route::post('/asisten-koki/{id_detail}/update', [PengajuanSertifikatController::class, 'updateAsisten'])->name('updateAsisten');
+    Route::post('/asisten-koki/{id_detail}/reject', [PengajuanSertifikatController::class, 'rejectAsisten'])->name('rejectAsisten');
     Route::get('/finansial', [KelayakanUsahaController::class, 'finansial'])->name('finansial');
+    Route::post('/finansial/{id_finansial}/update', [KelayakanUsahaController::class, 'updateFinansial'])->name('updateFinansial');
+    Route::post('/finansial/{id_finansial}/reject', [KelayakanUsahaController::class, 'rejectFinansial'])->name('rejectFinansial');
     Route::get('/operasional', [KelayakanUsahaController::class, 'operasional'])->name('operasional');
+    Route::post('/operasional/update/{id_operasional}', [KelayakanUsahaController::class, 'updateOperasional'])->name('updateOperasional');
+    Route::post('/operasional/reject/{id_operasional}', [KelayakanUsahaController::class, 'rejectOperasional'])->name('rejectOperasional');
     Route::get('/pemasaran', [KelayakanUsahaController::class, 'pemasaran'])->name('pemasaran');
+    Route::post('/pemasaran/{id_pemasaran}/update', [KelayakanUsahaController::class, 'updatePemasaran'])->name('updatePemasaran');
+    Route::post('/pemasaran/{id_pemasaran}/reject', [KelayakanUsahaController::class, 'rejectPemasaran'])->name('rejectPemasaran');
 });
 
 // Rute untuk halaman anggota
@@ -72,6 +84,8 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::post('/ajukan-kelayakan-operasional', [KelayakanUsahaController::class, 'storeOperasional']);
     Route::post('/ajukan-kelayakan-pemasaran', [KelayakanUsahaController::class, 'storePemasaran']);
     Route::get('/profile-user', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 // Route::get('/profile-edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
 // Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.password');

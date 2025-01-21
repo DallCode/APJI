@@ -9,6 +9,8 @@ class PengajuanAsistenKoki extends Model
     // Nama tabel
     protected $table = 'detail_pengajuan_asisten_koki';
 
+    protected $primaryKey = 'id_detail';
+
     // Kolom yang dapat diisi secara massal
     protected $fillable = [
         'id_detail',

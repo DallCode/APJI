@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\DataPengguna;
 
 class AdminController extends Controller
 {
     public function dashboard() {
-        return view('admin.dashboard');
+        $datapengguna = DataPengguna::count();
+        $keanggotaan = DataPengguna::where('tipe_member', 'Terdaftar')->count();
+        return view('admin.dashboard', compact('datapengguna', 'keanggotaan'));
     }
 
     public function event(Request $request)
@@ -28,15 +31,24 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'nama_event' => 'required|string',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'deskripsi' => 'required|string',
             'tanggal' => 'required|date',
             'lokasi' => 'required|string',
         ]);
     
+        // Upload gambar ke storage
+        if ($request->hasFile('img')) {
+            $path = $request->file('img')->store('events', 'public');
+            $validated['img'] = 'storage/' . $path; // Simpan path untuk akses gambar
+        }
+    
         // Simpan data ke database
-        \App\Models\Event::create($validated);
+        Event::create($validated);
     
         return redirect()->route('admin.event')->with('success', 'Event created successfully.');
     }
+    
     
 
     public function update(Request $request, $id_event)
@@ -58,6 +70,11 @@ class AdminController extends Controller
             $imageData = file_get_contents($image->getRealPath());
             $event->dokumentasi = base64_encode($imageData);
         }
+        // if ($request->hasFile('dokumentasi')) {
+        //     $path = $request->file('dokumentasi')->store('events', 'public');
+        //     $event->dokumentasi = 'storage/' . $path;
+        // }
+        
 
         $event->update([
             'nama_event' => $validated['nama_event'],

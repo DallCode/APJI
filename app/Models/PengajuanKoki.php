@@ -9,6 +9,8 @@ class PengajuanKoki extends Model
     // Nama tabel
     protected $table = 'detail_pengajuan_koki';
 
+    protected $primaryKey = 'id_detail';
+
     // Kolom yang dapat diisi secara massal
     protected $fillable = [
         'id_detail',
@@ -17,6 +19,7 @@ class PengajuanKoki extends Model
         'pengalaman_kerja',
         'pendidikan_terakhir',
         'status',
+        'file',
     ];
 
     // Jika tabel ini memiliki kolom created_at dan updated_at, maka ini tetap true.

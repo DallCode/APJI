@@ -11,10 +11,13 @@ class KelayakanFinansial extends Model
 
     protected $table = 'kelayakan_finansial';
 
+    protected $primaryKey = 'id_finansial';
+
     protected $fillable = [
         'id_pengguna',
         'nama_usaha',
         'laporan_keuangan',
+        'file',
     ];
 
      // Relasi ke pengajuan_sertifikat

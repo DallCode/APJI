@@ -12,13 +12,13 @@
           <div class="card">
               <div class="card-content">
                   <h2>Total Anggota</h2>
-                  <p>100</p>
+                  <p>{{ $datapengguna }}</p>
               </div>
           </div>
           <div class="card">
               <div class="card-content">
                   <h2>Anggota Terverifikasi</h2>
-                  <p>89</p>
+                  <p>{{ $keanggotaan }}</p>
               </div>
           </div>
           <div class="card menunggu">

@@ -11,10 +11,13 @@ class KelayakanOperasional extends Model
 
     protected $table = 'kelayakan_operasional';
 
+    protected $primaryKey = 'id_operasional';
+
     protected $fillable = [
         'id_pengguna',
         'nama_usaha',
         'deskripsi_operasional',
+        'file',
     ];
 
     // Relasi ke pengajuan_sertifikat

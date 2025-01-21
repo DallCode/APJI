@@ -225,4 +225,11 @@ tbody button {
 .sidebar-link.active {
     color: #007bff !important;
     font-weight: bold;
-  }
+}
+
+footer {
+    margin-right: 30px;
+    border-radius: 0 10px 0 0;
+    padding-left: 250px;
+    height: 80px;
+}

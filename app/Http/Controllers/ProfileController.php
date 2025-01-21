@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\DataPengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -17,29 +18,83 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): Response
+    // public function edit(Request $request): Response
+    // {
+    //     return Inertia::render('Profile/Edit', [
+    //         'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+    //         'status' => session('status'),
+    //     ]);
+    // }
+
+    public function edit()
     {
-        return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-        ]);
+        $user = Auth::user();
+
+        $dataPengguna = $user->dataPengguna;
+
+        return view('anggota.profile-user', compact('dataPengguna'));
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+    // public function update(ProfileUpdateRequest $request): RedirectResponse
+    // {
+    //     $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+    //     if ($request->user()->isDirty('email')) {
+    //         $request->user()->email_verified_at = null;
+    //     }
+
+    //     $request->user()->save();
+
+    //     return Redirect::route('profile.edit');
+    // }
+
+    public function update(Request $request)
+    {
+        // Validasi data
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'tipe_member' => 'nullable|string|max:255',
+            'nama_usaha' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string|max:500',
+            'provinsi' => 'nullable|string|max:255',
+            'kota' => 'nullable|string|max:255',
+            'kecamatan' => 'nullable|string|max:255',
+            'kode_pos' => 'nullable|string|max:10',
+            'no_telp' => 'nullable|string|max:15',
+            'nama_pemilik' => 'nullable|string|max:255',
+            'no_ktp' => 'nullable|string|max:20',
+            'no_sku' => 'nullable|string|max:20',
+            'no_npwp' => 'nullable|string|max:20',
+            'k_usaha' => 'nullable|string|max:255',
+            'j_usaha' => 'nullable|string|max:255',
+        ]);
+
+        // Ambil pengguna login
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('profile.edit')->withErrors('Gagal memperbarui profil. Pengguna tidak ditemukan.');
         }
 
-        $request->user()->save();
+        // Perbarui data di tabel data_pengguna
+        try {
+            $dataPengguna = $user->dataPengguna; // Relasi ke data_pengguna
 
-        return Redirect::route('profile.edit');
+            if (!$dataPengguna) {
+                return redirect()->route('profile.edit')->withErrors('Data pengguna tidak ditemukan.');
+            }
+
+            $dataPengguna->update($validated);
+
+            return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->route('profile.edit')->withErrors('Gagal memperbarui profil. Error: ' . $e->getMessage());
+        }
     }
+
 
     /**
      * Delete the user's account.
@@ -65,7 +120,9 @@ class ProfileController extends Controller
     // Menampilkan halaman profil
     public function profile()
     {
-        $dataPengguna = DataPengguna::first();
+        // Ambil pengguna yang sedang login
+        $dataPengguna = DataPengguna::where('email', auth()->user()->email)->first();
+
         return view('anggota.profile-user', compact('dataPengguna'));
     }
 

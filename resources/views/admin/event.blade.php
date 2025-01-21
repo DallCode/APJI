@@ -67,21 +67,29 @@
 </div>
 
 <!-- Modal for Creating Event -->
-<div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createEventModalLabel">Create New Event</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('event.store') }}" method="POST">
+            <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf <!-- Tambahkan CSRF Token -->
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="nama_event" class="form-label">Nama Event</label>
-                        <input type="text" class="form-control" id="nama_event" name="nama_event"
-                            placeholder="Masukkan nama event" required>
+                        <input type="text" class="form-control" id="nama_event" name="nama_event" placeholder="Masukkan nama event" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="img" class="form-label">Poster</label>
+                        <input type="file" class="form-control" id="img" name="img" accept="image/*" required onchange="previewImage()">
+                        <img id="imgPreview" src="#" alt="Preview" style="margin-top: 10px; max-width: 100%; height: auto; display: none;">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan Deskripsi Event" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="tanggal" class="form-label">Tanggal</label>
@@ -89,8 +97,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="lokasi" class="form-label">Lokasi</label>
-                        <input type="text" class="form-control" id="lokasi" name="lokasi"
-                            placeholder="Masukkan lokasi event" required>
+                        <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi event" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -101,6 +108,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal Update -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
@@ -201,4 +209,26 @@
         });
     });
 </script>
+
+<script>
+    function previewImage() {
+        const input = document.getElementById('img');
+        const preview = document.getElementById('imgPreview');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    }
+</script>
+
 @endsection

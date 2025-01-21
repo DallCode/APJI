@@ -117,7 +117,7 @@
                                     <td class="text-center">
                                         @if (!$pengajuanKoki)
                                             <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
-                                                data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                                data-bs-toggle="modal" data-bs-target="#modalKoki">
                                                 <i class="bi bi-eye me-1"></i> Ajukan
                                             </a>
                                         @elseif($pengajuanKoki->status === 'menunggu')
@@ -131,10 +131,10 @@
                                                 data-pesan="{{ $pengajuanKoki->catatan_admin }}">
                                                 Diterima
                                             </button>
-                                        @elseif($pengajuankoki->status === 'ditolak')
+                                        @elseif($pengajuanKoki->status === 'ditolak')
                                             <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
-                                                data-pesan="{{ $pengajuanKoki>catatan_admin }}">
+                                                data-pesan="{{ $pengajuanKoki->catatan_admin }}">
                                                 Ditolak
                                             </button>
                                         @endif
@@ -146,7 +146,7 @@
                                     <td class="text-center">
                                         @if (!$pengajuanAsistenKoki)
                                             <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
-                                                data-bs-toggle="modal" data-bs-target="#modalHalal">
+                                                data-bs-toggle="modal" data-bs-target="#modalAsistenKoki">
                                                 <i class="bi bi-eye me-1"></i> Ajukan
                                             </a>
                                         @elseif($pengajuanAsistenKoki->status === 'menunggu')
@@ -179,28 +179,24 @@
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content shadow-lg rounded-4">
                             <div class="modal-header border-0 bg-primary text-white rounded-top">
-                                <h5 class="modal-title fw-bold" id="modalHalalLabel">Formulir Pengajuan Sertifikat Halal
-                                </h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h5 class="modal-title fw-bold" id="modalHalalLabel">Formulir Pengajuan Sertifikat Halal</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="/ajukan-sertifikat-halal" method="POST">
+                            <!-- Tambahkan ID pada form -->
+                            <form id="formHalal" action="/ajukan-sertifikat-halal" method="POST">
                                 @csrf
                                 <div class="modal-body bg-light">
                                     <div class="mb-3">
                                         <label for="namaUsaha" class="form-label">Nama Usaha</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="namaUsaha"
-                                            name="nama_usaha" placeholder="Masukkan nama usaha Anda" required>
+                                        <input type="text" class="form-control border-0 shadow-sm" id="namaUsaha" name="nama_usaha" placeholder="Masukkan nama usaha Anda" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="alamatUsaha" class="form-label">Alamat Usaha</label>
-                                        <textarea class="form-control border-0 shadow-sm" id="alamatUsaha" name="alamat_usaha" rows="3"
-                                            placeholder="Masukkan alamat usaha Anda" required></textarea>
+                                        <textarea class="form-control border-0 shadow-sm" id="alamatUsaha" name="alamat_usaha" rows="3" placeholder="Masukkan alamat usaha Anda" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="jenisUsaha" class="form-label">Jenis Usaha</label>
-                                        <select class="form-select border-0 shadow-sm" id="jenisUsaha" name="jenis_usaha"
-                                            required>
+                                        <select class="form-select border-0 shadow-sm" id="jenisUsaha" name="jenis_usaha" required>
                                             <option value="" disabled selected>Pilih jenis usaha</option>
                                             <option value="Catering">Catering</option>
                                             <option value="Restoran">Restoran</option>
@@ -209,14 +205,13 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="produk" class="form-label">Nama Produk</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="produk"
-                                            name="nama_produk" placeholder="Masukkan nama produk Anda" required>
+                                        <input type="text" class="form-control border-0 shadow-sm" id="produk" name="nama_produk" placeholder="Masukkan nama produk Anda" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer border-0 bg-light">
-                                    <button type="button" class="btn btn-secondary rounded-3 px-4"
-                                        data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                                    <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
+                                    <!-- Ubah tombol menjadi type="button" -->
+                                    <button type="button" class="btn btn-primary rounded-3 px-4" id="btnSubmitHalal">Ajukan</button>
                                 </div>
                             </form>
                         </div>
@@ -224,40 +219,32 @@
                 </div>
 
                 <!-- Modal Sertifikat Koki -->
-                <div class="modal fade" id="modalKoki" tabindex="-1" aria-labelledby="modalKokiLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="modalKoki" tabindex="-1" aria-labelledby="modalKokiLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content shadow-lg rounded-4">
                             <div class="modal-header bg-primary text-white rounded-top border-0">
-                                <h5 class="modal-title fw-bold" id="modalKokiLabel">Formulir Pengajuan Sertifikat Koki
-                                </h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h5 class="modal-title fw-bold" id="modalKokiLabel">Formulir Pengajuan Sertifikat Koki</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="/ajukan-sertifikat-koki" method="POST">
+                            <form action="/ajukan-sertifikat-koki" method="POST" id="formKoki">
                                 @csrf
                                 <div class="modal-body bg-light">
                                     <div class="mb-3">
                                         <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="namaLengkap"
-                                            name="nama_lengkap" placeholder="Masukkan nama lengkap Anda" required>
+                                        <input type="text" class="form-control border-0 shadow-sm" id="namaLengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap Anda" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="pengalamanKerja" class="form-label">Pengalaman Kerja</label>
-                                        <textarea class="form-control border-0 shadow-sm" id="pengalamanKerja" name="pengalaman_kerja" rows="3"
-                                            placeholder="Ceritakan pengalaman kerja Anda" required></textarea>
+                                        <textarea class="form-control border-0 shadow-sm" id="pengalamanKerja" name="pengalaman_kerja" rows="3" placeholder="Ceritakan pengalaman kerja Anda" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="pendidikan"
-                                            name="pendidikan_terakhir" placeholder="Masukkan pendidikan terakhir Anda"
-                                            required>
+                                        <input type="text" class="form-control border-0 shadow-sm" id="pendidikan" name="pendidikan_terakhir" placeholder="Masukkan pendidikan terakhir Anda" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer border-0 bg-light">
-                                    <button type="button" class="btn btn-secondary rounded-3 px-4"
-                                        data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                                    <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4" id="btnSubmitKoki">Ajukan</button>
                                 </div>
                             </form>
                         </div>
@@ -328,6 +315,8 @@
 
             </main>
 
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     const modalPesanAdmin = document.getElementById('modalPesanAdmin');
@@ -342,10 +331,132 @@
                         });
                     }
                 });
+
+                // Tangkap tombol submit
+                document.getElementById('btnSubmitHalal').addEventListener('click', function () {
+                // Ambil data dari input form
+                const namaUsaha = document.getElementById('namaUsaha').value;
+                const alamatUsaha = document.getElementById('alamatUsaha').value;
+                const jenisUsaha = document.getElementById('jenisUsaha').value;
+                const namaProduk = document.getElementById('produk').value;
+
+                // Validasi jika ada field yang kosong
+                if (!namaUsaha || !alamatUsaha || !jenisUsaha || !namaProduk) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Harap isi semua data sebelum melanjutkan!',
+                    });
+                    return;
+                }
+
+                // Tampilkan konfirmasi SweetAlert
+                Swal.fire({
+                    title: 'Apakah data sudah sesuai?',
+                    html: `
+                        <strong>Nama Usaha:</strong> ${namaUsaha}<br>
+                        <strong>Alamat Usaha:</strong> ${alamatUsaha}<br>
+                        <strong>Jenis Usaha:</strong> ${jenisUsaha}<br>
+                        <strong>Nama Produk:</strong> ${namaProduk}
+                    `,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Ajukan!',
+                    cancelButtonText: 'Periksa Lagi',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kirim formulir jika pengguna yakin
+                        document.getElementById('formHalal').submit();
+                    }
+                });
+            });
+
+
+            document.getElementById('formKoki').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah pengiriman form
+
+            // Ambil data dari input form
+            const namaLengkap = document.getElementById('namaLengkap').value;
+            const pengalamanKerja = document.getElementById('pengalamanKerja').value;
+            const pendidikanTerakhir = document.getElementById('pendidikan').value;
+
+            // Validasi jika ada field yang kosong
+            if (!namaLengkap || !pengalamanKerja || !pendidikanTerakhir) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Harap isi semua data sebelum melanjutkan!',
+                });
+                return;
+            }
+
+            // Tampilkan konfirmasi SweetAlert
+            Swal.fire({
+                title: 'Apakah data sudah sesuai?',
+                html: `
+                    <strong>Nama Lengkap:</strong> ${namaLengkap}<br>
+                    <strong>Pengalaman Kerja:</strong> ${pengalamanKerja}<br>
+                    <strong>Pendidikan Terakhir:</strong> ${pendidikanTerakhir}<br>
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Ajukan!',
+                cancelButtonText: 'Periksa Lagi',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim formulir jika pengguna yakin
+                    document.getElementById('formKoki').submit();
+                }
+            });
+        });
+
+        // Tangkap tombol submit
+        document.querySelector('#modalAsistenKoki form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Mencegah form untuk langsung submit
+
+            // Ambil data dari input form
+            const namaLengkapAsisten = document.getElementById('namaLengkapAsisten').value;
+            const keahlian = document.getElementById('keahlian').value;
+            const suratPengantar = document.getElementById('suratPengantar').files[0];
+
+            // Validasi jika ada field yang kosong
+            if (!namaLengkapAsisten || !keahlian || !suratPengantar) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Harap isi semua data sebelum melanjutkan!',
+                });
+                return;
+            }
+
+            // Tampilkan konfirmasi SweetAlert
+            Swal.fire({
+                title: 'Apakah data sudah sesuai?',
+                html: `
+                    <strong>Nama Lengkap:</strong> ${namaLengkapAsisten}<br>
+                    <strong>Keahlian Khusus:</strong> ${keahlian}<br>
+                    <strong>Surat Pengantar:</strong> ${suratPengantar.name}<br>
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Ajukan!',
+                cancelButtonText: 'Periksa Lagi',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim formulir jika pengguna yakin
+                    this.submit(); // Mengirimkan form jika user menekan "Ya, Ajukan!"
+                }
+            });
+        });
+
             </script>
             
         </div>
-        <!-- Footer -->
-        {{-- @include('components.footer-user') --}}
     </div>
 @endsection

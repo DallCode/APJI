@@ -649,6 +649,15 @@ tbody button {
 
 .modal-header {
     background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+}
+.modal-header .btn-close {
+    filter: invert(1); /* Membalik warna */
+    background-color: transparent;
+}
+
+.modal-header .btn-close:hover {
+    filter: invert(1); /* Pastikan tetap putih saat hover */
 }
 
 .btn-primary {
@@ -804,6 +813,7 @@ tbody button {
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 0;
+    margin-bottom: 50px;
 }
 
 /* Event Cards - Flexbox Style */
@@ -979,4 +989,61 @@ form .btn {
 
 form .btn:hover {
     background-color: #218838;
+}
+
+.profile-page {
+    background-color: #f9f9f900;
+    padding: 20px;
+}
+
+.profile-form-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.profile-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
 }
