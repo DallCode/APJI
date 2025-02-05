@@ -56,12 +56,11 @@ class KelayakanUsahaController extends Controller
             $kelayakanFinansial->laporan_keuangan = $filePath;
         }
 
-        $kelayakanFinansial->update([
-            'nama_usaha' => $request->nama_usaha,
-            'status' => 'menunggu',
-        ]);
+        $kelayakanFinansial->nama_usaha = $request->nama_usaha;
+        $kelayakanFinansial->status = "menunggu";
+        $kelayakanFinansial->save();
 
-        return redirect()->route('anggota.kelayakanUsaha', ['id_finansial' => $id_finansial])
+        return redirect()->route('kelayakanUsaha', ['id_finansial' => $id_finansial])
     ->with('success', 'Pengajuan berhasil.');
 
 

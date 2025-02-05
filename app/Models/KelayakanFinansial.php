@@ -19,6 +19,7 @@ class KelayakanFinansial extends Model
         'nama_usaha',
         'laporan_keuangan',
         'file',
+        'status'
     ];
 
      // Relasi ke pengajuan_sertifikat
