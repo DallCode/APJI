@@ -40,7 +40,7 @@
                                     </a>
 
                                     <!-- Tombol Tolak -->
-                                    <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalOperasional" onclick="handleReject({{ $data->id_operasional }})">
+                                    <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalOperasional" data-id="{{ $data->id_operasional }}">
                                         <i class="bx bx-x-circle"></i>
                                     </a>
                                 </td>

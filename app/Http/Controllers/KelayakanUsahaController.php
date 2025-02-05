@@ -40,6 +40,33 @@ class KelayakanUsahaController extends Controller
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
     }
 
+    public function updateUserFinansial(Request $request, $id_finansial)
+    {
+        // dd($request->method(), $request->all()); // Debugging
+        $request->validate([
+            'nama_usaha' => 'required|string|max:255',
+            'laporan_keuangan' => 'required|file|mimes:pdf,docx',
+        ]);
+
+        $kelayakanFinansial = KelayakanFinansial::findOrFail($id_finansial);
+
+        // Simpan file laporan keuangan
+        if ($request->hasFile('laporan_keuangan')) {
+            $filePath = $request->file('laporan_keuangan')->store('laporan_keuangan', 'public');
+            $kelayakanFinansial->laporan_keuangan = $filePath;
+        }
+
+        $kelayakanFinansial->update([
+            'nama_usaha' => $request->nama_usaha,
+            'status' => 'menunggu',
+        ]);
+
+        return redirect()->route('anggota.kelayakanUsaha', ['id_finansial' => $id_finansial])
+    ->with('success', 'Pengajuan berhasil.');
+
+
+    }
+
     public function updateFinansial(Request $request, $id)
     {
         // Validasi input
@@ -65,10 +92,12 @@ class KelayakanUsahaController extends Controller
 
     public function rejectFinansial(Request $request, $id)
     {
+        // return $request;
         // Validasi input
         $request->validate([
             'message' => 'required|string|max:1000', // Pesan harus diisi
         ]);
+        // dd($request->all()); // Debug data request
 
         // Temukan data pengajuan berdasarkan ID
         $kelayakanFinansial = KelayakanFinansial::findOrFail($id);
@@ -233,7 +262,7 @@ class KelayakanUsahaController extends Controller
           $kelayakanPemasaran->file = $filePath; // Simpan path pesan ke kolom file
           $kelayakanPemasaran->save();
   
-          return redirect()->route('operasional')->with('success', 'Pengajuan berhasil ditolak.');
+          return redirect()->route('pemasaran')->with('success', 'Pengajuan berhasil ditolak.');
     }
 
     public function finansial()

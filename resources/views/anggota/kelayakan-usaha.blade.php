@@ -62,21 +62,31 @@
                                         </button>
                                     @elseif($kelayakanFinansial->status === 'diterima')
                                         <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#pesanAdmin"
-                                            data-pesan="{{ $kelayakanFinansial->catatan_admin }}">
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
+                                            data-pdf-url="{{ Storage::url($kelayakanFinansial->file) }}">
                                             Diterima
                                         </button>
-                                    @elseif($kelayakanFinansial->status === 'ditolak')
+                                        @elseif($kelayakanFinansial->status === 'ditolak')
+                                        @php
+                                            $filePath = $kelayakanFinansial->file ?? null;
+                                            $pesanTolak =
+                                                $filePath &&
+                                                \Illuminate\Support\Facades\Storage::disk('public')->exists(
+                                                    $filePath,
+                                                )
+                                                    ? \Illuminate\Support\Facades\Storage::disk('public')->get(
+                                                        $filePath,
+                                                    )
+                                                    : 'Pesan tidak ditemukan.';
+                                        @endphp
                                         <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#pesanAdmin"
-                                            data-pesan="{{ $kelayakanFinansial->catatan_admin }}">
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $pesanTolak }}"  data-status="ditolak" data-jenis-pengajuan="finansial">
                                             Ditolak
                                         </button>
                                     @endif
                                 </td>    
                             </tr>
-
-
                             <tr>
                                 <td>2</td>
                                 <td>Kelayakan Operasional</td>
@@ -93,14 +103,26 @@
                                         </button>
                                     @elseif($kelayakanOperasional->status === 'diterima')
                                         <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#pesanAdmin"
-                                            data-pesan="{{ $kelayakanOperasional->catatan_admin }}">
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
+                                            data-pdf-url="{{ Storage::url($kelayakanOperasional->file) }}">
                                             Diterima
                                         </button>
-                                    @elseif($kelayakanOperasional->status === 'ditolak')
+                                        @elseif($kelayakanOperasional->status === 'ditolak')
+                                        @php
+                                            $filePath = $kelayakanOperasional->file ?? null;
+                                            $pesanTolak =
+                                                $filePath &&
+                                                \Illuminate\Support\Facades\Storage::disk('public')->exists(
+                                                    $filePath,
+                                                )
+                                                    ? \Illuminate\Support\Facades\Storage::disk('public')->get(
+                                                        $filePath,
+                                                    )
+                                                    : 'Pesan tidak ditemukan.';
+                                        @endphp
                                         <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#pesanAdmin"
-                                            data-pesan="{{ $kelayakanOperasional->catatan_admin }}">
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $pesanTolak }}" data-status="ditolak" data-jenis-pengajuan="operasional">
                                             Ditolak
                                         </button>
                                     @endif
@@ -122,14 +144,26 @@
                                         </button>
                                     @elseif($kelayakanPemasaran->status === 'diterima')
                                         <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#pesanAdmin"
-                                            data-pesan="{{ $kelayakanPemasaran->catatan_admin }}">
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
+                                            data-pdf-url="{{ Storage::url($kelayakanPemasaran->file) }}">
                                             Diterima
                                         </button>
-                                    @elseif($kelayakanPemasaran->status === 'ditolak')
+                                        @elseif($kelayakanPemasaran->status === 'ditolak')
+                                        @php
+                                            $filePath = $kelayakanPemasaran->file ?? null;
+                                            $pesanTolak =
+                                                $filePath &&
+                                                \Illuminate\Support\Facades\Storage::disk('public')->exists(
+                                                    $filePath,
+                                                )
+                                                    ? \Illuminate\Support\Facades\Storage::disk('public')->get(
+                                                        $filePath,
+                                                    )
+                                                    : 'Pesan tidak ditemukan.';
+                                        @endphp
                                         <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
-                                            data-bs-toggle="modal" data-bs-target="#pesanAdmin"
-                                            data-pesan="{{ $kelayakanPemasaran->catatan_admin }}">
+                                            data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
+                                            data-pesan="{{ $pesanTolak }}">
                                             Ditolak
                                         </button>
                                     @endif
@@ -165,6 +199,38 @@
                                 <button type="submit" class="btn btn-primary rounded-3 px-4" id="btnSubmitFinansial">Ajukan</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+           <!-- Modal Update Kelayakan Finansial -->
+            <div class="modal fade" id="modalUpdateFinansial" tabindex="-1" aria-labelledby="modalFinansialLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content shadow-lg rounded-4">
+                        <div class="modal-header bg-primary text-white rounded-top border-0">
+                            <h5 class="modal-title fw-bold" id="modalFinansialLabel">Formulir Pengajuan Kelayakan Finansial</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formUpdateFinansial" method="POST" action="{{ route('anggota.kelayakanUsaha', $kelayakanFinansial->id_finansial ?? '') }}" enctype="multipart/form-data">
+                            @csrf
+                        
+                            <input type="hidden" name="id_finansial" id="id_finansial" value="{{ $kelayakanFinansial->id_finansial ?? '' }}">
+                            
+                            <div class="mb-3">
+                                <label for="namaUsaha" class="form-label">Nama Usaha</label>
+                                <input type="text" class="form-control border-0 shadow-sm" id="namaUsaha" name="nama_usaha"
+                                 value="{{ $kelayakanFinansial->nama_usaha ?? '' }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="laporanKeuangan" class="form-label">Upload Laporan Keuangan</label>
+                                <input type="file" class="form-control border-0 shadow-sm" id="laporanKeuangan" name="laporan_keuangan" required>
+                            </div>
+                        
+                            <div class="modal-footer border-0 bg-light">
+                                <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                            </div>
+                        </form>                        
                     </div>
                 </div>
             </div>
@@ -227,41 +293,127 @@
                 </div>
             </div>
 
-            <!-- Modal Pesan Admin -->
-            <div class="modal fade" id="pesanAdmin" tabindex="-1" aria-labelledby="modalPesanAdminLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalPesanAdminLabel">Pesan dari Admin</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p id="pesanAdminContent"></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           <!-- Modal Pesan Admin -->
+           <div class="modal fade" id="modalPesanAdmin" tabindex="-1" aria-labelledby="modalPesanAdminLabel"
+           aria-hidden="true">
+           <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title" id="modalPesanAdminLabel">Pesan dari Admin</h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal"
+                           aria-label="Close"></button>
+                   </div>
+                   <div class="modal-body">
+                       <p id="pesanAdminContent"></p>
+                   </div>
+                   <div class="modal-footer">
+                    <!-- Tombol Ajukan Kembali -->
+                    <button type="button" class="btn btn-primary" id="btnAjukanKembali">Ajukan Kembali</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+       <!-- Modal Tampilkan Sertifikat -->
+       <div class="modal fade" id="modalPesanAdminAccept" tabindex="-1"
+           aria-labelledby="modalPesanAdminAcceptLabel" aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title" id="modalPesanAdminAcceptLabel">Sertifikat Asisten Koki</h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal"
+                           aria-label="Close"></button>
+                   </div>
+                   <div class="modal-body">
+                       <!-- Tampilkan PDF -->
+                       <embed id="pdfViewer" src="" type="application/pdf" width="100%"
+                           height="500px">
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                   </div>
+               </div>
+           </div>
+       </div>
 
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const modalPesanAdmin = document.getElementById('pesanAdmin');
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('JavaScript dimuat'); // Log untuk memastikan JS aktif
+
+                // Logika untuk modalPesanAdmin
+                const modalPesanAdmin = document.getElementById('modalPesanAdmin');
                 if (modalPesanAdmin) {
-                    modalPesanAdmin.addEventListener('show.bs.modal', function (event) {
+                    console.log('Modal Pesan Admin ditemukan');
+                    modalPesanAdmin.addEventListener('show.bs.modal', function(event) {
                         const button = event.relatedTarget; // Tombol yang memicu modal
                         const pesan = button.getAttribute('data-pesan'); // Ambil data-pesan dari tombol
                         const modalBody = modalPesanAdmin.querySelector('#pesanAdminContent');
-                        
+
                         // Tampilkan pesan di modal
                         modalBody.textContent = pesan || 'Tidak ada pesan.';
+                        console.log('Pesan ditampilkan:', pesan);
+
+                        // Tampilkan atau sembunyikan tombol "Ajukan Kembali" berdasarkan status
+                        const btnAjukanKembali = modalPesanAdmin.querySelector('#btnAjukanKembali');
+                        if (button.getAttribute('data-status') === 'ditolak') {
+                            btnAjukanKembali.style.display = 'inline-block'; // Tampilkan tombol
+                        } else {
+                            btnAjukanKembali.style.display = 'none'; // Sembunyikan tombol
+                        }
+
+                        // Logika untuk tombol "Ajukan Kembali"
+                        btnAjukanKembali.addEventListener('click', function() {
+                            // Tutup modal pesan admin
+                            const modalPesanAdminInstance = bootstrap.Modal.getInstance(modalPesanAdmin);
+                            modalPesanAdminInstance.hide();
+
+                            // Buka modal yang sesuai berdasarkan jenis pengajuan
+                            const jenisPengajuan = button.getAttribute('data-jenis-pengajuan');
+                            if (jenisPengajuan === 'finansial') {
+                                const modalUpdateFinansial = new bootstrap.Modal(document.getElementById('modalUpdateFinansial'));
+                                modalUpdateFinansial.show();
+                            } else if (jenisPengajuan === 'operasional') {
+                                const modalOperasional = new bootstrap.Modal(document.getElementById('modalOperasional'));
+                                modalOperasional.show();
+                            } else if (jenisPengajuan === 'pemasaran') {
+                                const modalPemasaran = new bootstrap.Modal(document.getElementById('modalPemasaran'));
+                                modalPemasaran.show();
+                            }
+                        });
                     });
+                } else {
+                    console.error('Modal Pesan Admin tidak ditemukan di DOM');
+                }
+
+                // Logika untuk modalPesanAdminAccept
+                const modalPesanAdminAccept = document.getElementById('modalPesanAdminAccept');
+                if (modalPesanAdminAccept) {
+                    modalPesanAdminAccept.addEventListener('show.bs.modal', function(event) {
+                        const button = event.relatedTarget;
+                        const pdfUrl = button.getAttribute('data-pdf-url');
+
+                        console.log('URL file PDF:', pdfUrl); // Debug URL
+
+                        const pdfViewer = modalPesanAdminAccept.querySelector('#pdfViewer');
+                        if (pdfUrl) {
+                            pdfViewer.src = pdfUrl;
+                            console.log('File PDF berhasil dimuat:', pdfUrl);
+                        } else {
+                            console.error('File PDF tidak ditemukan atau URL kosong.');
+                        }
+                    });
+
+                    modalPesanAdminAccept.addEventListener('hidden.bs.modal', function() {
+                        const pdfViewer = modalPesanAdminAccept.querySelector('#pdfViewer');
+                        pdfViewer.src = ''; // Reset saat modal ditutup
+                        console.log('PDF Viewer di-reset.');
+                    });
+                } else {
+                    console.error('Modal Pesan Admin Accept tidak ditemukan di DOM');
                 }
             });
 

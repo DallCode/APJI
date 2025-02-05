@@ -47,7 +47,7 @@
                                 </a>
 
                                 <!-- Tombol Tolak -->
-                                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalPemasaran" onclick="handleReject({{ $data->id_pemasaran }})">
+                                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalPemasaran" data-id="{{ $data->id_pemasaran }}">
                                     <i class="bx bx-x-circle"></i>
                                 </a>
                             </td>
@@ -124,40 +124,7 @@
     </div>
 </div>
 
-<script>
-    // Handle modal untuk menampilkan surat pengantar
-    var suratPengantarModal = document.getElementById('suratPengantarModal');
-    suratPengantarModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var suratPengantar = button.getAttribute('data-surapengantar');
-        var pdfViewer = suratPengantarModal.querySelector('#pdfViewer');
-        pdfViewer.src = suratPengantar;
-    });
 
-    // Handle aksi tolak
-    function handleReject(id) {
-        if (confirm('Apakah Anda yakin ingin menolak pengajuan ini?')) {
-            // Kirim permintaan tolak ke server
-            fetch(`/sertifikasi/reject/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ id: id })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Pengajuan berhasil ditolak.');
-                    location.reload();
-                } else {
-                    alert('Gagal menolak pengajuan.');
-                }
-            });
-        }
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Handle modal untuk menampilkan laporan keuangan

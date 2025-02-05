@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengajuanSertifikatController;
 use App\Http\Controllers\KelayakanUsahaController;
 use App\Http\Controllers\RegisterController;
+use App\Models\PengajuanHalal;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,12 +54,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/koki/{id_detail}/reject', [PengajuanSertifikatController::class, 'rejectKoki'])->name('rejectKoki');
     Route::get('/asisten-koki', [PengajuanSertifikatController::class, 'asisten'])->name('asisten');
     Route::post('/asisten-koki/{id_detail}/update', [PengajuanSertifikatController::class, 'updateAsisten'])->name('updateAsisten');
+    Route::get('/asisten-koki/{id_detail}/getFileUrl', [PengajuanSertifikatController::class, 'getFileUrl'])->name('getFileUrl');
     Route::post('/asisten-koki/{id_detail}/reject', [PengajuanSertifikatController::class, 'rejectAsisten'])->name('rejectAsisten');
     Route::get('/finansial', [KelayakanUsahaController::class, 'finansial'])->name('finansial');
     Route::post('/finansial/{id_finansial}/update', [KelayakanUsahaController::class, 'updateFinansial'])->name('updateFinansial');
     Route::post('/finansial/{id_finansial}/reject', [KelayakanUsahaController::class, 'rejectFinansial'])->name('rejectFinansial');
+    // Route::post('/finansial/{id_finansial}/reject', [KelayakanUsahaController::class, 'rejectFinansial'])->name('rejectFinansial');
     Route::get('/operasional', [KelayakanUsahaController::class, 'operasional'])->name('operasional');
-    Route::post('/operasional/update/{id_operasional}', [KelayakanUsahaController::class, 'updateOperasional'])->name('updateOperasional');
+    Route::post('/operasional/{id_operasional}/update', [KelayakanUsahaController::class, 'updateOperasional'])->name('updateOperasional');
     Route::post('/operasional/reject/{id_operasional}', [KelayakanUsahaController::class, 'rejectOperasional'])->name('rejectOperasional');
     Route::get('/pemasaran', [KelayakanUsahaController::class, 'pemasaran'])->name('pemasaran');
     Route::post('/pemasaran/{id_pemasaran}/update', [KelayakanUsahaController::class, 'updatePemasaran'])->name('updatePemasaran');
@@ -72,20 +75,51 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     // Route::get('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'create'])->name('pengajuan.sertifikat-halal.create');
     Route::post('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'storeHalal']);
     Route::get('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'create'])->name('anggota.pengajuanSertifikat');
+    Route::post('/ajukan-sertifikat-halal/{id_detail}/updateUserHalal', [PengajuanSertifikatController::class, 'updateUserHalal'])->name('updateUserHalal');
     Route::get('/ajukan-sertifikat-koki', [PengajuanSertifikatController::class, 'createKoki'])->name('anggota.pengajuanSertifikat');
     Route::post('/ajukan-sertifikat-koki', [PengajuanSertifikatController::class, 'storeKoki']);
+    Route::post('/ajukan-sertifikat-koki/{id_detail}/updateUserKoki', [PengajuanSertifikatController::class, 'updateUserKoki'])->name('updateUserKoki');
     Route::get('/ajukan-sertifikat-asisten-koki', [PengajuanSertifikatController::class, 'createAsisten'])->name('anggota.pengajuanSertifikat');
     // Route::post('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'storeHalal'])->name('pengajuan.sertifikat-halal.store');
     Route::post('/ajukan-sertifikat-asisten-koki', [PengajuanSertifikatController::class, 'storeAsisten']);
+    Route::post('/ajukan-sertifikat-asisten-koki/{id_detail}/updateUserAsisten', [PengajuanSertifikatController::class, 'updateUserAsisten'])->name('updateUserAsisten');
+    // Route::get('/file/{id}', function ($id) {
+    //     $filePath = public_path("app/public/sertifikat_asisten_koki/{$id}.pdf");
+    
+    //     if (!file_exists($filePath)) {
+    //         abort(404, 'File not found');
+    //     }
+    
+    //     return response()->file($filePath);
+    // });
+
+    
+
+    
     Route::get('/event-anggota', [AnggotaController::class, 'event'])->name('event');
     Route::get('/riwayat-event', [AnggotaController::class, 'riwayat'])->name('riwayat');
     Route::get('/kelayakan-usaha', [AnggotaController::class, 'kelayakanUsaha'])->name('kelayakanUsaha');
     Route::post('/ajukan-kelayakan-finansial', [KelayakanUsahaController::class, 'storeFinansial'])->name('anggota.kelayakanUsaha');
+    Route::post('/ajukan-kelayakan-finansial/{id_finansial}/updateUserFinansial', [KelayakanUsahaController::class, 'updateUserFinansial'])->name('anggota.kelayakanUsaha');
     Route::post('/ajukan-kelayakan-operasional', [KelayakanUsahaController::class, 'storeOperasional']);
     Route::post('/ajukan-kelayakan-pemasaran', [KelayakanUsahaController::class, 'storePemasaran']);
     Route::get('/profile-user', [ProfileController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::get('/get-file-url/{id}', function ($id) {
+    //     // Cari data di database berdasarkan ID
+    //     $data = \App\Models\PengajuanAsistenKoki::find($id);
+    
+    //     if ($data && $data->file) {
+    //         // Cek apakah file ada di direktori storage
+    //         $filePath = 'sertifikat_asisten_koki/' . $data->file;
+    //         if (Storage::exists($filePath)) {
+    //             return response()->json(['url' => asset('storage/' . $filePath)]);
+    //         }
+    //     }
+    
+    //     return response()->json(['url' => null], 404); // Kembalikan 404 jika file tidak ditemukan
+    // })->name('getFileUrl');
 });
 // Route::get('/profile-edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
 // Route::get('/profile/password', [ProfileController::class, 'editPassword'])->name('profile.password');

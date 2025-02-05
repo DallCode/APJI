@@ -14,6 +14,7 @@ class KelayakanFinansial extends Model
     protected $primaryKey = 'id_finansial';
 
     protected $fillable = [
+        'id_finansial',
         'id_pengguna',
         'nama_usaha',
         'laporan_keuangan',

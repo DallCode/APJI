@@ -47,7 +47,7 @@
                                 </a>
 
                                 <!-- Tombol Tolak -->
-                                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalFinansial" onclick="handleReject({{ $data->id_finansial }})">
+                                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalFinansial" data-id="{{ $data->id_finansial }}">
                                     <i class="bx bx-x-circle"></i>
                                 </a>
                             </td>
@@ -112,13 +112,13 @@
             <div class="modal-body">
                 <form id="rejectForm" method="POST" action="">
                     @csrf
-                    <input type="hidden" name="id_detail" id="rejectId">
+                    <input type="hidden" name="id_finansial" id="rejectId">
                     <div class="mb-3">
                         <label for="message" class="form-label">Pesan</label>
                         <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
                     </div>
                     <button type="button" class="btn btn-danger" id="rejectSubmit">Kirim</button>
-                </form>                
+                </form>                               
             </div>
         </div>
     </div>
@@ -149,8 +149,9 @@
     rejectModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
         var id = button.getAttribute('data-id');
-        var rejectForm = document.getElementById('rejectForm');
-        rejectForm.action = "{{ route('rejectFinansial', ':id_finansial') }}".replace(':id_finansial', id);
+        document.getElementById('rejectId').value = id;
+        var form = document.getElementById('rejectForm');
+        form.action = "{{ route('rejectFinansial', ':id_finansial') }}".replace(':id_finansial', id);
     });
 
     // SweetAlert untuk menerima pengajuan

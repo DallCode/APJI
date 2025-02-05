@@ -18,6 +18,8 @@ class PengajuanAsistenKoki extends Model
         'nama_lengkap',
         'keahlian_khusus',
         'surat_pengantar',
+        'status',
+        'file',
     ];
 
     // Jika tabel ini memiliki kolom created_at dan updated_at, maka ini tetap true.

@@ -8,6 +8,7 @@ use App\Models\PengajuanHalal;
 use App\Models\DataPengguna;
 use App\Models\User;
 use App\Models\PengajuanKoki;
+use Illuminate\Support\Facades\Redis;
 
 class PengajuanSertifikatController extends Controller
 {
@@ -39,7 +40,7 @@ class PengajuanSertifikatController extends Controller
 
         return view('admin.asisten-koki', compact('asistenData'));
     }
-    
+
     public function storeHalal(Request $request)
     {
         // Validasi input
@@ -71,6 +72,30 @@ class PengajuanSertifikatController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }
+
+    public function updateUserHalal(Request $request, $id_detail)
+    {
+        // return $request;
+        $request->validate([
+            'nama_usaha' => 'required|string|max:255',
+            'alamat_usaha' => 'required|string',
+            'jenis_usaha' => 'required|string',
+            'nama_produk' => 'required|string|max:255',
+        ]);
+
+        $pengajuanHalal = PengajuanHalal::findOrFail($id_detail);
+
+        $pengajuanHalal->update([
+            'nama_usaha' => $request->nama_usaha,
+            'alamat_usaha' => $request->alamat_usaha,
+            'jenis_usaha' => $request->jenis_usaha,
+            'nama_produk' => $request->nama_produk,
+            'status' => 'menunggu',
+        ]);
+
+        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
+    }
+
 
     public function updateHalal(Request $request, $id)
     {
@@ -150,7 +175,7 @@ class PengajuanSertifikatController extends Controller
     {
         return view('anggota.pengajuan-sertifikat');
     }
-    
+
     public function storeKoki(Request $request)
     {
         // return $request;
@@ -178,6 +203,27 @@ class PengajuanSertifikatController extends Controller
         ]);
 
         return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
+    }
+
+    public function updateUserKoki(Request $request, $id_detail)
+    {
+        // return $request;
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'pengalaman_kerja' => 'required|string',
+            'pendidikan_terakhir' => 'required|string',
+        ]);
+
+        $pengajuanKoki = PengajuanKoki::findOrFail($id_detail);
+
+        $pengajuanKoki->update([
+            'nama_lengkap' => $request->nama_lengkap,
+            'pengalaman_kerja' => $request->pengalaman_kerja,
+            'pendidikan_terakhir' => $request->pendidikan_terakhir,
+            'status' => 'menunggu',
+        ]);
+
+        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
     }
 
     public function updateKoki(Request $request, $id)
@@ -230,7 +276,7 @@ class PengajuanSertifikatController extends Controller
     {
         return view('anggota.pengajuan-sertifikat');
     }
-    
+
     public function storeAsisten(Request $request)
     {
         $request->validate([
@@ -266,6 +312,26 @@ class PengajuanSertifikatController extends Controller
         return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }
 
+    public function updateUserAsisten(Request $request, $id_detail)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'keahlian_khusus' => 'required|string',
+            'surat_pengantar' => 'nullable|file|mimes:pdf|max:10240', // Hanya file PDF yang diizinkan
+        ]);
+
+        $pengajuanAsistenKoki = PengajuanAsistenKoki::findOrFail($id_detail);
+
+        $pengajuanAsistenKoki->update([
+            'nama_lengkap' => $request->nama_lengkap,
+            'keahlian_khusus' => $request->keahlian_khusus,
+            'surat_pengantar' => $request->surat_pengantar,
+            'status' => 'menunggu',
+        ]);
+
+        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
+    }
+
     public function updateAsisten(Request $request, $id)
     {
         // Validasi input
@@ -273,10 +339,10 @@ class PengajuanSertifikatController extends Controller
             'file' => 'required|file|mimes:pdf,jpg,png|max:2048', // Validasi file wajib ada
         ]);
 
-         // Temukan data pengajuan berdasarkan ID
-         $pengajuanAsistenKoki = PengajuanAsistenKoki::findOrFail($id);
+        // Temukan data pengajuan berdasarkan ID
+        $pengajuanAsistenKoki = PengajuanAsistenKoki::findOrFail($id);
 
-         // Simpan file baru
+        // Simpan file baru
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('sertifikat_asisten_koki', 'public');
             $pengajuanAsistenKoki->file = $filePath; // Update path file
@@ -288,6 +354,17 @@ class PengajuanSertifikatController extends Controller
 
         return redirect()->route('koki')->with('success', 'Pengajuan diterima dan sertifikat berhasil diupload.');
     }
+
+    public function getFileUrl($id)
+    {
+        $pengajuanAsistenKoki = PengajuanAsistenKoki::find($id);
+        if ($pengajuanAsistenKoki && $pengajuanAsistenKoki->file) {
+            return response()->json(['url' => asset('storage/' . $pengajuanAsistenKoki->file)]);
+        }
+        return response()->json(['error' => 'File not found'], 404);
+    }
+
+
 
     public function rejectAsisten(Request $request, $id)
     {

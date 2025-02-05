@@ -41,33 +41,42 @@
         </div>
 
         <div class="tablecontent">
-            <table>
-                <tbody>
+          <table>
+              <tbody>
+                @foreach($recentUsers as $user)
                   <tr>
-                    <td class="notif">User baru telah login.</td>
-                    <td><a class="detail" href="">Lihat Detail</a></td>
+                      <td class="notif">User baru {{ $user->email }} telah mendaftar.</td>
+                      <td><a class="detail" href="#" data-bs-toggle="modal" data-bs-target="#userModal{{ $user->id }}">Lihat Detail</a></td>
                   </tr>
-                  <tr>
-                    <td class="notif">User baru telah login.</td>
-                    <td><a class="detail" href="">Lihat Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td class="notif">User baru telah login.</td>
-                    <td><a class="detail" href="">Lihat Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td class="notif">User baru telah login.</td>
-                    <td><a class="detail" href="">Lihat Detail</a></td>
-                  </tr>
-                  <tr>
-                    <td class="notif">User baru telah login.</td>
-                    <td><a class="detail" href="">Lihat Detail</a></td>
-                  </tr>
-                </tbody>
-            </table>
-        </div>
-      </div>
 
+                  <!-- Modal untuk setiap user -->
+                  <div class="modal fade" id="userModal{{ $user->id }}" tabindex="-1" aria-labelledby="userModalLabel{{ $user->id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="userModalLabel{{ $user->id }}">Detail Pengguna: {{ $user->email }}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <ul>
+                            <li><strong>Email:</strong> {{ $user->email }}</li>
+                            <li><strong>Nama Usaha:</strong> {{ $user->nama_usaha }}</li>
+                            <li><strong>Status:</strong> {{ $user->status }}</li>
+                            <li><strong>Role:</strong> {{ $user->role }}</li>
+                            <!-- Anda bisa menambahkan lebih banyak detail jika diperlukan -->
+                          </ul>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+              </tbody>
+          </table>
+      </div>
+      </div>
     </main>
   </div>
 </div>
