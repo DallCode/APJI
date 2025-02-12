@@ -1,12 +1,6 @@
 @extends('layout.pemasaran')
 @section('content')
 
-@if (session('success'))
-<div style="color: green;">
-    {{ session('success') }}
-</div>
-@endif
-
 <div class="container-fluid">
     <div class="row">
         <x-sidebar-admin />
@@ -37,17 +31,25 @@
                             <td>{{ $data->nama_usaha }}</td>
                             <td>{{ $data->strategi_pemasaran }}</td>
                             {{-- <td>{{ $data->keahlian_khusus }}</td> --}}
-                            <td>
-                                <!-- Tombol Terima -->
-                                <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#acceptModalPemasaran" data-id="{{ $data->id_pemasaran }}">
-                                    <i class="bx bx-check-circle"></i>
-                                </a>
-
-                                <!-- Tombol Tolak -->
-                                <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalPemasaran" data-id="{{ $data->id_pemasaran }}">
-                                    <i class="bx bx-x-circle"></i>
-                                </a>
-                            </td>
+                             <td id="action-{{ $data->id_pemasaran }}">
+                                    @if ($data->status === 'diterima')
+                                        <button class="btn btn-success btn-lg w-100 disabled">Diterima</button>
+                                    @elseif ($data->status === 'ditolak')
+                                        <button class="btn btn-danger btn-lg w-100 disabled">Ditolak</button>
+                                    @else
+                                        <!-- Tombol Terima -->
+                                        <a href="#" class="btn btn-success btn-sm accept-btn" data-bs-toggle="modal"
+                                            data-bs-target="#acceptModalPemasaran" data-id="{{ $data->id_pemasaran }}">
+                                            <i class="bx bx-check-circle"></i>
+                                        </a>
+                                
+                                        <!-- Tombol Tolak -->
+                                        <a href="#" class="btn btn-danger btn-sm reject-btn" data-bs-toggle="modal"
+                                            data-bs-target="#rejectModalPemasaran" data-id="{{ $data->id_pemasaran }}">
+                                            <i class="bx bx-x-circle"></i>
+                                        </a>
+                                    @endif
+                                </td>
                         </tr>
                         @endforeach
                     </tbody>

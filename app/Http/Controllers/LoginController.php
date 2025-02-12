@@ -41,9 +41,9 @@ class LoginController extends Controller
 
             // Redirect berdasarkan role
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard')->with('success', 'Login berhasil, selamat datang admin! 😎');
             } elseif ($user->role === 'anggota') {
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard')->with('success', 'Login berhasil');
             }
         }
 

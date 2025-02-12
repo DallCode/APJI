@@ -1,12 +1,6 @@
 @extends('layout.kelayakan-usaha')
 @section('content')
 
-@if (session('success'))
-<div style="color: green;">
-    {{ session('success') }}
-</div>
-@endif
-
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
@@ -68,11 +62,11 @@
                                             Menunggu
                                         </a>
                                     @elseif($kelayakanFinansial->status === 'diterima')
-                                        <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                             data-pdf-url="{{ Storage::url($kelayakanFinansial->file) }}">
                                             Diterima
-                                        </button>
+                                        </a>
                                         @elseif($kelayakanFinansial->status === 'ditolak')
                                         @php
                                             $filePath = $kelayakanFinansial->file ?? null;
@@ -86,11 +80,11 @@
                                                     )
                                                     : 'Pesan tidak ditemukan.';
                                         @endphp
-                                        <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
                                             data-pesan="{{ $pesanTolak }}"  data-status="ditolak" data-jenis-pengajuan="finansial">
                                             Ditolak
-                                        </button>
+                                        </a>
                                     @endif
                                 </td>    
                             </tr>
@@ -109,11 +103,11 @@
                                             Menunggu
                                         </a>
                                     @elseif($kelayakanOperasional->status === 'diterima')
-                                        <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                             data-pdf-url="{{ Storage::url($kelayakanOperasional->file) }}">
                                             Diterima
-                                        </button>
+                                        </a>
                                         @elseif($kelayakanOperasional->status === 'ditolak')
                                         @php
                                             $filePath = $kelayakanOperasional->file ?? null;
@@ -127,11 +121,11 @@
                                                     )
                                                     : 'Pesan tidak ditemukan.';
                                         @endphp
-                                        <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
                                             data-pesan="{{ $pesanTolak }}" data-status="ditolak" data-jenis-pengajuan="operasional">
                                             Ditolak
-                                        </button>
+                                        </a>
                                     @endif
                                 </td>
                             </tr>
@@ -150,11 +144,11 @@
                                             Menunggu
                                         </a>
                                     @elseif($kelayakanPemasaran->status === 'diterima')
-                                        <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                             data-pdf-url="{{ Storage::url($kelayakanPemasaran->file) }}">
                                             Diterima
-                                        </button>
+                                        </a>
                                         @elseif($kelayakanPemasaran->status === 'ditolak')
                                         @php
                                             $filePath = $kelayakanPemasaran->file ?? null;
@@ -168,11 +162,11 @@
                                                     )
                                                     : 'Pesan tidak ditemukan.';
                                         @endphp
-                                        <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
                                             data-pesan="{{ $pesanTolak }}" data-status="ditolak" data-jenis-pengajuan="pemasaran">
                                             Ditolak
-                                        </button>
+                                        </a>
                                     @endif
                                 </td>
                             </tr>

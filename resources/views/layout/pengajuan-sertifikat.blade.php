@@ -63,13 +63,13 @@
         }
     
         // Cek apakah ada pesan sukses atau error dari session Laravel
-        // // @if(session('success'))
-        // //     showToastSuccess("{{ session('success') }}");
-        // // @endif
+        @if(session('success'))
+            showToastSuccess("{{ session('success') }}");
+        @endif
     
-        // @if(session('error'))
-        //     showToastError("{{ session('error') }}");
-        // @endif
+        @if(session('error'))
+            showToastError("{{ session('error') }}");
+        @endif
     </script>
     
 

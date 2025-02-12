@@ -103,22 +103,34 @@ class PengajuanSertifikatController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:pdf,jpg,png|max:2048', // Validasi file
         ]);
-    
+
         // Temukan data pengajuan berdasarkan ID
         $pengajuanHalal = PengajuanHalal::findOrFail($id);
-    
+
         // Simpan file jika ada
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('sertifikat_halal', 'public');
             $pengajuanHalal->file = $filePath; // Simpan path file
         }
-    
-        // Update status menjadi 'diterima'
-        $pengajuanHalal->status = 'diterima';
-        $pengajuanHalal->save(); // Simpan perubahan
-    
+
+        // Update status sesuai request
+        if ($request->has('status')) {
+            $pengajuanHalal->status = $request->status;
+        } else {
+            $pengajuanHalal->status = 'diterima'; // Default jika tidak ada status dikirim
+        }
+
+        // Simpan perubahan
+        $pengajuanHalal->save();
+
+        // Cek apakah request berasal dari AJAX atau form biasa
+        if ($request->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
         return redirect()->back()->with('success', 'Pengajuan diterima dan sertifikat berhasil diupload.');
     }
+
 
     public function rejectHalal(Request $request, $id)
     {
@@ -236,18 +248,30 @@ class PengajuanSertifikatController extends Controller
         // Temukan data pengajuan berdasarkan ID
         $pengajuanKoki = PengajuanKoki::findOrFail($id);
 
-        // Simpan file baru
+        // Simpan file jika ada
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('sertifikat_koki', 'public');
-            $pengajuanKoki->file = $filePath; // Update path file
+            $pengajuanKoki->file = $filePath; // Simpan path file
         }
 
-        // Update status menjadi 'diterima'
-        $pengajuanKoki->status = 'diterima';
-        $pengajuanKoki->save(); // Simpan perubahan
+        // Update status jika dikirim dari request
+        if ($request->has('status')) {
+            $pengajuanKoki->status = $request->status;
+        } else {
+            $pengajuanKoki->status = 'diterima'; // Default jika tidak ada status dikirim
+        }
+
+        // Simpan perubahan
+        $pengajuanKoki->save();
+
+        // Cek apakah request berasal dari AJAX atau form biasa
+        if ($request->ajax()) {
+            return response()->json(['success' => true]);
+        }
 
         return redirect()->route('koki')->with('success', 'Pengajuan diterima dan sertifikat berhasil diupload.');
     }
+
 
     public function rejectKoki(Request $request, $id)
     {

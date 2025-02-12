@@ -95,12 +95,12 @@
                                                 Menunggu
                                             </a>
                                         @elseif($pengajuanHalal->status === 'diterima')
-                                            <button
+                                            <a
                                                 class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                                 data-pdf-url="{{ Storage::url($pengajuanHalal->file) }}">
                                                 Diterima
-                                            </button>
+                                            </a>
                                         @elseif($pengajuanHalal->status === 'ditolak')
                                             @php
                                                 $filePath = $pengajuanHalal->file ?? null;
@@ -114,11 +114,11 @@
                                                         )
                                                         : 'Pesan tidak ditemukan.';
                                             @endphp
-                                            <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
                                                 data-pesan="{{ $pesanTolak }}"  data-status="ditolak" data-jenis-pengajuan="halal">
                                                 Ditolak
-                                            </button>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
@@ -137,11 +137,11 @@
                                                 Menunggu
                                             </a>
                                         @elseif($pengajuanKoki->status === 'diterima')
-                                            <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                                 data-pdf-url="{{ Storage::url($pengajuanKoki->file) }}">
                                                 Diterima
-                                            </button>
+                                            </a>
                                             @elseif($pengajuanKoki->status === 'ditolak')
                                             @php
                                                 $filePath = $pengajuanKoki->file ?? null;
@@ -155,11 +155,11 @@
                                                         )
                                                         : 'Pesan tidak ditemukan.';
                                             @endphp
-                                            <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
                                                 data-pesan="{{ $pesanTolak }}"  data-status="ditolak" data-jenis-pengajuan="koki">
                                                 Ditolak
-                                            </button>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
@@ -178,11 +178,11 @@
                                                 Menunggu
                                             </a>
                                         @elseif($pengajuanAsistenKoki->status === 'diterima')
-                                            <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                                 data-pdf-url="{{ Storage::url($pengajuanAsistenKoki->file) }}">
                                                 Diterima
-                                            </button>
+                                            </a>
                                             @elseif($pengajuanAsistenKoki->status === 'ditolak')
                                             @php
                                                 $filePath = $pengajuanAsistenKoki->file ?? null;
@@ -196,11 +196,11 @@
                                                         )
                                                         : 'Pesan tidak ditemukan.';
                                             @endphp
-                                            <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
                                                 data-pesan="{{ $pesanTolak }}"  data-status="ditolak" data-jenis-pengajuan="asisten-koki">
                                                 Ditolak
-                                            </button>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
@@ -849,6 +849,8 @@
                     });
                 });
             </script>
+
+            
 
         </div>
     </div>

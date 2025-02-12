@@ -1,12 +1,6 @@
 @extends('layout.dashboard')
 @section('content')
 
-@if (session('success'))
-<div style="color: green;">
-    {{ session('success') }}
-</div>
-@endif
-
 <div class="container-fluid">
   <div class="row">
 

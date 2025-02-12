@@ -18,12 +18,6 @@
 </head>
 
 <body>
-    
-    @if (session('success'))
-        <div style="color: green;">
-            {{ session('success') }}
-        </div>
-    @endif
 
     {{-- <header>
         <h1>Selamat datang, Anggota!</h1>

@@ -16,11 +16,6 @@
 </head>
 
 <body>
-    @if (session('success'))
-        <div style="color: green;">
-            {{ session('success') }}
-        </div>
-    @endif
 
     <!-- Navbar -->
     @include('components.navbar-user')

@@ -1,12 +1,6 @@
 @extends('layout.halal')
 @section('content')
 
-@if (session('success'))
-<div style="color: green;">
-    {{ session('success') }}
-</div>
-@endif
-
 <div class="container-fluid">
     <div class="row">
         <x-sidebar-admin />
@@ -38,17 +32,17 @@
                                 <td>{{ $data->jenis_usaha }}</td>
                                 <td>{{ $data->nama_produk }}</td>
                                 <td id="action-{{ $data->id_detail }}">
-                                    @if ($data->status === 'accepted')
-                                        <a href="#" class="btn btn-success btn-lg w-100 disabled">Diterima</a>
-                                    @elseif ($data->status === 'rejected')
-                                        <a href="#" class="btn btn-danger btn-lg w-100 disabled">Ditolak</a>
+                                    @if ($data->status === 'diterima')
+                                        <button class="btn btn-success btn-lg w-100 disabled">Diterima</button>
+                                    @elseif ($data->status === 'ditolak')
+                                        <button class="btn btn-danger btn-lg w-100 disabled">Ditolak</button>
                                     @else
                                         <!-- Tombol Terima -->
                                         <a href="#" class="btn btn-success btn-sm accept-btn" data-bs-toggle="modal"
                                             data-bs-target="#acceptModal" data-id="{{ $data->id_detail }}">
                                             <i class="bx bx-check-circle"></i>
                                         </a>
-
+                                
                                         <!-- Tombol Tolak -->
                                         <a href="#" class="btn btn-danger btn-sm reject-btn" data-bs-toggle="modal"
                                             data-bs-target="#rejectModal" data-id="{{ $data->id_detail }}">
@@ -56,6 +50,7 @@
                                         </a>
                                     @endif
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>
@@ -194,4 +189,49 @@
             });
         });
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".accept-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                let id = this.getAttribute("data-id");
+                updateStatus(id, "diterima");
+            });
+        });
+
+        document.querySelectorAll(".reject-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                let id = this.getAttribute("data-id");
+                updateStatus(id, "ditolak");
+            });
+        });
+
+        function updateStatus(id, status) {
+            fetch(`/halal/${id}/update-status`, {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ status: status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    let actionCell = document.getElementById(`action-${id}`);
+                    
+                    if (status === "diterima") {
+                        actionCell.innerHTML = `<button class="btn btn-success btn-lg w-100 disabled">Diterima</button>`;
+                    } else {
+                        actionCell.innerHTML = `<button class="btn btn-danger btn-lg w-100 disabled">Ditolak</button>`;
+                    }
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    });
+</script>
+
+
+    
 @endsection
