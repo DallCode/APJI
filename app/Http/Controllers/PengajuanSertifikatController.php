@@ -70,7 +70,7 @@ class PengajuanSertifikatController extends Controller
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diajukan.');
+        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }
 
     public function updateUserHalal(Request $request, $id_detail)
@@ -93,7 +93,7 @@ class PengajuanSertifikatController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
+        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
     }
 
 
@@ -103,21 +103,21 @@ class PengajuanSertifikatController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:pdf,jpg,png|max:2048', // Validasi file
         ]);
-
+    
         // Temukan data pengajuan berdasarkan ID
         $pengajuanHalal = PengajuanHalal::findOrFail($id);
-
+    
         // Simpan file jika ada
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('sertifikat_halal', 'public');
             $pengajuanHalal->file = $filePath; // Simpan path file
         }
-
+    
         // Update status menjadi 'diterima'
         $pengajuanHalal->status = 'diterima';
         $pengajuanHalal->save(); // Simpan perubahan
-
-        return redirect()->route('halal')->with('success', 'Pengajuan diterima dan sertifikat berhasil diupload.');
+    
+        return redirect()->back()->with('success', 'Pengajuan diterima dan sertifikat berhasil diupload.');
     }
 
     public function rejectHalal(Request $request, $id)
@@ -223,7 +223,7 @@ class PengajuanSertifikatController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
+        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
     }
 
     public function updateKoki(Request $request, $id)
@@ -329,7 +329,7 @@ class PengajuanSertifikatController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('anggota.pengajuan-sertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
+        return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diperbarui.');
     }
 
     public function updateAsisten(Request $request, $id)

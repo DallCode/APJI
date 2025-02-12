@@ -47,7 +47,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
     // Halaman-halaman lain untuk admin
     Route::get('/halal', [PengajuanSertifikatController::class, 'halal'])->name('halal');
-    Route::post('/halal/{id_detail}/update', [PengajuanSertifikatController::class, 'updateHalal'])->name('updateHalal');
+    Route::post('/halal/{id}/update', [PengajuanSertifikatController::class, 'updateHalal'])->name('updateHalal');
     Route::post('/halal/{id_detail}/reject', [PengajuanSertifikatController::class, 'rejectHalal'])->name('rejectHalal');
     Route::get('/koki', [PengajuanSertifikatController::class, 'koki'])->name('koki');
     Route::post('/koki/{id_detail}/update', [PengajuanSertifikatController::class, 'updateKoki'])->name('updateKoki');
@@ -100,9 +100,11 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::get('/riwayat-event', [AnggotaController::class, 'riwayat'])->name('riwayat');
     Route::get('/kelayakan-usaha', [AnggotaController::class, 'kelayakanUsaha'])->name('kelayakanUsaha');
     Route::post('/ajukan-kelayakan-finansial', [KelayakanUsahaController::class, 'storeFinansial'])->name('anggota.kelayakanUsaha');
-    Route::post('/ajukan-kelayakan-finansial/{id_finansial}/updateUserFinansial', [KelayakanUsahaController::class, 'updateUserFinansial'])->name('anggota.kelayakanUsaha');
-    Route::post('/ajukan-kelayakan-operasional', [KelayakanUsahaController::class, 'storeOperasional']);
-    Route::post('/ajukan-kelayakan-pemasaran', [KelayakanUsahaController::class, 'storePemasaran']);
+    Route::put('/ajukan-kelayakan-finansial/{id_finansial}', [KelayakanUsahaController::class, 'updateUserFinansial'])->name('anggota.kelayakanUsaha.update');
+    Route::post('/ajukan-kelayakan-operasional', [KelayakanUsahaController::class, 'storeOperasional'])->name('anggota.kelayakanUsaha');
+    Route::put('/ajukan-kelayakan-operasional/{id_operasional}', [KelayakanUsahaController::class, 'updateUserOperasional'])->name('anggota.kelayakanUsaha.update');
+    Route::post('/ajukan-kelayakan-pemasaran', [KelayakanUsahaController::class, 'storePemasaran'])->name('anggota.kelayakanUsaha');
+    Route::post('/ajukan-kelayakan-pemasaran/{id_pemasaran}/updateUserPemasaran', [KelayakanUsahaController::class, 'updateUserPemasaran'])->name('anggota.kelayakanUsaha');
     Route::get('/profile-user', [ProfileController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');

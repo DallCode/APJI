@@ -1,6 +1,13 @@
 @extends('layout.profile-user')
 
 @section('content')
+
+@if (session('success'))
+<div style="color: green;">
+    {{ session('success') }}
+</div>
+@endif
+
 <!-- Container -->
 <div class="container-fluid">
     <div class="row">

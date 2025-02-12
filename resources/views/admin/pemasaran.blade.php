@@ -1,5 +1,12 @@
 @extends('layout.pemasaran')
 @section('content')
+
+@if (session('success'))
+<div style="color: green;">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="container-fluid">
     <div class="row">
         <x-sidebar-admin />
@@ -28,18 +35,8 @@
                         @foreach ($dataPemasaran as $data)
                         <tr>
                             <td>{{ $data->nama_usaha }}</td>
+                            <td>{{ $data->strategi_pemasaran }}</td>
                             {{-- <td>{{ $data->keahlian_khusus }}</td> --}}
-                            <td class="surat-pengantar-column">
-                                <!-- Tombol Lihat Surat Pengantar -->
-                                @if($data->strategi_pemasaran)
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#suratPengantarModal" 
-                                        data-surapengantar="{{ Storage::url($data->strategi_pemasaran) }}">
-                                    <i class='bx bx-show'></i>
-                                </button>
-                                @else
-                                <span>Tidak Ada</span>
-                                @endif
-                            </td>
                             <td>
                                 <!-- Tombol Terima -->
                                 <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#acceptModalPemasaran" data-id="{{ $data->id_pemasaran }}">

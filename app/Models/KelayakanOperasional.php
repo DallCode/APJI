@@ -18,6 +18,7 @@ class KelayakanOperasional extends Model
         'nama_usaha',
         'deskripsi_operasional',
         'file',
+        'status',
     ];
 
     // Relasi ke pengajuan_sertifikat

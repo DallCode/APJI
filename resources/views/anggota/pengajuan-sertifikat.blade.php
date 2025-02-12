@@ -1,5 +1,6 @@
 @extends('layout.pengajuan-sertifikat')
 @section('content')
+
     <!-- Container -->
     <div class="container-fluid">
         <div class="row">
@@ -89,12 +90,13 @@
                                                 <i class="bi bi-eye me-1"></i> Ajukan
                                             </a>
                                         @elseif($pengajuanHalal->status === 'menunggu')
-                                            <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px;pointer-events: none;color: #AEAEAE;text-decoration: none;cursor: default;"
                                                 disabled>
                                                 Menunggu
-                                            </button>
+                                            </a>
                                         @elseif($pengajuanHalal->status === 'diterima')
-                                            <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
+                                            <button
+                                                class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
                                                 data-pdf-url="{{ Storage::url($pengajuanHalal->file) }}">
                                                 Diterima
@@ -130,10 +132,10 @@
                                                 <i class="bi bi-eye me-1"></i> Ajukan
                                             </a>
                                         @elseif($pengajuanKoki->status === 'menunggu')
-                                            <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px;pointer-events: none;color: #AEAEAE;text-decoration: none;cursor: default;"
                                                 disabled>
                                                 Menunggu
-                                            </button>
+                                            </a>
                                         @elseif($pengajuanKoki->status === 'diterima')
                                             <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
@@ -171,10 +173,10 @@
                                                 <i class="bi bi-eye me-1"></i> Ajukan
                                             </a>
                                         @elseif($pengajuanAsistenKoki->status === 'menunggu')
-                                            <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                            <a class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px;pointer-events: none;color: #AEAEAE;text-decoration: none;cursor: default;"
                                                 disabled>
                                                 Menunggu
-                                            </button>
+                                            </a>
                                         @elseif($pengajuanAsistenKoki->status === 'diterima')
                                             <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                                 data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
@@ -259,48 +261,51 @@
                     </div>
                 </div>
 
-                <!-- Modal Update Halal -->
+                <!-- Modal Update Sertifikat Halal -->
                 <div class="modal fade" id="modalUpdateHalal" tabindex="-1" aria-labelledby="modalHalalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content shadow-lg rounded-4">
-                            <div class="modal-header border-0 bg-primary text-white rounded-top">
+                            <div class="modal-header bg-primary text-white rounded-top border-0">
                                 <h5 class="modal-title fw-bold" id="modalHalalLabel">Formulir Pengajuan Sertifikat Halal</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <!-- Form dengan ID untuk validasi -->
-                            <form id="formUpdateHalal" action="{{ route('updateUserHalal', ['id_detail' => $pengajuanHalal->id_detail]) }}" method="POST">
+                            <form id="formUpdateHalal" method="POST" action="{{ isset($pengajuanHalal) && $pengajuanHalal->id_detail ? route('updateUserHalal', $pengajuanHalal->id_detail) : '#' }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('POST') <!-- Method spoofing untuk update -->
-                                <div class="modal-body bg-light">
-                                    <div class="mb-3">
-                                        <label for="namaUsaha" class="form-label">Nama Usaha</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="namaUsaha" name="nama_usaha" 
-                                            value="{{ $pengajuanHalal->nama_usaha }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="alamatUsaha" class="form-label">Alamat Usaha</label>
-                                        <textarea class="form-control border-0 shadow-sm" id="alamatUsaha" name="alamat_usaha" rows="3" required>{{ $pengajuanHalal->alamat_usaha }}</textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="jenisUsaha" class="form-label">Jenis Usaha</label>
-                                        <select class="form-select border-0 shadow-sm" id="jenisUsaha" name="jenis_usaha" required>
-                                            <option value="" disabled>Pilih jenis usaha</option>
-                                            <option value="Catering" {{ $pengajuanHalal->jenis_usaha == 'Catering' ? 'selected' : '' }}>Catering</option>
-                                            <option value="Restoran" {{ $pengajuanHalal->jenis_usaha == 'Restoran' ? 'selected' : '' }}>Restoran</option>
-                                            <option value="Produk Makanan/Minuman" {{ $pengajuanHalal->jenis_usaha == 'Produk Makanan/Minuman' ? 'selected' : '' }}>Produk Makanan/Minuman</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="produk" class="form-label">Nama Produk</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="produk" name="nama_produk" 
-                                            value="{{ $pengajuanHalal->nama_produk }}" required>
-                                    </div>
+                                
+                                <input type="hidden" name="id_detail" id="id_detail" value="{{ $pengajuanHalal->id_detail ?? '' }}">
+                                
+                                <div class="mb-3">
+                                    <label for="namaUsahaHalal" class="form-label">Nama Usaha</label>
+                                    <input type="text" class="form-control border-0 shadow-sm" id="namaUsahaHalal" name="nama_usaha"
+                                    value="{{ $pengajuanHalal->nama_usaha ?? '' }}" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="alamatUsahaHalal" class="form-label">Alamat Usaha</label>
+                                    <textarea class="form-control border-0 shadow-sm" id="alamatUsahaHalal" name="alamat_usaha" rows="3" required>{{ $pengajuanHalal->alamat_usaha ?? '' }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="jenisUsahaHalal" class="form-label">Jenis Usaha</label>
+                                    <select class="form-select border-0 shadow-sm" id="jenisUsahaHalal" name="jenis_usaha" required>
+                                        <option value="" disabled {{ !isset($pengajuanHalal) ? 'selected' : '' }}>Pilih jenis usaha</option>
+                                        <option value="Catering" {{ isset($pengajuanHalal) && $pengajuanHalal->jenis_usaha == 'Catering' ? 'selected' : '' }}>Catering</option>
+                                        <option value="Restoran" {{ isset($pengajuanHalal) && $pengajuanHalal->jenis_usaha == 'Restoran' ? 'selected' : '' }}>Restoran</option>
+                                        <option value="Produk Makanan/Minuman" {{ isset($pengajuanHalal) && $pengajuanHalal->jenis_usaha == 'Produk Makanan/Minuman' ? 'selected' : '' }}>Produk Makanan/Minuman</option>
+                                    </select>                    
+                                </div>
+                                <div class="mb-3">
+                                    <label for="produkHalal" class="form-label">Nama Produk</label>
+                                    <input type="text" class="form-control border-0 shadow-sm" id="produkHalal" name="nama_produk" 
+                                        value="{{ $pengajuanHalal->nama_produk ?? '' }}" required>
+                                </div>
+                                
                                 <div class="modal-footer border-0 bg-light">
                                     <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4" id="btnSubmitHalal" 
+                                        {{ isset($pengajuanHalal) && $pengajuanHalal->id_detail ? '' : 'disabled' }}>
+                                        Ajukan
+                                    </button>
                                 </div>
-                            </form>
+                            </form>                        
                         </div>
                     </div>
                 </div>
@@ -351,35 +356,38 @@
                 <div class="modal fade" id="modalUpdateKoki" tabindex="-1" aria-labelledby="modalKokiLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content shadow-lg rounded-4">
-                            <div class="modal-header border-0 bg-primary text-white rounded-top">
+                            <div class="modal-header bg-primary text-white rounded-top border-0">
                                 <h5 class="modal-title fw-bold" id="modalKokiLabel">Formulir Pengajuan Sertifikat Koki</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <!-- Form dengan ID untuk validasi -->
-                            <form id="formUpdateKoki" action="{{ route('updateUserKoki', ['id_detail' => $pengajuanKoki->id_detail]) }}" method="POST">
+                            <form id="formUpdateKoki" method="POST" action="{{ isset($pengajuanKoki) && $pengajuanKoki->id_detail ? route('updateUserKoki', $pengajuanKoki->id_detail) : '#' }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('POST') <!-- Method spoofing untuk update -->
-                                <div class="modal-body bg-light">
-                                    <div class="mb-3">
-                                        <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="namaLengkap" name="nama_lengkap" 
-                                            value="{{ $pengajuanKoki->nama_lengkap }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="pengalamanKerja" class="form-label">Pengalaman Kerja</label>
-                                        <textarea class="form-control border-0 shadow-sm" id="pengalamanKerja" name="pengalaman_kerja" rows="3" required>{{ $pengajuanKoki->pengalaman_kerja }}</textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="pendidikan" name="pendidikan_terakhir" 
-                                            value="{{ $pengajuanKoki->pendidikan_terakhir }}" required>
-                                    </div>
+                                
+                                <input type="hidden" name="id_detail" id="id_detail_koki" value="{{ $pengajuanKoki->id_detail ?? '' }}">
+                                
+                                <div class="mb-3">
+                                    <label for="namaLengkapKoki" class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control border-0 shadow-sm" id="namaLengkapKoki" name="nama_lengkap"
+                                    value="{{ $pengajuanKoki->nama_lengkap ?? '' }}" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="pengalamanKerjaKoki" class="form-label">Pengalaman Kerja</label>
+                                    <textarea class="form-control border-0 shadow-sm" id="pengalamanKerjaKoki" name="pengalaman_kerja" rows="3" required>{{ $pengajuanKoki->pengalaman_kerja ?? '' }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pendidikanKoki" class="form-label">Pendidikan Terakhir</label>
+                                    <input type="text" class="form-control border-0 shadow-sm" id="pendidikanKoki" name="pendidikan_terakhir" 
+                                        value="{{ $pengajuanKoki->pendidikan_terakhir ?? '' }}" required>
+                                </div>
+                                
                                 <div class="modal-footer border-0 bg-light">
                                     <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4" id="btnSubmitKoki" 
+                                        {{ isset($pengajuanKoki) && $pengajuanKoki->id_detail ? '' : 'disabled' }}>
+                                        Ajukan
+                                    </button>
                                 </div>
-                            </form>
+                            </form>                        
                         </div>
                     </div>
                 </div>
@@ -430,34 +438,37 @@
                 <div class="modal fade" id="modalUpdateAsistenKoki" tabindex="-1" aria-labelledby="modalAsistenKokiLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content shadow-lg rounded-4">
-                            <div class="modal-header border-0 bg-success text-white rounded-top">
+                            <div class="modal-header bg-success text-white rounded-top border-0">
                                 <h5 class="modal-title fw-bold" id="modalAsistenKokiLabel">Formulir Pengajuan Sertifikat Asisten Koki</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <!-- Form dengan ID untuk validasi -->
-                            <form id="formUpdateAsistenKoki" action="{{ route('updateUserAsisten', ['id_detail' => $pengajuanAsistenKoki->id_detail]) }}" method="POST" enctype="multipart/form-data">
+                            <form id="formUpdateAsistenKoki" method="POST" action="{{ isset($pengajuanAsistenKoki) && $pengajuanAsistenKoki->id_detail ? route('updateUserAsisten', $pengajuanAsistenKoki->id_detail) : '#' }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('POST') <!-- Method spoofing untuk update -->
-                                <div class="modal-body bg-light">
-                                    <div class="mb-3">
-                                        <label for="namaLengkapAsisten" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control border-0 shadow-sm" id="namaLengkapAsisten" name="nama_lengkap" 
-                                            value="{{ $pengajuanAsistenKoki->nama_lengkap }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="keahlian" class="form-label">Keahlian Khusus</label>
-                                        <textarea class="form-control border-0 shadow-sm" id="keahlian" name="keahlian_khusus" rows="3" required>{{ $pengajuanAsistenKoki->keahlian_khusus }}</textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="suratPengantar" class="form-label">Surat Pengantar dari Perusahaan (opsional)</label>
-                                        <input type="file" class="form-control border-0 shadow-sm" id="suratPengantar" name="surat_pengantar">
-                                    </div>
+                                
+                                <input type="hidden" name="id_detail" id="id_detail_asisten_koki" value="{{ $pengajuanAsistenKoki->id_detail ?? '' }}">
+                                
+                                <div class="mb-3">
+                                    <label for="namaLengkapAsisten" class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control border-0 shadow-sm" id="namaLengkapAsisten" name="nama_lengkap"
+                                        value="{{ $pengajuanAsistenKoki->nama_lengkap ?? '' }}" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="keahlian" class="form-label">Keahlian Khusus</label>
+                                    <textarea class="form-control border-0 shadow-sm" id="keahlian" name="keahlian_khusus" rows="3" required>{{ $pengajuanAsistenKoki->keahlian_khusus ?? '' }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="suratPengantar" class="form-label">Surat Pengantar dari Perusahaan (opsional)</label>
+                                    <input type="file" class="form-control border-0 shadow-sm" id="suratPengantar" name="surat_pengantar">
+                                </div>
+                                
                                 <div class="modal-footer border-0 bg-light">
                                     <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4" id="btnSubmitAsistenKoki" 
+                                        {{ isset($pengajuanAsistenKoki) && $pengajuanAsistenKoki->id_detail ? '' : 'disabled' }}>
+                                        Ajukan
+                                    </button>
                                 </div>
-                            </form>
+                            </form>                        
                         </div>
                     </div>
                 </div>
@@ -653,10 +664,6 @@
                     Swal.fire({
                         title: 'Apakah data sudah sesuai?',
                         html: `
-                            <strong>Nama Usaha:</strong> ${namaUsaha}<br>
-                            <strong>Alamat Usaha:</strong> ${alamatUsaha}<br>
-                            <strong>Jenis Usaha:</strong> ${jenisUsaha}<br>
-                            <strong>Nama Produk:</strong> ${produk}<br>
                         `,
                         icon: 'question',
                         showCancelButton: true,
@@ -712,9 +719,6 @@
                 Swal.fire({
                     title: 'Apakah data sudah sesuai?',
                     html: `
-                        <strong>Nama Lengkap:</strong> ${namaLengkap}<br>
-                        <strong>Pengalaman Kerja:</strong> ${pengalamanKerja}<br>
-                        <strong>Pendidikan Terakhir:</strong> ${pendidikan}<br>
                     `,
                     icon: 'question',
                     showCancelButton: true,
@@ -745,9 +749,6 @@
             Swal.fire({
                 title: 'Apakah data sudah sesuai?',
                 html: `
-                    <strong>Nama Lengkap:</strong> ${namaLengkap}<br>
-                    <strong>Keahlian Khusus:</strong> ${keahlian}<br>
-                    <strong>Surat Pengantar:</strong> ${suratPengantar}<br>
                 `,
                 icon: 'question',
                 showCancelButton: true,

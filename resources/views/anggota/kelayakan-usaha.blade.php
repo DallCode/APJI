@@ -1,5 +1,12 @@
 @extends('layout.kelayakan-usaha')
 @section('content')
+
+@if (session('success'))
+<div style="color: green;">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
@@ -51,15 +58,15 @@
                                 <td>Kelayakan Finansial</td>
                                 <td class="text-center">
                                     @if (!$kelayakanFinansial)
-                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-primary btn-sm shadow-sm" style="width: 110px;"
                                             data-bs-toggle="modal" data-bs-target="#modalFinansial">
                                             <i class="bi bi-eye me-1"></i> Ajukan
                                         </a>
                                     @elseif($kelayakanFinansial->status === 'menunggu')
-                                        <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px;pointer-events: none;color: #AEAEAE;text-decoration: none;cursor: default;"
                                             disabled>
                                             Menunggu
-                                        </button>
+                                        </a>
                                     @elseif($kelayakanFinansial->status === 'diterima')
                                         <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
@@ -97,10 +104,10 @@
                                             <i class="bi bi-eye me-1"></i> Ajukan
                                         </a>
                                     @elseif($kelayakanOperasional->status === 'menunggu')
-                                        <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px;pointer-events: none;color: #AEAEAE;text-decoration: none;cursor: default;"
                                             disabled>
                                             Menunggu
-                                        </button>
+                                        </a>
                                     @elseif($kelayakanOperasional->status === 'diterima')
                                         <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
@@ -138,10 +145,10 @@
                                             <i class="bi bi-eye me-1"></i> Ajukan
                                         </a>
                                     @elseif($kelayakanPemasaran->status === 'menunggu')
-                                        <button class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px"
+                                        <a class="btn btn-outline-secondary btn-sm shadow-sm" style="width: 110px;pointer-events: none;color: #AEAEAE;text-decoration: none;cursor: default;"
                                             disabled>
                                             Menunggu
-                                        </button>
+                                        </a>
                                     @elseif($kelayakanPemasaran->status === 'diterima')
                                         <button class="btn btn-outline-success btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdminAccept"
@@ -163,7 +170,7 @@
                                         @endphp
                                         <button class="btn btn-outline-danger btn-sm shadow-sm" style="width: 110px"
                                             data-bs-toggle="modal" data-bs-target="#modalPesanAdmin"
-                                            data-pesan="{{ $pesanTolak }}">
+                                            data-pesan="{{ $pesanTolak }}" data-status="ditolak" data-jenis-pengajuan="pemasaran">
                                             Ditolak
                                         </button>
                                     @endif
@@ -211,8 +218,10 @@
                             <h5 class="modal-title fw-bold" id="modalFinansialLabel">Formulir Pengajuan Kelayakan Finansial</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="formUpdateFinansial" method="POST" action="{{ route('anggota.kelayakanUsaha', $kelayakanFinansial->id_finansial ?? '') }}" enctype="multipart/form-data">
+                        <form id="formUpdateFinansial" method="POST" action="{{ route('anggota.kelayakanUsaha.update', $kelayakanFinansial->id_finansial ?? '') }}" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT') 
+                        
                         
                             <input type="hidden" name="id_finansial" id="id_finansial" value="{{ $kelayakanFinansial->id_finansial ?? '' }}">
                             
@@ -262,7 +271,40 @@
                         </form>
                     </div>
                 </div>
-            </div>            
+            </div>     
+            
+            <!-- Modal Update Kelayakan Operasional -->
+            <div class="modal fade" id="modalUpdateOperasional" tabindex="-1" aria-labelledby="modalOperasionalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content shadow-lg rounded-4">
+                        <div class="modal-header bg-primary text-white rounded-top border-0">
+                            <h5 class="modal-title fw-bold" id="modalOperasionalLabel">Formulir Pengajuan Kelayakan Operasional</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formUpdateOperasional" method="POST" action="{{ route('anggota.kelayakanUsaha.update', $kelayakanOperasional->id_operasional ?? '') }}">
+                            @csrf
+                            @method('PUT') 
+                            
+                            <input type="hidden" name="id_operasional" id="id_operasional" value="{{ $kelayakanOperasional->id_operasional ?? '' }}">
+                            
+                            <div class="mb-3">
+                                <label for="namaUsahaOperasional" class="form-label">Nama Usaha</label>
+                                <input type="text" class="form-control border-0 shadow-sm" id="namaUsahaOperasional" name="nama_usaha"
+                                value="{{ $kelayakanOperasional->nama_usaha ?? '' }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="deskripsiOperasional" class="form-label">Deskripsi Operasional</label>
+                                <textarea class="form-control border-0 shadow-sm" id="deskripsiOperasional" name="deskripsi_operasional" rows="3" required>{{ $kelayakanOperasional->deskripsi_operasional ?? '' }}</textarea>
+                            </div>
+                            
+                            <div class="modal-footer border-0 bg-light">
+                                <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
+                            </div>
+                        </form>                        
+                    </div>
+                </div>
+            </div>
 
             <!-- Modal Kelayakan Pemasaran -->
             <div class="modal fade" id="modalPemasaran" tabindex="-1" aria-labelledby="modalPemasaranLabel" aria-hidden="true">
@@ -272,7 +314,7 @@
                             <h5 class="modal-title fw-bold" id="modalPemasaranLabel">Formulir Pengajuan Kelayakan Pemasaran</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="/ajukan-kelayakan-pemasaran" method="POST">
+                        <form action="/ajukan-kelayakan-pemasaran" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body bg-light">
                                 <div class="mb-3">
@@ -283,10 +325,59 @@
                                     <label for="strategiPemasaran" class="form-label">Strategi Pemasaran</label>
                                     <textarea class="form-control border-0 shadow-sm" id="strategiPemasaran" name="strategi_pemasaran" rows="3" placeholder="Jelaskan strategi pemasaran usaha Anda" required></textarea>
                                 </div>
+                                <!-- Jika di masa depan ingin menambahkan unggahan file, Anda bisa menambahkan input file berikut (opsional) -->
+                                <!--
+                                <div class="mb-3">
+                                    <label for="filePemasaran" class="form-label">Unggah File (opsional)</label>
+                                    <input type="file" class="form-control border-0 shadow-sm" id="filePemasaran" name="file" accept=".pdf,.jpg,.png">
+                                </div>
+                                -->
                             </div>
                             <div class="modal-footer border-0 bg-light">
                                 <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
-                                <button type="button" class="btn btn-primary rounded-3 px-4" id="btnSubmitPemasaran">Ajukan</button>
+                                <button type="submit" class="btn btn-primary rounded-3 px-4" id="btnSubmitPemasaran">Ajukan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Update Kelayakan Pemasaran -->
+            <div class="modal fade" id="modalUpdatePemasaran" tabindex="-1" aria-labelledby="modalPemasaranLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content shadow-lg rounded-4">
+                        <div class="modal-header bg-primary text-white rounded-top border-0">
+                            <h5 class="modal-title fw-bold" id="modalPemasaranLabel">Formulir Update Kelayakan Pemasaran</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formUpdatePemasaran" method="POST" action="{{ route('anggota.kelayakanUsaha', $kelayakanPemasaran->id_pemasaran ?? '') }}" enctype="multipart/form-data">
+                            @csrf
+
+                            <!-- Input hidden untuk menyimpan ID pemasaran -->
+                            <input type="hidden" name="id_pemasaran" id="id_pemasaran" value="{{ $kelayakanPemasaran->id_pemasaran ?? '' }}">
+
+                            <div class="modal-body bg-light">
+                                <div class="mb-3">
+                                    <label for="namaUsahaPemasaran" class="form-label">Nama Usaha</label>
+                                    <input type="text" class="form-control border-0 shadow-sm" id="namaUsahaPemasaran" name="nama_usaha"
+                                        placeholder="Masukkan nama usaha Anda" value="{{ $kelayakanPemasaran->nama_usaha ?? '' }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="strategiPemasaran" class="form-label">Strategi Pemasaran</label>
+                                    <textarea class="form-control border-0 shadow-sm" id="strategiPemasaran" name="strategi_pemasaran" rows="3"
+                                        placeholder="Jelaskan strategi pemasaran usaha Anda" required>{{ $kelayakanPemasaran->strategi_pemasaran ?? '' }}</textarea>
+                                </div>
+                                <!-- Jika di masa depan ingin menambahkan unggahan file (opsional), Anda bisa menambahkan input berikut -->
+                                <!--
+                                <div class="mb-3">
+                                    <label for="filePemasaran" class="form-label">Unggah File (opsional)</label>
+                                    <input type="file" class="form-control border-0 shadow-sm" id="filePemasaran" name="file" accept=".pdf,.jpg,.png">
+                                </div>
+                                -->
+                            </div>
+                            <div class="modal-footer border-0 bg-light">
+                                <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary rounded-3 px-4">Ajukan</button>
                             </div>
                         </form>
                     </div>
@@ -377,11 +468,11 @@
                                 const modalUpdateFinansial = new bootstrap.Modal(document.getElementById('modalUpdateFinansial'));
                                 modalUpdateFinansial.show();
                             } else if (jenisPengajuan === 'operasional') {
-                                const modalOperasional = new bootstrap.Modal(document.getElementById('modalOperasional'));
-                                modalOperasional.show();
+                                const modalUpdateOperasional = new bootstrap.Modal(document.getElementById('modalUpdateOperasional'));
+                                modalUpdateOperasional.show();
                             } else if (jenisPengajuan === 'pemasaran') {
-                                const modalPemasaran = new bootstrap.Modal(document.getElementById('modalPemasaran'));
-                                modalPemasaran.show();
+                                const modalUpdatePemasaran = new bootstrap.Modal(document.getElementById('modalUpdatePemasaran'));
+                                modalUpdatePemasaran.show();
                             }
                         });
                     });
@@ -541,6 +632,84 @@
                     }
                 });
             });
+
+            document.getElementById('formUpdateFinansial').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah pengiriman form langsung
+
+            // Ambil data dari input form
+            const namaUsaha = document.getElementById('namaUsaha').value;
+            const laporanKeuangan = document.getElementById('laporanKeuangan').files[0];
+
+            // Tampilkan konfirmasi SweetAlert
+            Swal.fire({
+                title: 'Apakah data sudah sesuai?',
+                html: `
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Update!',
+                cancelButtonText: 'Periksa Lagi',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim formulir jika pengguna yakin
+                    document.getElementById('formUpdateFinansial').submit();
+                }
+            });
+        });
+
+                document.getElementById('formUpdateOperasional').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah pengiriman form langsung
+
+            // Ambil data dari input form
+            const namaUsaha = document.getElementById('namaUsahaOperasional').value;
+            const deskripsiOperasional = document.getElementById('deskripsiOperasional').value;
+
+            // Tampilkan konfirmasi SweetAlert
+            Swal.fire({
+                title: 'Apakah data sudah sesuai?',
+                html: `
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Update!',
+                cancelButtonText: 'Periksa Lagi',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim formulir jika pengguna yakin
+                    document.getElementById('formUpdateOperasional').submit();
+                }
+            });
+        });
+
+                document.getElementById('formUpdatePemasaran').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah pengiriman form langsung
+
+            // Ambil data dari input form
+            const namaUsaha = document.getElementById('namaUsahaPemasaran').value;
+            const strategiPemasaran = document.getElementById('strategiPemasaran').value;
+
+            // Tampilkan konfirmasi SweetAlert
+            Swal.fire({
+                title: 'Apakah data sudah sesuai?',
+                html: `
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Update!',
+                cancelButtonText: 'Periksa Lagi'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim formulir jika pengguna yakin
+                    document.getElementById('formUpdatePemasaran').submit();
+                }
+            });
+        });
 
         </script>
 

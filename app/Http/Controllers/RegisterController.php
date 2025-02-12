@@ -38,32 +38,49 @@ class RegisterController extends Controller
             'k_usaha' => 'required|in:Mikro,Kecil,Menengah',
             'j_usaha' => 'required|in:Makanan,Minuman,Jasa',
         ]);
-
+    
         try {
-            // Simpan data pengguna
-            DataPengguna::create($validated);
-
-            // Simpan user dengan role anggota
-            User::create([
+            // Simpan user terlebih dahulu
+            $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'nama_usaha' => $request->nama_usaha,
                 'role' => 'anggota',
                 'status' => 'active',
             ]);
-
-            // Flash pesan sukses
+    
+            // Simpan data pengguna dengan menghubungkan ke user yang baru dibuat
+            DataPengguna::create([
+                'id' => $user->id, // Pastikan 'id' di data_pengguna terkait dengan user
+                'email' => $request->email,
+                'tipe_member' => $request->tipe_member,
+                'nama_usaha' => $request->nama_usaha,
+                'alamat' => $request->alamat,
+                'provinsi' => $request->provinsi,
+                'kota' => $request->kota,
+                'kecamatan' => $request->kecamatan,
+                'kode_pos' => $request->kode_pos,
+                'no_telp' => $request->no_telp,
+                'nama_pemilik' => $request->nama_pemilik,
+                'no_ktp' => $request->no_ktp,
+                'no_sku' => $request->no_sku,
+                'no_npwp' => $request->no_npwp,
+                'k_usaha' => $request->k_usaha,
+                'j_usaha' => $request->j_usaha,
+            ]);
+    
+            // Redirect ke halaman login dengan pesan sukses
             return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Silahkan Login.');
         } catch (\Illuminate\Database\QueryException $e) {
-            // Tangani duplikat data berdasarkan kode error
+            // Tangani duplikat data berdasarkan kode error SQL
             if ($e->getCode() == 23000) { // 23000 adalah kode SQL untuk pelanggaran constraint
                 return back()->with('error', 'Data sudah terdaftar. Harap gunakan data yang berbeda.');
             }
-
+    
             // Tangani kesalahan lainnya
             return back()->with('error', 'Terjadi kesalahan saat pendaftaran: ' . $e->getMessage());
         }
     }
+    
 
 
     // public function store(Request $request)

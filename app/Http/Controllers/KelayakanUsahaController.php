@@ -36,13 +36,15 @@ class KelayakanUsahaController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('anggota.kelayakanUsaha')->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
+        return redirect()->route('kelayakanUsaha')->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Finansial berhasil diajukan.');
     }
 
     public function updateUserFinansial(Request $request, $id_finansial)
     {
-        // dd($request->method(), $request->all()); // Debugging
+        // Debugging
+        // dd($request->all(), $id_finansial);
+
         $request->validate([
             'nama_usaha' => 'required|string|max:255',
             'laporan_keuangan' => 'required|file|mimes:pdf,docx',
@@ -50,7 +52,6 @@ class KelayakanUsahaController extends Controller
 
         $kelayakanFinansial = KelayakanFinansial::findOrFail($id_finansial);
 
-        // Simpan file laporan keuangan
         if ($request->hasFile('laporan_keuangan')) {
             $filePath = $request->file('laporan_keuangan')->store('laporan_keuangan', 'public');
             $kelayakanFinansial->laporan_keuangan = $filePath;
@@ -60,10 +61,7 @@ class KelayakanUsahaController extends Controller
         $kelayakanFinansial->status = "menunggu";
         $kelayakanFinansial->save();
 
-        return redirect()->route('kelayakanUsaha', ['id_finansial' => $id_finansial])
-    ->with('success', 'Pengajuan berhasil.');
-
-
+        return redirect()->route('kelayakanUsaha', ['id_finansial' => $id_finansial])->with('success', 'Pengajuan berhasil.');
     }
 
     public function updateFinansial(Request $request, $id)
@@ -138,8 +136,28 @@ class KelayakanUsahaController extends Controller
         
         // KelayakanOperasional::create($request->all());
         
-        return redirect()->route('anggota.kelayakan-usaha')->with('success', 'Pengajuan Kelayakan Operasional berhasil diajukan.');
+        return redirect()->route('kelayakanUsaha')->with('success', 'Pengajuan Kelayakan Operasional berhasil diajukan.');
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Operasional berhasil diajukan.');
+    }
+
+    public function updateUserOperasional(Request $request, $id_operasional)
+    {
+        // Debugging
+        // dd($request->all(), $id_operasional);
+
+        $request->validate([
+            'nama_usaha' => 'required|string|max:255',
+            'deskripsi_operasional' => 'required|string',
+        ]);
+
+        $kelayakanOperasional = KelayakanOperasional::findOrFail($id_operasional);
+
+        $kelayakanOperasional->nama_usaha = $request->nama_usaha;
+        $kelayakanOperasional->deskripsi_operasional = $request->deskripsi_operasional;
+        $kelayakanOperasional->status = "menunggu";
+        $kelayakanOperasional->save();
+
+        return redirect()->route('kelayakanUsaha', ['id_operasional' => $id_operasional])->with('success', 'Pengajuan berhasil.');
     }
 
     public function updateOperasional (Request $request, $id)
@@ -214,8 +232,25 @@ class KelayakanUsahaController extends Controller
 
         // KelayakanPemasaran::create($request->all());
         
-        return redirect()->route('anggota.kelayakan-usaha')->with('success', 'Pengajuan Kelayakan Pemasaran berhasil diajukan.');
+        return redirect()->route('kelayakanUsaha')->with('success', 'Pengajuan Kelayakan Pemasaran berhasil diajukan.');
         // return redirect()->back()->with('success', 'Pengajuan Kelayakan Pemasaran berhasil diajukan.');
+    }
+
+    public function updateUserPemasaran (Request $request, $id_pemasaran)
+    {
+        $request->validate([
+            'nama_usaha' => 'required|string|max:255',
+            'strategi_pemasaran' => 'required|string',
+        ]);
+
+        $kelayakanPemasaran = KelayakanPemasaran::findOrFail($id_pemasaran);
+
+        $kelayakanPemasaran->nama_usaha = $request->nama_usaha;
+        $kelayakanPemasaran->strategi_pemasaran = $request->strategi_pemasaran;
+        $kelayakanPemasaran->status = "menunggu";
+        $kelayakanPemasaran->save();
+
+        return redirect()->route('kelayakanUsaha', ['id_pemasaran' => $id_pemasaran])->with('success', 'Pengajuan berhasil.');
     }
 
     public function updatePemasaran(Request $request, $id)

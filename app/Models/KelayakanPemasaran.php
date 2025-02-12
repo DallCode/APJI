@@ -18,6 +18,7 @@ class KelayakanPemasaran extends Model
         'nama_usaha',
         'strategi_pemasaran',
         'file',
+        'status',
     ];
 
     // Relasi ke pengajuan_sertifikat

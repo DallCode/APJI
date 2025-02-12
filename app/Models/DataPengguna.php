@@ -12,6 +12,7 @@ class DataPengguna extends Model
 
     protected $fillable = [
         'id_pengguna',
+        'id',
         'email',
         'tipe_member',
         'nama_usaha',

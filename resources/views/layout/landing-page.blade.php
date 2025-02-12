@@ -11,7 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
@@ -37,6 +38,43 @@
             document.getElementById("hero-description").innerHTML = "Meningkatkan Kualitas dan Ketersediaan Kuliner di Jawa Barat";
         }, 3000);
     </script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+  // Notifikasi setelah pengajuan diterima
+  function showToastSuccess(message) {
+      Toastify({
+          text: message,
+          duration: 3000,
+          close: true,
+          gravity: "top", // Posisi atas
+          position: "right", // Posisi kanan
+          backgroundColor: "#4CAF50", // Warna hijau untuk sukses
+      }).showToast();
+  }
+
+  // Notifikasi setelah pengajuan ditolak
+  function showToastError(message) {
+      Toastify({
+          text: message,
+          duration: 3000,
+          close: true,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#FF5733", // Warna merah untuk error
+      }).showToast();
+  }
+
+  // Cek apakah ada pesan sukses atau error dari session Laravel
+  @if(session('success'))
+      showToastSuccess("{{ session('success') }}");
+  @endif
+
+  @if(session('error'))
+      showToastError("{{ session('error') }}");
+  @endif
+</script>
+
 
 </body>
 

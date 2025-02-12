@@ -14,7 +14,7 @@
       <ul class="nav flex-column">
         <!-- Event section remains the same -->
         <li class="nav-item">
-          <a class="sidebar-link {{ Request()->is('event') ? 'active' : '' }}" href="/event">
+          <a class="sidebar-link {{ Request()->is('admin/event') ? 'active' : '' }}" href="/event">
             <i class='bx bx-calendar-event'></i> Event
           </a>
         </li>
