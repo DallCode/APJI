@@ -34,19 +34,19 @@
                                 <h5 class="card-title text-center fw-bold text-dark mb-2" style="font-size: 17px;">{{ $item->nama_event }}</h5>
                                 <p class="card-text text-muted mb-1" style="font-size: 14px;"><i class="bx bx-calendar me-2 text-primary"></i>{{ $item->tanggal }}</p>
                                 <p class="card-text text-muted" style="font-size: 14px;"><i class="bx bx-map me-2 text-danger"></i>{{ $item->lokasi }}</p>
-                                <a href="#" class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#eventDetailModal{{ $item->id }}">Detail Event</a>
+                                <a href="#" class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#eventDetailModal{{ $item->id }}-{{ $loop->index }}">Detail Event</a>
                             </div>
                         </div>
                     </div>
                     
                     <!-- MODAL DETAIL EVENT for each item in the loop -->
-                    <div class="modal fade" id="eventDetailModal{{ $item->id }}" tabindex="-1" 
-                        aria-labelledby="eventDetailModalLabel{{ $item->id }}" aria-hidden="true">
+                    <div class="modal fade" id="eventDetailModal{{ $item->id }}-{{ $loop->index }}" tabindex="-1" 
+                        aria-labelledby="eventDetailModalLabel{{ $item->id }}-{{ $loop->index }}" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="eventDetailModalLabel{{ $item->id }}">Detail Event</h5>
+                                    <h5 class="modal-title" id="eventDetailModalLabel{{ $item->id }}-{{ $loop->index }}">Detail Event</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <!-- Modal Body -->

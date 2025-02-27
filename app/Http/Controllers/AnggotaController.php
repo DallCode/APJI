@@ -37,6 +37,18 @@ class AnggotaController extends Controller
         return view('anggota.riwayat-event', compact('event', 'search'));
     }
 
+    public function Detail(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Menggunakan paginate() untuk mendukung pagination
+        $event = Event::when($search, function ($query) use ($search) {
+            return $query->where('nama_event', 'LIKE', "%{$search}%");
+        })->paginate(10); // Sesuaikan jumlah per halaman (10)
+
+        return view('anggota.event-detail', compact('event'));
+    }
+
     public function pengajuan()
     {
         return view('anggota.pengajuan-sertifikat');

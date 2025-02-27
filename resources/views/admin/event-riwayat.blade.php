@@ -3,66 +3,96 @@
 
 <div class="container-fluid">
     <div class="row">
-
         <x-sidebar-admin/>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 content">
-            <h1>RiwayatEvent</h1>
+            <div class="container pt-4">
+                <h1>Riwayat Event</h1>
 
-            <div class="category">
-                <a class="add-new" href="" data-bs-toggle="modal" data-bs-target="#createEventModal">Add
-                    New</a>
-
-                <form class="search" action="" method="GET">
-                    <input type="text" name="search" placeholder="Cari event" value="">
-                    <button type="submit"><i class='bx bx-search-alt-2'></i>Cari</button>
-                </form>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            {{-- <th></th> --}}
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($event as $event)
-                            <tr>
-                                <td>{{ $event->nama_event }}</td>
-                                {{-- <td><a class="detail" href="">Lihat Detail</a></td> --}}
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateModal"
-                                            data-id-event="{{ $event->id_event }}"
-                                            data-nama-event="{{ $event->nama_event }}"
-                                            data-tanggal="{{ $event->tanggal }}" data-lokasi="{{ $event->lokasi }}"
-                                            data-daftar-hadir="{{ $event->daftar_hadir }}"
-                                            data-notulensi="{{ $event->notulensi }}"
-                                            data-dokumentasi="{{ $event->dokumentasi }}">
-                                            <i class='bx bxs-pencil'></i>
-                                        </a>
-                                        <form method="POST" action="{{ route('event.delete', $event->id_event) }}"
-                                            style="display: inline-block; margin: 0;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm delete-button">
-                                                <i class='bx bxs-trash'></i>
-                                            </button>
-                                        </form>
-
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <div class="d-flex justify-content-center">
-                    
+                <!-- Search Section -->
+                <div class="container pt-4">
+                    <form class="d-flex" role="search" method="GET" action="{{ route('admin.event-riwayat') }}">
+                        <input class="form-control me-2" type="search" name="search" value="{{ request('search') }}" placeholder="Cari Event" aria-label="Search">
+                        <button class="btn btn-primary" type="submit">Cari</button>
+                    </form>
                 </div>
-            </div>
 
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach ($event as $item)
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <img src="{{ asset($item->img) }}" alt="{{ $item->nama_event }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-center fw-bold">{{ $item->nama_event }}</h5>
+
+                                <div class="mt-3">
+                                    <p class="card-text mb-2">
+                                        <i class="bx bx-calendar text-primary me-2"></i>
+                                        {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                    </p>
+                                    <p class="card-text">
+                                        <i class="bx bx-map text-danger me-2"></i>
+                                        {{ $item->lokasi }}
+                                    </p>
+                                </div>
+
+                                <div class="mt-auto">
+                                    <a href="{{ route('detailEvent') }}" class="btn btn-primary w-100" data-bs-toggle="">
+                                        Detail Event
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <!-- Modal for event details -->
+                    <div class="modal fade" id="eventDetailModal{{ $item->id }}" tabindex="-1" 
+                        aria-labelledby="eventDetailModalLabel{{ $item->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eventDetailModalLabel{{ $item->id }}">Detail Event</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="text-center mb-4">
+                                        <img 
+                                            src="{{ asset($item->img) }}" 
+                                            alt="Event {{ $item->nama_event }}" 
+                                            class="img-fluid rounded" 
+                                            style="max-height: 300px; object-fit: cover;">
+                                    </div>
+                                    <h5 class="text-center fw-bold mb-3">{{ $item->nama_event }}</h5>
+                                    <p class="text-muted mb-3">{{ $item->deskripsi }}</p>
+                                    <p class="text-muted mb-1">
+                                        <i class="bx bx-calendar me-2 text-primary"></i>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                    </p>
+                                    <p class="text-muted">
+                                        <i class="bx bx-map me-2 text-danger"></i>{{ $item->lokasi }}
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    @endforeach
+
+                    @if ($event->isEmpty())
+                    <div class="col-12">
+                        <p class="text-center text-muted">Belum ada event tersedia.</p>
+                    </div>
+                    @endif
+                </div>
+
+                <!-- Pagination Section -->
+                {{-- <div class="d-flex justify-content-end mt-4">
+                    @if ($event->hasPages())
+                        {{ $event->links() }}
+                    @endif
+                </div> --}}
+            </div>
         </main>
     </div>
 </div>

@@ -3,9 +3,8 @@
 
 <div class="container-fluid">
     <div class="row">
-
         <x-sidebar-admin/>
-
+        
         <main class="col-md-9 ms-sm-auto col-lg-10 content">
             <h1>Event</h1>
 
@@ -22,27 +21,34 @@
                     <thead>
                         <tr>
                             <th>Event</th>
-                            {{-- <th></th> --}}
+                            <th>Tanggal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($event as $event)
-                            <tr>
-                                <td>{{ $event->nama_event }}</td>
-                                {{-- <td><a class="detail" href="">Lihat Detail</a></td> --}}
+                        @foreach ($event as $item)
+                            @php
+                            // Event is expired only when it has passed by at least one day
+                            $today = \Carbon\Carbon::now();
+                            $eventDate = \Carbon\Carbon::parse($item->tanggal);
+                            $expired = $eventDate->addDay()->isPast();
+                            @endphp
+                            <tr class="{{ $expired ? 'text-danger' : '' }}">
+                                <td>{{ $item->nama_event }}</td>
+                                <td>{{ $item->tanggal }}</td>
                                 <td>
                                     <div class="action-buttons">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#updateModal"
-                                            data-id-event="{{ $event->id_event }}"
-                                            data-nama-event="{{ $event->nama_event }}"
-                                            data-tanggal="{{ $event->tanggal }}" data-lokasi="{{ $event->lokasi }}"
-                                            data-daftar-hadir="{{ $event->daftar_hadir }}"
-                                            data-notulensi="{{ $event->notulensi }}"
-                                            data-dokumentasi="{{ $event->dokumentasi }}">
+                                            data-id-event="{{ $item->id_event }}"
+                                            data-nama-event="{{ $item->nama_event }}"
+                                            data-tanggal="{{ $item->tanggal }}" 
+                                            data-lokasi="{{ $item->lokasi }}"
+                                            data-daftar-hadir="{{ $item->daftar_hadir }}"
+                                            data-notulensi="{{ $item->notulensi }}"
+                                            data-dokumentasi="{{ $item->dokumentasi }}">
                                             <i class='bx bxs-pencil'></i>
                                         </a>
-                                        <form method="POST" action="{{ route('event.delete', $event->id_event) }}"
+                                        <form method="POST" action="{{ route('event.delete', $item->id_event) }}"
                                             style="display: inline-block; margin: 0;">
                                             @csrf
                                             @method('DELETE')
@@ -50,7 +56,6 @@
                                                 <i class='bx bxs-trash'></i>
                                             </button>
                                         </form>
-
                                     </div>
                                 </td>
                             </tr>
@@ -59,10 +64,11 @@
                 </table>
 
                 <div class="d-flex justify-content-center">
-                    
+                    @if (isset($event) && method_exists($event, 'links'))
+                        {{ $event->links() }}
+                    @endif
                 </div>
             </div>
-
         </main>
     </div>
 </div>
@@ -76,7 +82,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf <!-- Tambahkan CSRF Token -->
+                @csrf
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="nama_event" class="form-label">Nama Event</label>
@@ -110,7 +116,6 @@
     </div>
 </div>
 
-
 <!-- Modal Update -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
     aria-hidden="true">
@@ -118,46 +123,37 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="updateModalLabel">Update Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('event.update', $event->id_event) }}"
-                enctype="multipart/form-data">
+                <form method="POST" action="" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="nama_event">Nama Event</label>
-                        <input type="text" class="form-control" id="nama_event" name="nama_event"
-                            value="{{ $event->nama_event }}">
+                        <input type="text" class="form-control" id="nama_event" name="nama_event">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="tanggal">Tanggal</label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal"
-                            value="{{ $event->tanggal }}">
+                        <input type="date" class="form-control" id="tanggal" name="tanggal">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="lokasi">Lokasi</label>
-                        <input type="text" class="form-control" id="lokasi" name="lokasi"
-                            value="{{ $event->lokasi }}">
+                        <input type="text" class="form-control" id="lokasi" name="lokasi">
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="daftar_hadir">Daftar Hadir</label>
-                        <textarea class="form-control" id="daftar_hadir" name="daftar_hadir">{{ $event->daftar_hadir }}</textarea>
-                    </div> --}}
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="notulensi">Notulensi</label>
-                        <textarea class="form-control" id="notulensi" name="notulensi">{{ $event->notulensi }}</textarea>
+                        <textarea class="form-control" id="notulensi" name="notulensi"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
+                        <label for="dokumentasi">Dokumentasi</label>
+                        <textarea class="form-control" id="dokumentasi" name="dokumentasi"></textarea>
+                    </div>
+                    {{-- <div class="form-group mb-3">
                         <label for="dokumentasi">Dokumentasi</label>
                         <input type="file" class="form-control" id="dokumentasi" name="dokumentasi">
-                        @if ($event->dokumentasi)
-                            <img src="data:image/jpeg;base64,{{ $event->dokumentasi }}" alt="Gambar Dokumentasi"
-                                width="100px">
-                        @endif
-                    </div>
+                        <img src="#" alt="Gambar Dokumentasi" width="100px" style="margin-top: 10px; display: none;">
+                    </div> --}}
                     <button type="submit" class="btn btn-primary" style="margin-top:10px">Update</button>
                 </form>
             </div>
@@ -193,7 +189,11 @@
             modal.querySelector('#nama_event').value = namaEvent;
             modal.querySelector('#tanggal').value = tanggal;
             modal.querySelector('#lokasi').value = lokasi;
-            modal.querySelector('#daftar_hadir').value = daftarHadir || '';
+            
+            if (modal.querySelector('#daftar_hadir')) {
+                modal.querySelector('#daftar_hadir').value = daftarHadir || '';
+            }
+            
             modal.querySelector('#notulensi').value = notulensi || '';
 
             if (dokumentasi) {

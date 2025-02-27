@@ -12,7 +12,7 @@ use App\Models\KelayakanPemasaran;
 use App\Models\PengajuanHalal;
 use App\Models\PengajuanKoki;
 use App\Models\PengajuanAsistenKoki;
-
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -36,7 +36,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('recentUsers', 'datapengguna', 'keanggotaan', 'totalPengajuan', 'totalKelayakan'));
     }
 
-    public function event(Request $request)
+    public function eventAdmin(Request $request)
     {
         $search = $request->input('search');
 
@@ -48,11 +48,33 @@ class AdminController extends Controller
         return view('admin.event', compact('event'));
     }
 
-    public function riwayat()
+    public function riwayatAdmin(Request $request)
     {
-        $event = Event::all();
+        $search = $request->input('search');
+        
+        $event = Event::where('tanggal', '<', Carbon::today()) // Hanya event yang sudah kadaluarsa
+            ->when($search, function ($query, $search) {
+                return $query->where('nama_event', 'like', "%$search%");
+            })
+            ->orderBy('tanggal', 'desc')
+            ->paginate(6); // Batasi 9 event per halaman
 
         return view('admin.event-riwayat', compact('event'));
+    }
+
+    public function detailEvent(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $event = Event::where('tanggal', '<', Carbon::today()) // Hanya event yang sudah kadaluarsa
+            ->when($search, function ($query, $search) {
+                return $query->where('nama_event', 'like', "%$search%");
+            })
+            ->orderBy('tanggal', 'desc')
+            ->paginate(6); // Batasi 9 event per halaman
+
+            return view('admin.detail-event', compact('event'));
+        
     }
 
     
@@ -88,29 +110,16 @@ class AdminController extends Controller
             'nama_event' => 'required|string',
             'tanggal' => 'required|date',
             'lokasi' => 'required|string',
-            'daftar_hadir' => 'nullable|string',
             'notulensi' => 'nullable|string',
-            'dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dokumentasi' => 'nullable|string',
         ]);
-
-        if ($request->hasFile('dokumentasi')) {
-            $image = $request->file('dokumentasi');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
-            $imageData = file_get_contents($image->getRealPath());
-            $event->dokumentasi = base64_encode($imageData);
-        }
-        // if ($request->hasFile('dokumentasi')) {
-        //     $path = $request->file('dokumentasi')->store('events', 'public');
-        //     $event->dokumentasi = 'storage/' . $path;
-        // }
-        
 
         $event->update([
             'nama_event' => $validated['nama_event'],
             'tanggal' => $validated['tanggal'],
             'lokasi' => $validated['lokasi'],
-            'daftar_hadir' => $validated['daftar_hadir'],
             'notulensi' => $validated['notulensi'],
+            'dokumentasi' => $validated['dokumentasi'],
         ]);
 
         return redirect()->route('admin.event')->with('success', 'Event updated successfully.');
