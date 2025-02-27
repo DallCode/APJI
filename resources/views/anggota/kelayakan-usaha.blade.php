@@ -212,7 +212,8 @@
                             <h5 class="modal-title fw-bold" id="modalFinansialLabel">Formulir Pengajuan Kelayakan Finansial</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="formUpdateFinansial" method="POST" action="{{ route('anggota.kelayakanUsaha.update', $kelayakanFinansial->id_finansial ?? '') }}" enctype="multipart/form-data">
+                        <form id="formUpdateFinansial" method="POST"action="{{ route('anggota.kelayakanUsaha.update.finansial', $kelayakanFinansial->id_finansial ?? '') }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT') 
                         
@@ -627,18 +628,11 @@
                 });
             });
 
-            document.getElementById('formUpdateFinansial').addEventListener('submit', function(event) {
-            event.preventDefault(); // Mencegah pengiriman form langsung
+                    document.getElementById('formUpdateFinansial').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            // Ambil data dari input form
-            const namaUsaha = document.getElementById('namaUsaha').value;
-            const laporanKeuangan = document.getElementById('laporanKeuangan').files[0];
-
-            // Tampilkan konfirmasi SweetAlert
             Swal.fire({
                 title: 'Apakah data sudah sesuai?',
-                html: `
-                `,
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -647,8 +641,8 @@
                 cancelButtonText: 'Periksa Lagi',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Kirim formulir jika pengguna yakin
-                    document.getElementById('formUpdateFinansial').submit();
+                    // Kirim form menggunakan submit()
+                    this.submit();
                 }
             });
         });

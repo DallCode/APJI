@@ -6,6 +6,7 @@
 }
       
 .hero {
+  margin-top: 50px;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
               url('/assets/img/logo/apji2.jpg');
   background-size: cover;
@@ -13,10 +14,11 @@
   height: 100vh;
   position: relative;
   overflow: hidden;
+  border-radius: 0 0 100px 0;
 }
 
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Plus Jakarta Sans", serif;
 }
 
 /* Animasi untuk fadeInUp */
@@ -52,14 +54,23 @@
 
 .feature-card {
   border: none;
-  border-radius: 15px;
   transition: transform 0.3s ease;
   background: white;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  padding: 20px;
+  margin-top: 20px;
 }
 
 .feature-card:hover {
   transform: translateY(-10px);
+}
+
+.pelatihan {
+  border-radius: 30px 0 0 0;
+}
+
+.konsultasi {
+  border-radius: 0 0 30px 0;
 }
 
 .service-icon {
@@ -71,6 +82,7 @@
 .service-icon:hover {
   color: var(--secondary-color);
 }
+
 
 /* .stats-section h2 {
   font-size: 3rem;
@@ -283,6 +295,7 @@
 .img-fluid {
   max-height: 400px;
   object-fit: cover;
+  border-radius: 30px 0 35px 0;
 }
 
 .about-title {
@@ -295,6 +308,60 @@
   margin: 0 auto;  /* Menambahkan margin otomatis untuk memastikan elemen berada di tengah */
 }
 
+.container-tentang {
+  justify-items: right;
+}
+
+.tentang-kami {
+  background-color: #013298;
+  text-align: left;
+  width: 92%;
+  margin-bottom: 50px;
+  height: 70px;
+  padding-top: 15px;
+  padding-left: 70px;
+  color: white;
+  border-radius: 30px 0 0 0;
+  font-weight: bold;
+}
+
+.layanan-kami {
+  background-color: #013298;
+  text-align: right;
+  width: 91.5%;
+  margin-bottom: 50px;
+  height: 70px;
+  padding-top: 15px;
+  padding-right: 70px;
+  color: white;
+  border-radius: 0 30px 0 0;
+  font-weight: bold;
+}
+
+.container-berita {
+  justify-items: right;
+}
+
+.berita-terbaru {
+  background-color: #013298;
+  text-align: left;
+  width: 92%;
+  margin-bottom: 50px;
+  height: 70px;
+  padding-top: 15px;
+  padding-left: 70px;
+  color: white;
+  border-radius: 30px 0 0 0;
+  font-weight: bold;
+}
+
+.hubungi-kami {
+  font-weight: bold;
+  font-size: 50px;
+  color: #013298;
+  border-bottom: 20px;
+}
+
 .btn-baca {
   background-color: #013298; /* Warna seperti logo */
   border-color: #013298;
@@ -302,5 +369,5 @@
 
 .btn-baca:hover {
   background-color: #001f3b; /* Warna gelap saat hover */
-  border-color: #001f3b;
+  border-color: #001f3b;
 }

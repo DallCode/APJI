@@ -22,21 +22,28 @@ class PengajuanSertifikatController extends Controller
         $search = $request->input('search');
 
         // Jika ada pencarian, filter berdasarkan nama usaha
-        $halalData = PengajuanHalal::where('nama_usaha', 'like', "%{$search}%")->get();
+        $halalData = PengajuanHalal::where('nama_usaha', 'like', "%{$search}%")
+                    ->paginate(10);
 
         return view('admin.halal', compact('halalData'));
     }
 
-    public function koki()
+    public function koki(Request $request)
     {
-        $kokiData = PengajuanKoki::all();
+        $search = $request->input('search');
+
+        $kokiData = PengajuanKoki::where('nama_lengkap', 'like', "%{$search}%")
+                    ->paginate(10);
 
         return view('admin.koki', compact('kokiData'));
     }
 
-    public function asisten()
+    public function asisten(Request $request)
     {
-        $asistenData = PengajuanAsistenKoki::all();
+        $search = $request->input('search');
+
+        $asistenData = PengajuanAsistenKoki::where('nama_lengkap', 'like', "%{$search}%")
+                    ->paginate(10);
 
         return view('admin.asisten-koki', compact('asistenData'));
     }
@@ -310,28 +317,27 @@ class PengajuanSertifikatController extends Controller
             'file' => 'nullable|file|mimes:pdf,jpg,png|max:2048', // Validasi file
         ]);
 
-        // Simpan file jika ada
-        $filePath = null;
-        if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('pengajuan_asisten_koki', 'public'); // Simpan di storage/public/pengajuan_halal
-        }
+        $fileSuratPengantar = null;
+        $fileDokumen = null;
 
-        // Simpan file PDF jika ada
         if ($request->hasFile('surat_pengantar')) {
-            $filePath = $request->file('surat_pengantar')->store('surat_pengantar', 'public');
-        } else {
-            $filePath = null; // Jika tidak ada file
+            $fileSuratPengantar = $request->file('surat_pengantar')->store('surat_pengantar', 'public');
         }
 
-        // Simpan pengajuan ke database
+        if ($request->hasFile('file')) {
+            $fileDokumen = $request->file('file')->store('pengajuan_asisten_koki', 'public');
+        }
+
+        // Simpan ke database dengan field yang sesuai
         PengajuanAsistenKoki::create([
-            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna, // Gunakan ID user yang sedang login
+            'id_pengguna' => auth()->user()->dataPengguna->id_pengguna,
             'nama_lengkap' => $request->nama_lengkap,
             'keahlian_khusus' => $request->keahlian_khusus,
-            'surat_pengantar' => $filePath,
-            'file' => $filePath, // Path file atau null jika tidak ada 
-            'status' => 'menunggu', //default
+            'surat_pengantar' => $fileSuratPengantar,
+            'file' => $fileDokumen,
+            'status' => 'menunggu',
         ]);
+
 
         return redirect()->route('anggota.pengajuanSertifikat')->with('success', 'Pengajuan berhasil diajukan.');
     }

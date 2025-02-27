@@ -13,10 +13,35 @@
       <div class="sidebar-label">Menu</div>
       <ul class="nav flex-column">
         <!-- Event section remains the same -->
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="sidebar-link {{ Request()->is('admin/event') ? 'active' : '' }}" href="/event">
             <i class='bx bx-calendar-event'></i> Event
           </a>
+        </li> --}}
+
+        <li class="nav-item">
+          <a class="sidebar-link" href="#eventMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="eventMenu">
+            <i class='bx bx-archive'></i> Event
+            <i class="bx bx-chevron-right ms-2" id="eventIcon"></i>
+          </a>
+          <div class="collapse" id="eventMenu">
+            <ul class="nav flex-coloumn ms-3">
+              <li class="nav-item">
+                <a class="sidebar-link {{ Request()->is('event') ? 'active' : '' }}" href="/event">
+                  <i class='bx bx-check-circle'></i> Event
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="collapse" id="eventMenu">
+            <ul class="nav flex-coloumn ms-3">
+              <li class="nav-item">
+                <a class="sidebar-link {{ Request()->is('riwayat-event') ? 'active' : '' }}" href="/event-riwayat">
+                  <i class='bx bx-check-circle'></i> Riwayat Event
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
         
         <!-- Pengajuan with Dropdown Collapse -->
@@ -79,6 +104,20 @@
   </nav>
   
   <script>
+     // Toggle icon for pengajuanMenu
+     var eventCollapse = document.getElementById('eventMenu');
+    var eventIcon = document.getElementById('eventIcon');
+  
+    eventCollapse.addEventListener('shown.bs.collapse', function () {
+      eventIcon.classList.remove('bx-chevron-right');
+      eventIcon.classList.add('bx-chevron-down');
+    });
+  
+    eventCollapse.addEventListener('hidden.bs.collapse', function () {
+      eventIcon.classList.remove('bx-chevron-down');
+      eventIcon.classList.add('bx-chevron-right');
+    });
+
     // Toggle icon for pengajuanMenu
     var pengajuanCollapse = document.getElementById('pengajuanMenu');
     var pengajuanIcon = document.getElementById('pengajuanIcon');

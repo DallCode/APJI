@@ -24,14 +24,14 @@
           </div>
           <div class="card menunggu">
               <div class="card-content">
-                  <h2>Menunggu Diverifikasi</h2>
-                  <p>11</p>
+                  <h2>Total Pengajuan</h2>
+                  <p>{{ $totalPengajuan }}</p>
               </div>
           </div>
           <div class="card">
               <div class="card-content">
-                  <h2>Pengajuan</h2>
-                  <p>71</p>
+                  <h2>Total Kelayakan</h2>
+                  <p>{{ $totalKelayakan }}</p>
               </div>
           </div>
       </div>
@@ -61,7 +61,7 @@
                         <div class="modal-body">
                           <ul>
                             <li><strong>Email:</strong> {{ $user->email }}</li>
-                            <li><strong>Nama Usaha:</strong> {{ $user->nama_usaha }}</li>
+                            {{-- <li><strong>Nama Usaha:</strong> {{ $user->nama_usaha }}</li> --}}
                             <li><strong>Status:</strong> {{ $user->status }}</li>
                             <li><strong>Role:</strong> {{ $user->role }}</li>
                             <!-- Anda bisa menambahkan lebih banyak detail jika diperlukan -->

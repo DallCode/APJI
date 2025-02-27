@@ -4,13 +4,13 @@
   <section class="hero d-flex align-items-center" id="beranda">
     <div class="hero-image"></div> <!-- Tambahkan div untuk gambar latar belakang -->
     <div class="container text-center text-white">
-        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">
+        <h1 class="display-3 fw-bold animate_animated animate_fadeInDown">
             Asosiasi Pengusaha Tataboga Jawa Barat
         </h1>
-        <p class="lead mt-4 animate__animated animate__fadeInUp">
+        <p class="lead mt-4 animate_animated animate_fadeInUp">
             Memajukan Industri Kuliner Jawa Barat Melalui Inovasi dan Kolaborasi
         </p>
-        <div class="mt-5 animate__animated animate__zoomIn">
+        <div class="mt-5 animate_animated animate_zoomIn">
             <a href="{{ route('login')}}" class="btn btn-primary btn-lg me-3">Login</a>
             <a href="{{ route('registerShow')}}" class="btn btn-outline-light btn-lg">Menjadi Anggota</a>
         </div>
@@ -19,27 +19,30 @@
 
 
 <!-- About Section -->
-<section id="tentang" class="py-5" style="background: linear-gradient(135deg, #f5f5f5, #ffffff); color: #002f5b;">
+<section id="tentang" class="py-5" style="color: #002f5b;">
+    <div class="container-tentang">
+        <h2 class="tentang-kami">Tentang Kami</h2>
+    </div>
     <div class="container">
         <!-- Judul Tentang Kami dengan latar belakang khusus -->
-        <h2 class="text-center fw-bold mb-5 about-title">Tentang Kami</h2>
-        <div class="row">
+            
+        <div class="row" style="margin-bottom:20px;">
             <!-- Sub Judul -->
             <div class="col-12 text-center mb-4">
-                <h2 class="fw-bold animate__animated animate__fadeInUp">Kami Menciptakan Identitas Industri Kuliner Indonesia</h2>
+                <h2 class="fw-bold animate_animated animate_fadeInUp">Kami Menciptakan Identitas Industri Kuliner Indonesia</h2>
             </div>
         </div>
         <div class="row align-items-center">
             <!-- Gambar -->
-            <div class="col-lg-6 mb-4 animate__animated animate__zoomIn">
-                <img src="{{ asset ('assets/img/logo/apji1.png')}}" alt="Tentang Kami" class="img-fluid rounded-3 shadow-lg">
+            <div class="col-lg-6 mb-4 animate_animated animate_zoomIn">
+                <img src="{{ asset ('assets/img/logo/apji1.png')}}" alt="Tentang Kami" class="img-fluid">
             </div>
             <!-- Deskripsi -->
-            <div class="col-lg-6 animate__animated animate__fadeInRight">
-                <p class="lead">
+            <div class="col-lg-6 animate_animated animate_fadeInRight" style="margin-bottom:20px">
+                <p class="lead" style="font-size:18px">
                     <span class="fw-bold text-dark">Indonesia</span> itu kaya. Kaya sumber daya alam dan sumber daya manusia. Jelas ini suatu anugerah yang belum tentu dimiliki negara lain. Namun "pemberian" itu tak akan menjadi apa-apa, tanpa adanya sentuhan orang-orang kreatif yang membuatnya menjadi bernilai tambah. Tak hanya nilai tambah ekonomis, tapi juga nilai tambah estetika.
                 </p>
-                <div class="d-flex flex-wrap mt-4 justify-content-center">
+                <div class="d-flex flex-wrap mt-4 justify-content-center" style="font-size:13px">
                     <span class="badge bg-primary text-white px-3 py-2 m-1 shadow-sm hover-badge">INDUSTRI</span>
                     <span class="badge bg-primary text-white px-3 py-2 m-1 shadow-sm hover-badge">WEDDING</span>
                     <span class="badge bg-primary text-white px-3 py-2 m-1 shadow-sm hover-badge">OFFSHORE</span>
@@ -60,16 +63,16 @@
 <!-- <section id="tentang" class="py-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 animate__animated animate__fadeInLeft">
+            <div class="col-lg-6 animate_animated animate_fadeInLeft">
                 <img src="img/apji1.png" alt="Tentang Kami" class="img-fluid rounded-3">
             </div>
-            <div class="col-lg-6 animate__animated animate__fadeInRight">
+            <div class="col-lg-6 animate_animated animate_fadeInRight">
                 <h2 class="fw-bold mb-4">Tentang Kami</h2>
                 <p class="lead">Kami adalah wadah bagi para pengusaha kuliner di Jawa Barat untuk berkembang dan berinovasi.</p>
                 <h6 class="lead fw-bold">
                     Asosiasi Pengusaha Tataboga Jawa Barat
                 </h6>
-                <p class="lead mt-4 animate__animated animate__fadeInUp" id="hero-description">
+                <p class="lead mt-4 animate_animated animate_fadeInUp" id="hero-description">
                     Memajukan Industri Kuliner Jawa Barat Melalui Inovasi dan Kolaborasi
                 </p>                                      
                 <ul class="list-unstyled">
@@ -129,11 +132,11 @@
 
 <!-- Services Section -->
 <section id="layanan" class="py-5 bg-light">
+<h2 class="layanan-kami">Layanan Kami</h2>
     <div class="container">
-        <h2 class="text-center fw-bold mb-5 about-title">Layanan Kami</h2>
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="card feature-card h-100 animate__animated animate__fadeInUp">
+                <div class="pelatihan feature-card h-100 animate_animated animate_fadeInUp">
                     <div class="card-body text-center">
                         <i class="fas fa-graduation-cap service-icon"></i>
                         <h4 class="card-title">Pelatihan Profesional</h4>
@@ -142,7 +145,7 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card feature-card h-100 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="sertifikasi feature-card h-100 animate_animated animate_fadeInUp" style="animation-delay: 0.2s">
                     <div class="card-body text-center">
                         <i class="fas fa-certificate service-icon"></i>
                         <h4 class="card-title">Sertifikasi</h4>
@@ -151,7 +154,7 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card feature-card h-100 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <div class="konsultasi feature-card h-100 animate_animated animate_fadeInUp" style="animation-delay: 0.4s">
                     <div class="card-body text-center">
                         <i class="fas fa-handshake service-icon"></i>
                         <h4 class="card-title">Konsultasi Bisnis</h4>
@@ -165,8 +168,10 @@
 
 <!-- Section Berita -->
 <section id="berita" class="py-5 bg-light">
+    <div class="container-berita">
+        <h2 class="berita-terbaru">Berita Terbaru</h2>
+    </div>
 <div class="container">
-    <h2 class="text-center fw-bold mb-5 about-title">Berita Terbaru</h2>
     <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <!-- Slide 1 -->
@@ -265,7 +270,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="text-center mb-5">
-                    <h2 class="fw-bold about-title">Hubungi Kami</h2>
+                    <h2 class="hubungi-kami">Hubungi Kami</h2>
                     <p class="lead">Jadilah bagian dari komunitas kuliner terbesar di Jawa Barat</p>
                 </div>
                 <div class="contact-form">
@@ -286,7 +291,7 @@
                                 <option selected>Pilih Kategori Usaha</option>
                                 <option>Restoran</option>
                                 <option>Katering</option>
-                                <option>Café</option>
+                                <option>Café</option>
                                 <option>UMKM Kuliner</option>
                             </select>
                         </div>
@@ -301,7 +306,7 @@
             </div>
 
             <!-- Kolom Peta Google Maps Full Width -->
-        <div class="col-12">
+        <div class="col-12" style="margin-top:50px">
             <div class="map-container">
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126227.29612216696!2d107.610473!3d-6.927213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6e0e93aafdb%3A0x8a89a3f9c20db5b7!2sJl.%20Asia%20Afrika%20No.141-149%2C%20Lantai%209%2C%20Suite%20901%2C%20Kb.%20Pisang%2C%20Kec.%20Sumur%20Bandung%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040112!5e0!3m2!1sen!2sid!4v1698381339380!5m2!1sen!2sid" 

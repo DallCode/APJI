@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-dark text-white py-4">
+<footer class="text-white py-4" style="background-color:#013298">
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4 mb-md-0">
@@ -27,4 +27,4 @@
             <p class="mb-0">&copy; 2024 Asosiasi Pengusaha Tataboga Jawa Barat. Hak Cipta Dilindungi.</p>
         </div>
     </div>
-  </footer>
+  </footer>

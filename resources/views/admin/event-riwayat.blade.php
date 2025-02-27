@@ -7,7 +7,7 @@
         <x-sidebar-admin/>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 content">
-            <h1>Event</h1>
+            <h1>RiwayatEvent</h1>
 
             <div class="category">
                 <a class="add-new" href="" data-bs-toggle="modal" data-bs-target="#createEventModal">Add
@@ -64,104 +64,6 @@
             </div>
 
         </main>
-    </div>
-</div>
-
-<!-- Modal for Creating Event -->
-<div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createEventModalLabel">Create New Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf <!-- Tambahkan CSRF Token -->
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="nama_event" class="form-label">Nama Event</label>
-                        <input type="text" class="form-control" id="nama_event" name="nama_event" placeholder="Masukkan nama event" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="img" class="form-label">Poster</label>
-                        <input type="file" class="form-control" id="img" name="img" accept="image/*" required onchange="previewImage()">
-                        <img id="imgPreview" src="#" alt="Preview" style="margin-top: 10px; max-width: 100%; height: auto; display: none;">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="deskripsi" class="form-label">Deskripsi</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan Deskripsi Event" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tanggal" class="form-label">Tanggal</label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="lokasi" class="form-label">Lokasi</label>
-                        <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi event" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal Update -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('event.update', $event->id_event) }}"
-                enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="nama_event">Nama Event</label>
-                        <input type="text" class="form-control" id="nama_event" name="nama_event"
-                            value="{{ $event->nama_event }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal">Tanggal</label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal"
-                            value="{{ $event->tanggal }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="lokasi">Lokasi</label>
-                        <input type="text" class="form-control" id="lokasi" name="lokasi"
-                            value="{{ $event->lokasi }}">
-                    </div>
-                    {{-- <div class="form-group">
-                        <label for="daftar_hadir">Daftar Hadir</label>
-                        <textarea class="form-control" id="daftar_hadir" name="daftar_hadir">{{ $event->daftar_hadir }}</textarea>
-                    </div> --}}
-                    <div class="form-group">
-                        <label for="notulensi">Notulensi</label>
-                        <textarea class="form-control" id="notulensi" name="notulensi">{{ $event->notulensi }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="dokumentasi">Dokumentasi</label>
-                        <input type="file" class="form-control" id="dokumentasi" name="dokumentasi">
-                        @if ($event->dokumentasi)
-                            <img src="data:image/jpeg;base64,{{ $event->dokumentasi }}" alt="Gambar Dokumentasi"
-                                width="100px">
-                        @endif
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px">Update</button>
-                </form>
-            </div>
-        </div>
     </div>
 </div>
 

@@ -25,7 +25,7 @@ class KelayakanUsahaController extends Controller
              $filePath = $request->file('file')->store('kelayakan_finansial', 'public'); // Simpan di storage/public/pengajuan_halal
          }
 
-        $path = $request->file('laporan_keuangan')->store('laporan_keuangan');
+        $path = $request->file('laporan_keuangan')->store('laporan_keuangan', 'public');
         
 
         KelayakanFinansial::create([
@@ -299,23 +299,32 @@ class KelayakanUsahaController extends Controller
           return redirect()->route('pemasaran')->with('success', 'Pengajuan berhasil ditolak.');
     }
 
-    public function finansial()
+    public function finansial(Request $request)
     {
-        $dataFinansial = KelayakanFinansial::all();
+        $search = $request->input('search');
+
+        $dataFinansial = KelayakanFinansial::where('nama_usaha', 'like', "%{$search}%")
+                        ->paginate(10);
 
         return view('admin.finansial', compact('dataFinansial'));
     }
 
-    public function operasional()
+    public function operasional(Request $request)
     {
-        $dataOperasional = KelayakanOperasional::all();
+        $search = $request->input('search');
+
+        $dataOperasional = KelayakanOperasional::where('nama_usaha', 'like', "%{$search}%")
+                        ->paginate(10);
 
         return view('admin.operasional', compact('dataOperasional'));
     }
 
-    public function pemasaran()
+    public function pemasaran(Request $request)
     {
-        $dataPemasaran = KelayakanPemasaran::all();
+        $search = $request->input('search');
+
+        $dataPemasaran = KelayakanPemasaran::where('nama_usaha', 'like', "%{$search}%")
+                        ->paginate(10);
 
         return view('admin.pemasaran', compact('dataPemasaran'));
     }

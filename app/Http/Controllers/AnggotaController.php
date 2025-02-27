@@ -4,18 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AnggotaController extends Controller
 {
-    public function event()
+    public function event(Request $request)
     {
-        $event = Event::all(); // Ambil semua data event dari tabel
-        return view('anggota.event-anggota', compact('event'));
+        $search = $request->input('search');
+        $event = Event::where('tanggal', '>=', Carbon::today())
+        ->when($search, function ($query) use ($search) {
+            return $query->where('nama_event', 'like', "%$search%")
+                         ->where('tanggal', '>=', Carbon::today()); // Tambahkan filter ulang
+        })
+        ->paginate(6)
+        ->appends(request()->query());
+
+        return view('anggota.event-anggota', compact('event', 'search'));
     }
 
-    public function riwayat()
+    public function riwayat(Request $request)
     {
-        return view('anggota.riwayat-event');
+        $search = $request->input('search');
+
+        $event = Event::where('tanggal', '<', Carbon::today())
+                    ->when($search, function ($query) use ($search) {
+                        return $query->where('nama_event', 'like', "%$search%");
+                    })
+                    ->orderByDesc('tanggal') // Urutkan dari yang terbaru
+                    ->paginate(6) // Batasi 6 event per halaman
+                    ->appends(request()->query()); // Menjaga query pencarian saat paginasi
+
+        return view('anggota.riwayat-event', compact('event', 'search'));
     }
 
     public function pengajuan()
@@ -25,7 +44,7 @@ class AnggotaController extends Controller
 
     public function dashboard()
     {
-        $Event = Event::all(); // Ambil semua data event dari tabel
+        $Event = Event::orderBy('tanggal', 'desc')->take(3)->get();
         return view('anggota.dashboard-anggota', compact('Event'));
     }
 

@@ -735,35 +735,35 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-        // Event listener untuk form update asisten koki
-        document.getElementById('formUpdateAsistenKoki').addEventListener('submit', function(event) {
-            event.preventDefault(); // Mencegah pengiriman form
+                    document.addEventListener('DOMContentLoaded', function() {
+                    // Event listener untuk form update asisten koki
+                    document.getElementById('formUpdateAsistenKoki').addEventListener('submit', function(event) {
+                        event.preventDefault(); // Mencegah pengiriman form
 
-            // Ambil data dari input form
-            const namaLengkap = document.getElementById('namaLengkapAsisten').value;
-            const keahlian = document.getElementById('keahlian').value;
-            const suratPengantar = document.getElementById('suratPengantar').files.length > 0 ? 'Sudah diunggah' : 'Tidak ada file';
+                        // Ambil data dari input form
+                        const namaLengkap = document.getElementById('namaLengkapAsisten').value;
+                        const keahlian = document.getElementById('keahlian').value;
+                        const suratPengantar = document.getElementById('suratPengantar').files.length > 0 ? 'Sudah diunggah' : 'Tidak ada file';
 
-            // Tampilkan konfirmasi SweetAlert
-            Swal.fire({
-                title: 'Apakah data sudah sesuai?',
-                html: `
-                `,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Ajukan!',
-                cancelButtonText: 'Periksa Lagi',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Kirim formulir jika pengguna yakin
-                    document.getElementById('formUpdateAsistenKoki').submit();
-                }
-            });
-        });
-    });
+                        // Tampilkan konfirmasi SweetAlert
+                        Swal.fire({
+                            title: 'Apakah data sudah sesuai?',
+                            html: `
+                            `,
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya, Ajukan!',
+                            cancelButtonText: 'Periksa Lagi',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Kirim formulir jika pengguna yakin
+                                document.getElementById('formUpdateAsistenKoki').submit();
+                            }
+                        });
+                    });
+                });
 
 
 
@@ -817,8 +817,8 @@
                     const keahlian = document.getElementById('keahlian').value;
                     const suratPengantar = document.getElementById('suratPengantar').files[0];
 
-                    // Validasi jika ada field yang kosong
-                    if (!namaLengkapAsisten || !keahlian || !suratPengantar) {
+                    // Validasi jika nama dan keahlian kosong
+                    if (!namaLengkapAsisten || !keahlian) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -831,10 +831,10 @@
                     Swal.fire({
                         title: 'Apakah data sudah sesuai?',
                         html: `
-                    <strong>Nama Lengkap:</strong> ${namaLengkapAsisten}<br>
-                    <strong>Keahlian Khusus:</strong> ${keahlian}<br>
-                    <strong>Surat Pengantar:</strong> ${suratPengantar.name}<br>
-                `,
+                            <strong>Nama Lengkap:</strong> ${namaLengkapAsisten}<br>
+                            <strong>Keahlian Khusus:</strong> ${keahlian}<br>
+                            <strong>Surat Pengantar:</strong> ${suratPengantar ? suratPengantar.name : 'Tidak ada file'}<br>
+                        `,
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -848,6 +848,7 @@
                         }
                     });
                 });
+
             </script>
 
             

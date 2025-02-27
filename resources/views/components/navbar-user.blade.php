@@ -12,13 +12,13 @@
                 <li class="profile-header">
                     <i class='bx bx-user-circle profile-icon'></i>
                     <div class="profile-info">
-                        <p>Bima</p>
+                        <p>{{ Auth::user()->dataPengguna->nama_pemilik }}</p>
                         <small>Anggota Account</small>
                     </div>
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/profile-user">
                         <i class='bx bx-user'></i> Profile
                     </a>
                 </li>

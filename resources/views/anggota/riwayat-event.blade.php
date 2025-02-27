@@ -11,89 +11,86 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 content">
             <!-- Header Section -->
             <div class="header-section text-center py-4 bg-gradient">
-                <h1 class="fw-bold text-black">Riwayat Event Anda</h1>
-                <p class="text-dark">Lihat kembali event-event yang telah Anda ikuti atau lewatkan sebelumnya.</p>
+                <h1 class="fw-bold text-black">Riwayat Event</h1>
+                <p class="text-dark">Lihat kembali event-event APJI yang telah terlewatkan sebelumnya.</p>
             </div>
 
-            <!-- Search Section -->
-            <div class="container pt-4">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Cari Riwayat Event" aria-label="Search">
+             <!-- Search Section -->
+             <div class="container pt-4">
+                <form class="d-flex" role="search" method="GET" action="{{ route('riwayat') }}">
+                    <input class="form-control me-2" type="search" name="search" value="{{ request('search') }}" placeholder="Cari Riwayat Event" aria-label="Search">
                     <button class="btn btn-primary" type="submit">Cari</button>
                 </form>
             </div>
 
             <!-- Riwayat Events Section -->
-            <div class="simple-container pt-1">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <!-- Event Card 1 -->
-                    <div class="col">
-                        <div class="event-card-simple shadow-sm rounded">
-                            <img src="https://via.placeholder.com/300" alt="Event 1" class="event-card-img">
-                            <div class="event-card-body">
-                                <h5 class="event-card-title">Seminar Bisnis Kuliner Indonesia</h5>
-                                <p class="event-card-description">Bergabunglah dengan para ahli di industri kuliner untuk mempelajari strategi terbaru dalam mengelola bisnis makanan.</p>
-                                <ul class="event-card-details">
-                                    <li>15 Januari 2024</li>
-                                    <li>09:00 - 12:00</li>
-                                    <li>Jakarta, Indonesia</li>
-                                    <li class="text-success">Selesai</li>
-                                </ul>
-                                <div class="event-card-completed-time text-center mt-3">
-                                    <span class="badge bg-primary text-white py-2 px-3">
-                                        <i class="bi bi-calendar-check"></i> Diselesaikan pada: <strong>15 Januari 2024</strong>
-                                    </span>
-                                </div>
+            <div class="container pt-4">
+                <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+                    @foreach ($event as $item)
+                    <div class="col d-flex align-items-stretch">
+                        <div class="card shadow-sm border-0 rounded event-card" style="width:290px">
+                            <img src="{{ asset($item->img) }}" alt="{{ $item->nama_event }}" class="card-img-top rounded-top" style="object-fit: cover; height: 180px;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-center fw-bold text-dark mb-2" style="font-size: 17px;">{{ $item->nama_event }}</h5>
+                                <p class="card-text text-muted mb-1" style="font-size: 14px;"><i class="bx bx-calendar me-2 text-primary"></i>{{ $item->tanggal }}</p>
+                                <p class="card-text text-muted" style="font-size: 14px;"><i class="bx bx-map me-2 text-danger"></i>{{ $item->lokasi }}</p>
+                                <button class="btn btn-primary w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#eventDetailModal{{ $item->id }}">Detail Event</button>
                             </div>
                         </div>
                     </div>
+                    @endforeach
 
-                    <!-- Event Card 2 -->
-                    <div class="col">
-                        <div class="event-card-simple shadow-sm rounded">
-                            <img src="https://via.placeholder.com/300" alt="Event 2" class="event-card-img">
-                            <div class="event-card-body">
-                                <h5 class="event-card-title">Workshop Pemasaran Digital</h5>
-                                <p class="event-card-description">Pelajari bagaimana menggunakan pemasaran digital untuk meningkatkan visibilitas dan penjualan bisnis restoran Anda.</p>
-                                <ul class="event-card-details">
-                                    <li>18 Januari 2024</li>
-                                    <li>13:00 - 16:00</li>
-                                    <li>Bandung, Indonesia</li>
-                                    <li class="text-success">Selesai</li>
-                                </ul>
-                                <div class="event-card-completed-time text-center mt-3">
-                                    <span class="badge bg-primary text-white py-2 px-3">
-                                        <i class="bi bi-calendar-check"></i> Diselesaikan pada: <strong>17 Januari 2024</strong>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                    @if ($event->isEmpty())
+                    <p class="text-center text-muted">Belum ada event tersedia.</p>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Pagination Section -->
+            <div class="container pt-4">
+                @if ($event->total() > 6)
+                    <div class="d-flex justify-content-end"> <!-- Posisi pagination di pojok kanan bawah -->
+                        {{ $event->links() }}
                     </div>
+                @endif
+            </div>
 
-                    <!-- Event Card 3 -->
-                    <div class="col">
-                        <div class="event-card-simple shadow-sm rounded">
-                            <img src="https://via.placeholder.com/300" alt="Event 3" class="event-card-img">
-                            <div class="event-card-body">
-                                <h5 class="event-card-title">Webinar Tren Industri Jasa Boga</h5>
-                                <p class="event-card-description">Pelajari tren terbaru dalam industri jasa boga dan bagaimana mengadaptasi bisnis Anda untuk masa depan.</p>
-                                <ul class="event-card-details">
-                                    <li>25 Januari 2024</li>
-                                    <li>10:00 - 11:30</li>
-                                    <li>Online</li>
-                                    <li class="text-success">Selesai</li>
-                                </ul>
-                                <div class="event-card-completed-time text-center mt-3">
-                                    <span class="badge bg-primary text-white py-2 px-3">
-                                        <i class="bi bi-calendar-check"></i> Diselesaikan pada: <strong>25 Januari 2024</strong>
-                                    </span>
-                                </div>
+            <!-- Modals -->
+            @foreach ($event as $item)
+            <div class="modal fade" id="eventDetailModal{{ $item->id }}" tabindex="-1" aria-labelledby="eventDetailModalLabel{{ $item->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eventDetailModalLabel{{ $item->id }}">Detail Event</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <!-- Event Image -->
+                            <div class="text-center mb-4">
+                                <img src="{{ asset($item->img) }}" alt="Event {{ $item->nama_event }}" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
                             </div>
+                            <!-- Event Details -->
+                            <h5 class="text-center fw-bold mb-3">{{ $item->nama_event }}</h5>
+                            <p class="text-muted mb-3">{{ $item->deskripsi }}</p>
+                            <p class="text-muted mb-1">
+                                <i class="bx bx-calendar me-2 text-primary"></i>{{ $item->tanggal }}
+                            </p>
+                            <p class="text-muted">
+                                <i class="bx bx-map me-2 text-danger"></i>{{ $item->lokasi }}
+                            </p>
+                        </div>
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Daftar</button>
                         </div>
                     </div>
                 </div>
             </div>
-
+            @endforeach
+        </div>
         </main>
     </div>
         <!-- Footer -->

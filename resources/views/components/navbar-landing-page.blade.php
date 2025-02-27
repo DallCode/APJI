@@ -12,7 +12,7 @@
                 <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
                 <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
-                <li class="nav-item"><a class="nav-link" href="#berita">berita</a></li>
+                <li class="nav-item"><a class="nav-link" href="#berita">Berita</a></li>
                 <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
             </ul>
             <!-- <ul class="navbar-nav">
@@ -24,5 +24,5 @@
                 </li>
             </ul> -->
         </div>
-    </div>
-  </nav>
+    </div>
+  </nav>

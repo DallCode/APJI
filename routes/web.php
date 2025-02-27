@@ -40,6 +40,7 @@ Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('au
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/event', [AdminController::class, 'event'])->name('admin.event');
+    Route::get('/event-riwayat', [AdminController::class, 'riwayat'])->name('admin.event-riwayat');
     Route::post('/event', [AdminController::class, 'store'])->name('event.store');
     Route::put('/event/update/{id_event}', [AdminController::class, 'update'])->name('event.update');
     Route::delete('/event/{id_event}', [AdminController::class, 'destroy'])->name('event.delete');
@@ -100,7 +101,7 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::get('/riwayat-event', [AnggotaController::class, 'riwayat'])->name('riwayat');
     Route::get('/kelayakan-usaha', [AnggotaController::class, 'kelayakanUsaha'])->name('kelayakanUsaha');
     Route::post('/ajukan-kelayakan-finansial', [KelayakanUsahaController::class, 'storeFinansial'])->name('anggota.kelayakanUsaha');
-    Route::put('/ajukan-kelayakan-finansial/{id_finansial}', [KelayakanUsahaController::class, 'updateUserFinansial'])->name('anggota.kelayakanUsaha.update');
+    Route::put('/ajukan-kelayakan-finansial/{id_finansial}', [KelayakanUsahaController::class, 'updateUserFinansial'])->name('anggota.kelayakanUsaha.update.finansial');
     Route::post('/ajukan-kelayakan-operasional', [KelayakanUsahaController::class, 'storeOperasional'])->name('anggota.kelayakanUsaha');
     Route::put('/ajukan-kelayakan-operasional/{id_operasional}', [KelayakanUsahaController::class, 'updateUserOperasional'])->name('anggota.kelayakanUsaha.update');
     Route::post('/ajukan-kelayakan-pemasaran', [KelayakanUsahaController::class, 'storePemasaran'])->name('anggota.kelayakanUsaha');
