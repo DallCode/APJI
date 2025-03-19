@@ -232,4 +232,38 @@
     }
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.querySelector("table");
+        const headers = table.querySelectorAll("th");
+        const tbody = table.querySelector("tbody");
+
+        const sortTable = (index, asc) => {
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.children[index].textContent.trim().toLowerCase();
+                const cellB = rowB.children[index].textContent.trim().toLowerCase();
+                
+                if (!isNaN(Date.parse(cellA)) && !isNaN(Date.parse(cellB))) {
+                    return asc ? new Date(cellA) - new Date(cellB) : new Date(cellB) - new Date(cellA);
+                }
+                
+                return asc ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            });
+            
+            rows.forEach(row => tbody.appendChild(row));
+        };
+
+        headers.forEach((header, index) => {
+            let asc = true;
+            header.addEventListener("click", () => {
+                sortTable(index, asc);
+                asc = !asc;
+            });
+        });
+    });
+</script>
+
+
 @endsection

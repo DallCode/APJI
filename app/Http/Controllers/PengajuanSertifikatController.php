@@ -23,7 +23,7 @@ class PengajuanSertifikatController extends Controller
 
         // Jika ada pencarian, filter berdasarkan nama usaha
         $halalData = PengajuanHalal::where('nama_usaha', 'like', "%{$search}%")
-                    ->paginate(10);
+                    ->paginate(2);
 
         return view('admin.halal', compact('halalData'));
     }

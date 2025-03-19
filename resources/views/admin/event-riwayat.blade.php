@@ -37,38 +37,47 @@
                                 </div>
 
                                 <div class="mt-auto">
-                                    <a href="{{ route('detailEvent') }}" class="btn btn-primary w-100" data-bs-toggle="">
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#eventDetailModal{{ $item->id }}-{{ $loop->index }}">
                                         Detail Event
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {{-- <!-- Modal for event details -->
-                    <div class="modal fade" id="eventDetailModal{{ $item->id }}" tabindex="-1" 
-                        aria-labelledby="eventDetailModalLabel{{ $item->id }}" aria-hidden="true">
+                    <!-- Modal untuk Detail Event -->
+                    <div class="modal fade" id="eventDetailModal{{ $item->id }}-{{ $loop->index }}" tabindex="-1" aria-labelledby="eventDetailModalLabel{{ $item->id }}-{{ $loop->index }}" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="eventDetailModalLabel{{ $item->id }}">Detail Event</h5>
+                                    <h5 class="modal-title fw-bold" id="eventDetailModalLabel{{ $item->id }}-{{ $loop->index }}">Detail Event</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
+                                    <!-- Event Image -->
                                     <div class="text-center mb-4">
-                                        <img 
-                                            src="{{ asset($item->img) }}" 
-                                            alt="Event {{ $item->nama_event }}" 
-                                            class="img-fluid rounded" 
-                                            style="max-height: 300px; object-fit: cover;">
+                                        {{-- <img src="{{ asset($item->img) }}" alt="Event {{ $item->nama_event }}" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;"> --}}
                                     </div>
+                                    <!-- Event Details -->
                                     <h5 class="text-center fw-bold mb-3">{{ $item->nama_event }}</h5>
-                                    <p class="text-muted mb-3">{{ $item->deskripsi }}</p>
-                                    <p class="text-muted mb-1">
-                                        <i class="bx bx-calendar me-2 text-primary"></i>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+        
+                                    <p class="text-muted mb-3">
+                                        <strong>Tanggal:</strong>
+                                        {{ $item->tanggal }}</p>
+                                    <!-- Notulensi -->
+                                    <p class="text-muted mb-3">
+                                        <strong>Notulensi:</strong> 
+                                        {{ $item->notulensi ? $item->notulensi : 'Notulensi belum tersedia' }}
                                     </p>
-                                    <p class="text-muted">
-                                        <i class="bx bx-map me-2 text-danger"></i>{{ $item->lokasi }}
+        
+                                    <!-- Dokumentasi -->
+                                    <p class="text-muted mb-3">
+                                        <strong>Dokumentasi:</strong> 
+                                        @if ($item->dokumentasi)
+                                            <a href="{{ $item->dokumentasi }}" target="_blank" class="text-primary">{{ $item->dokumentasi }}</a>
+                                        @else
+                                            Dokumentasi belum tersedia
+                                        @endif
                                     </p>
                                 </div>
                                 <div class="modal-footer">
@@ -76,92 +85,59 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
-                    @endforeach
+                    </div>
 
+                    @endforeach
+                    
+                    
                     @if ($event->isEmpty())
                     <div class="col-12">
                         <p class="text-center text-muted">Belum ada event tersedia.</p>
                     </div>
                     @endif
                 </div>
-
                 <!-- Pagination Section -->
-                {{-- <div class="d-flex justify-content-end mt-4">
-                    @if ($event->hasPages())
-                        {{ $event->links() }}
+                <div class="container pt-4">
+                    @if ($event->total() > 6)
+                        <div class="d-flex justify-content-right">
+                            <nav>
+                                <ul class="pagination">
+                                    {{-- Tombol Previous --}}
+                                    @if ($event->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Previous</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $event->previousPageUrl() }}">Previous</a>
+                                        </li>
+                                    @endif
+
+                                    {{-- Nomor Halaman --}}
+                                    @foreach ($event->getUrlRange(1, $event->lastPage()) as $page => $url)
+                                        <li class="page-item {{ $event->currentPage() == $page ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endforeach
+
+                                    {{-- Tombol Next --}}
+                                    @if ($event->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $event->nextPageUrl() }}">Next</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Next</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
+                        </div>
                     @endif
-                </div> --}}
+                </div>
             </div>
         </main>
     </div>
 </div>
-
-<script>
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', function(event) {
-            if (!confirm('Apakah Anda yakin ingin menghapus event ini?')) {
-                event.preventDefault();
-            }
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var updateModal = document.getElementById('updateModal');
-        updateModal.addEventListener('show.bs.modal', function(event) {
-            var button = event.relatedTarget; // Tombol yang diklik
-            var idEvent = button.getAttribute('data-id-event');
-            var namaEvent = button.getAttribute('data-nama-event');
-            var tanggal = button.getAttribute('data-tanggal');
-            var lokasi = button.getAttribute('data-lokasi');
-            var daftarHadir = button.getAttribute('data-daftar-hadir');
-            var notulensi = button.getAttribute('data-notulensi');
-            var dokumentasi = button.getAttribute('data-dokumentasi');
-
-            // Isi nilai dalam form modal
-            var modal = updateModal;
-            modal.querySelector('#nama_event').value = namaEvent;
-            modal.querySelector('#tanggal').value = tanggal;
-            modal.querySelector('#lokasi').value = lokasi;
-            modal.querySelector('#daftar_hadir').value = daftarHadir || '';
-            modal.querySelector('#notulensi').value = notulensi || '';
-
-            if (dokumentasi) {
-                var imgPreview = modal.querySelector('img');
-                if (imgPreview) {
-                    imgPreview.src = 'data:image/jpeg;base64,' + dokumentasi;
-                    imgPreview.style.display = 'block';
-                }
-            }
-
-            // Update action form untuk ID event yang sesuai
-            var form = modal.querySelector('form');
-            form.action = '/event/update/' + idEvent;
-        });
-    });
-</script>
-
-<script>
-    function previewImage() {
-        const input = document.getElementById('img');
-        const preview = document.getElementById('imgPreview');
-        
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            };
-            
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.src = '#';
-            preview.style.display = 'none';
-        }
-    }
-</script>
 
 @endsection

@@ -35,7 +35,7 @@
                                 <th>Notulensi</th>
                                 {{-- <th>Lokasi</th> --}}
                                 {{-- <th>Gambar</th> --}}
-                                <th>Dokumentasi</th>
+                            <th>Dokumentasi</th>
                                 {{-- <th>Aksi</th> --}}
                             </tr>
                         </thead>

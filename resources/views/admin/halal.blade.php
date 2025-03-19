@@ -55,9 +55,37 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-end mt-3">
-                    {{ $halalData->links() }}
-                </div>
+                <div class="d-flex justify-content-left mt-3">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            @if ($halalData->onFirstPage())
+                                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $halalData->previousPageUrl() }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo; Previous</span>
+                                    </a>
+                                </li>
+                            @endif
+                
+                            @foreach ($halalData->getUrlRange(1, $halalData->lastPage()) as $page => $url)
+                                <li class="page-item {{ $halalData->currentPage() == $page ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                            @endforeach
+                
+                            @if ($halalData->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $halalData->nextPageUrl() }}" aria-label="Next">
+                                        <span aria-hidden="true">Next &raquo;</span>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="page-item disabled"><span class="page-link">Next</span></li>
+                            @endif
+                        </ul>
+                    </nav>
+                </div>                
             </div>
         </main>
     </div>
@@ -235,6 +263,38 @@
     });
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.querySelector("table");
+        const headers = table.querySelectorAll("th");
+        const tbody = table.querySelector("tbody");
+
+        const sortTable = (index, asc) => {
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.children[index].textContent.trim().toLowerCase();
+                const cellB = rowB.children[index].textContent.trim().toLowerCase();
+                
+                if (!isNaN(Date.parse(cellA)) && !isNaN(Date.parse(cellB))) {
+                    return asc ? new Date(cellA) - new Date(cellB) : new Date(cellB) - new Date(cellA);
+                }
+                
+                return asc ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            });
+            
+            rows.forEach(row => tbody.appendChild(row));
+        };
+
+        headers.forEach((header, index) => {
+            let asc = true;
+            header.addEventListener("click", () => {
+                sortTable(index, asc);
+                asc = !asc;
+            });
+        });
+    });
+</script>
 
     
 @endsection

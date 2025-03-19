@@ -17,29 +17,25 @@
         <!-- Statistics Section -->
         <section class="stats-section py-4">
             <div class="container">
-                <div class="row g-4 text-center">
-                    <!-- Pengajuan Sertifikat Card -->
-                    <div class="col-md-6">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="d-flex gap-4">
+                        <!-- Pengajuan Sertifikat Card -->
                         <a href="{{ route('pengajuan') }}" class="text-decoration-none">
-                            <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center" style="transition: transform 0.3s ease-in-out; height: 160px;">
+                            <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
+                                style="transition: transform 0.3s ease-in-out; height: 160px; width: 475px;">
                                 <div class="text-center">
-                                    <!-- Logo Icon for Pengajuan Sertifikat -->
                                     <i class="bx bx-award text-primary" style="font-size: 4rem; margin-bottom: 8px;"></i>
-                                    <!-- Text Below Logo -->
                                     <h5 class="mt-0 fw-bold text-dark" style="font-size: 1.20rem;">Pengajuan Sertifikat</h5>
                                 </div>
                             </div>
                         </a>
-                    </div>
 
-                    <!-- Kelayakan Usaha Card -->
-                    <div class="col-md-6">
+                        <!-- Kelayakan Usaha Card -->
                         <a href="{{ route('kelayakanUsaha') }}" class="text-decoration-none">
-                            <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center" style="transition: transform 0.3s ease-in-out; height: 160px;">
+                            <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
+                                style="transition: transform 0.3s ease-in-out; height: 160px; width: 475px;">
                                 <div class="text-center">
-                                    <!-- Logo Icon for Kelayakan Usaha -->
                                     <i class="bx bx-check-shield text-success" style="font-size: 4rem; margin-bottom: 8px;"></i>
-                                    <!-- Text Below Logo -->
                                     <h5 class="mt-0 fw-bold text-dark" style="font-size: 1.20rem;">Kelayakan Usaha</h5>
                                 </div>
                             </div>

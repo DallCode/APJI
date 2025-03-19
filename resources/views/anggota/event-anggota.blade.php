@@ -87,11 +87,42 @@
         
             <div class="container pt-4">
                 @if ($event->total() >= 6)
-                    <div class="d-flex justify-content-start"> <!-- Posisi pagination di pojok kiri -->
-                        {{ $event->links() }}
+                    <div class="d-flex justify-content-center">
+                        <nav>
+                            <ul class="pagination pagination-sm">
+                                {{-- Tombol "Previous" --}}
+                                @if ($event->onFirstPage())
+                                    <li class="page-item disabled">
+                                        <span class="page-link rounded-pill">&laquo;</span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link rounded-pill" href="{{ $event->previousPageUrl() }}" aria-label="Previous">&laquo;</a>
+                                    </li>
+                                @endif
+            
+                                {{-- Nomor Halaman --}}
+                                @foreach ($event->getUrlRange(1, $event->lastPage()) as $page => $url)
+                                    <li class="page-item {{ $page == $event->currentPage() ? 'active' : '' }}">
+                                        <a class="page-link rounded-pill" href="{{ $url }}">{{ $page }}</a>
+                                    </li>
+                                @endforeach
+            
+                                {{-- Tombol "Next" --}}
+                                @if ($event->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link rounded-pill" href="{{ $event->nextPageUrl() }}" aria-label="Next">&raquo;</a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled">
+                                        <span class="page-link rounded-pill">&raquo;</span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
                     </div>
                 @endif
-            </div>
+            </div>            
         </main>
     </div>
 </div>

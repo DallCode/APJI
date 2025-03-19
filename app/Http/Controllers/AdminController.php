@@ -17,7 +17,7 @@ use Carbon\Carbon;
 class AdminController extends Controller
 {
     public function dashboard() {
-        $recentUsers = User::latest()->take(5)->get(); 
+        $recentUsers = User::latest()->paginate(5); // Pagination 5 data per halaman
         $datapengguna = DataPengguna::count();
         $keanggotaan = DataPengguna::where('tipe_member', 'Terdaftar')->count();
          // Menghitung total pengajuan dari tiga tabel
@@ -50,7 +50,7 @@ class AdminController extends Controller
 
     public function riwayatAdmin(Request $request)
     {
-        $search = $request->input('search');
+        $search = $request->input('search'); 
         
         $event = Event::where('tanggal', '<', Carbon::today()) // Hanya event yang sudah kadaluarsa
             ->when($search, function ($query, $search) {
