@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengajuanSertifikatController;
 use App\Http\Controllers\KelayakanUsahaController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\GuideController;
 use App\Models\PengajuanHalal;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +74,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // Rute untuk halaman anggota
 Route::middleware(['auth', 'anggota'])->group(function () {
     Route::get('/anggota/dashboard', [AnggotaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/guide', [GuideController::class, 'index'])->name('anggota.guide');
     Route::get('/pengajuan-sertifikat', [AnggotaController::class, 'pengajuan'])->name('pengajuan');
     // Route::get('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'create'])->name('pengajuan.sertifikat-halal.create');
     Route::post('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'storeHalal']);

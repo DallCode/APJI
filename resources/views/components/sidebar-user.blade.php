@@ -15,6 +15,17 @@
             </li>
         </ul>
 
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="sidebar-link {{ request()->routeIs('anggota.guide') ? 'active' : '' }}" href="{{ route('anggota.guide') }}">
+                    <div class="d-flex align-items-center">
+                        <i class='bx bx-help-circle custom-icon'></i> 
+                        <span class="small-text">Bantuan</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+
         {{-- <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="sidebar-link {{ request()->is('event-anggota') ? 'active' : '' }}" href="/event-anggota">
@@ -35,7 +46,7 @@
                     </div>
                     <i class="bx bx-chevron-down"></i>
                 </a>
-                <div class="collapse" id="eventMenu">
+                <div class="collapse {{ request()->is('event-anggota') || request()->is('riwayat-event') ? 'show' : '' }}" id="eventMenu">
                     <ul class="list-unstyled ms-3">
                         <li class="nav-item">
                             <a class="sidebar-link {{ request()->is('event-anggota') ? 'active' : '' }}" href="/event-anggota">
@@ -57,6 +68,7 @@
                 </div>
             </li>
         </ul>
+        
 
         <ul class="nav flex-column">
             <li class="nav-item">
