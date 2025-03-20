@@ -29,6 +29,10 @@
                             <input type="email" name="email" id="email" class="form-control" value="{{ $dataPengguna->email }}">
                         </div>
 
+                        <div class="form-group text-center mt-2">
+                            <a href="{{ route('password.reset') }}" class="text-decoration-none">Reset Password</a>
+                        </div>
+
                         <!-- Tipe Member -->
                         <div class="form-group">
                             <label for="tipe_member" class="form-label">Tipe Member</label>

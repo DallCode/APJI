@@ -57,6 +57,10 @@
                         <input type="checkbox" class="form-check-input" id="show-password"> Show Password
                     </div>
 
+                    <div class="form-group text-center mt-2">
+                        <a href="{{ route('password.forgot') }}" class="text-decoration-none">Lupa Password?</a>
+                    </div>
+                    
                     <button type="submit" class="login-btn">Login</button>
 
                     <p class="text-center mt-3">Anggota Baru? <a href="{{ route('registerShow') }}">Daftar di sini</a></p>
