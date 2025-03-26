@@ -23,7 +23,6 @@ class RegisterController extends Controller
         $validated = $request->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            'tipe_member' => 'required|in:Terdaftar,Biasa',
             'nama_usaha' => 'required',
             'alamat' => 'required',
             'provinsi' => 'required',
@@ -52,7 +51,6 @@ class RegisterController extends Controller
             DataPengguna::create([
                 'id' => $user->id, // Pastikan 'id' di data_pengguna terkait dengan user
                 'email' => $request->email,
-                'tipe_member' => $request->tipe_member,
                 'nama_usaha' => $request->nama_usaha,
                 'alamat' => $request->alamat,
                 'provinsi' => $request->provinsi,

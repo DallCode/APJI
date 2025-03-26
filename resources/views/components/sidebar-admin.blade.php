@@ -8,6 +8,12 @@
           <i class='bx bx-home'></i> Dashboard
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="sidebar-link {{ request()->routeIs('admin.laporan') ? 'active' : '' }}" href="{{ route('admin.laporan') }}">
+          <i class='bx bxs-report' ></i> Laporan
+        </a>
+      </li>
     </ul>
 
     <div class="sidebar-label">Menu</div>

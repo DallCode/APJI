@@ -18,9 +18,8 @@
                 <section class="stats-section py-4">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-md-6 col-lg-5 mb-3 d-flex justify-content-center">
-                                <!-- Pengajuan Sertifikat Card -->
-                                <a href="{{ route('pengajuan') }}" class="text-decoration-none w-100">
+                            <div class="col-md-6 col-lg-5">
+                                <a href="{{ route('pengajuan') }}" class="text-decoration-none">
                                     <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
                                         style="transition: transform 0.3s ease-in-out; height: 160px;">
                                         <div class="text-center">
@@ -32,10 +31,8 @@
                                     </div>
                                 </a>
                             </div>
-
-                            <div class="col-md-6 col-lg-5 mb-3 d-flex justify-content-center">
-                                <!-- Kelayakan Usaha Card -->
-                                <a href="{{ route('kelayakanUsaha') }}" class="text-decoration-none w-100">
+                            <div class="col-md-6 col-lg-5">
+                                <a href="{{ route('kelayakanUsaha') }}" class="text-decoration-none">
                                     <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
                                         style="transition: transform 0.3s ease-in-out; height: 160px;">
                                         <div class="text-center">
@@ -50,6 +47,7 @@
                         </div>
                     </div>
                 </section>
+
 
 
                 <!-- Recent Activities Table -->

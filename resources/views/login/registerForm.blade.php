@@ -30,15 +30,6 @@
                 </div>
 
                 <div class="input-group">
-                    <select name="tipe_member" required>
-                        <option value="">Pilih Tipe Member</option>
-                        <option value="Terdaftar">Terdaftar</option>
-                        <option value="Biasa">Biasa</option>
-                    </select>
-                    <i class="fas fa-user-tag"></i>
-                </div>
-
-                <div class="input-group">
                     <input type="email" name="email" placeholder="Email Usaha" required>
                     <i class="fas fa-envelope"></i>
                 </div>

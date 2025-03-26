@@ -9,6 +9,7 @@ use App\Http\Controllers\PengajuanSertifikatController;
 use App\Http\Controllers\KelayakanUsahaController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\GuideController;
+use App\Http\Controllers\LaporanController;
 use App\Models\PengajuanHalal;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,8 @@ Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('au
 // Rute untuk halaman admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/laporan', [LaporanController::class, 'index'])->name('admin.laporan');
+    Route::get('/laporan/export', [LaporanController::class, 'export'])->name('laporan.export');
     Route::get('/event', [AdminController::class, 'eventAdmin'])->name('admin.event');
     Route::get('/event-riwayat', [AdminController::class, 'riwayatAdmin'])->name('admin.event-riwayat');
     Route::get('/detail-event', [AdminController::class, 'detailEvent'])->name('detailEvent');
