@@ -8,13 +8,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengajuanSertifikatController;
 use App\Http\Controllers\KelayakanUsahaController;
 use App\Http\Controllers\RegisterController;
-<<<<<<< HEAD
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LaporanController;
-=======
 use App\Http\Controllers\WhatsAppResetController;
 use App\Http\Middleware\PreventBackHistory;
->>>>>>> Bima
 use App\Models\PengajuanHalal;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
