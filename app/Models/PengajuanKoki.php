@@ -23,7 +23,7 @@ class PengajuanKoki extends Model
     ];
 
     // Jika tabel ini memiliki kolom created_at dan updated_at, maka ini tetap true.
-    public $timestamps = false; // Atur menjadi true jika tabel memiliki timestamps.
+    public $timestamps = true; // Atur menjadi true jika tabel memiliki timestamps.
 
     public function pengguna()
     {

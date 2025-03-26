@@ -10,6 +10,7 @@ class PengajuanAsistenKoki extends Model
     protected $table = 'detail_pengajuan_asisten_koki';
 
     protected $primaryKey = 'id_detail';
+    
 
     // Kolom yang dapat diisi secara massal
     protected $fillable = [
@@ -23,7 +24,7 @@ class PengajuanAsistenKoki extends Model
     ];
 
     // Jika tabel ini memiliki kolom created_at dan updated_at, maka ini tetap true.
-    public $timestamps = false; // Atur menjadi true jika tabel memiliki timestamps.
+    public $timestamps = true; // Atur menjadi true jika tabel memiliki timestamps.
 
     // Relasi ke pengajuan_sertifikat
     public function pengguna()

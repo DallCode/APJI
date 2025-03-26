@@ -1,0 +1,25 @@
+/* Reset beberapa elemen */
+.laporan-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.laporan-container .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.laporan-container .card h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.laporan-container table {
+    font-size: 14px;
+}
+
+.laporan-container table th {
+    background-color: #e9ecef;
+    text-align: center;
+}
