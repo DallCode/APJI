@@ -17,8 +17,8 @@
         <!-- Statistics Section -->
         <section class="stats-section py-4">
             <div class="container">
-                <div class="row d-flex justify-content-center text-center">
-                    <div class="d-flex gap-4">
+                <div class="row justify-content-center">
+                    <div class="d-flex gap-4 col-md-6 col-lg-5">
                         <!-- Pengajuan Sertifikat Card -->
                         <a href="{{ route('pengajuan') }}" class="text-decoration-none">
                             <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
