@@ -75,16 +75,56 @@ class LaporanController extends Controller
         $tahun = $request->query('tahun', date('Y'));
         $bulan = $request->query('bulan');
 
-        $data = [
-            'totalSertifikat' => PengajuanHalal::count() + PengajuanKoki::count() + PengajuanAsistenKoki::count(),
-            'totalKelayakan' => KelayakanFinansial::count() + KelayakanOperasional::count() + KelayakanPemasaran::count(),
+        // Buat query dengan filter tahun & bulan
+        $querySertifikat = [
+            'Sertifikat Halal' => PengajuanHalal::query(),
+            'Sertifikat Koki' => PengajuanKoki::query(),
+            'Sertifikat Asisten Koki' => PengajuanAsistenKoki::query(),
         ];
+
+        $sertifikatData = [];
+        foreach ($querySertifikat as $key => $query) {
+            if ($bulan) {
+                $query->whereYear('created_at', $tahun)->whereMonth('created_at', $bulan);
+            } else {
+                $query->whereYear('created_at', $tahun);
+            }
+
+            $sertifikatData[$key] = [
+                'diterima' => (clone $query)->where('status', 'diterima')->count(),
+                'ditolak' => (clone $query)->where('status', 'ditolak')->count(),
+                'total' => $query->count(),
+            ];
+        }
+
+        $queryKelayakan = [
+            'finansial' => KelayakanFinansial::query(),
+            'operasional' => KelayakanOperasional::query(),
+            'pemasaran' => KelayakanPemasaran::query(),
+        ];
+
+        $kelayakanData = [];
+        foreach ($queryKelayakan as $key => $query) {
+            if ($bulan) {
+                $query->whereYear('created_at', $tahun)->whereMonth('created_at', $bulan);
+            } else {
+                $query->whereYear('created_at', $tahun);
+            }
+
+            $kelayakanData[$key] = $query->count();
+        }
+
+        $totalSertifikat = collect($sertifikatData)->sum('total');
+        $totalKelayakan = collect($kelayakanData)->sum();
+
+        // Kirim data ke PDF dengan hasil query yang sudah difilter
+        $data = compact('totalSertifikat', 'sertifikatData', 'totalKelayakan', 'kelayakanData', 'tahun', 'bulan');
 
         if ($format === 'pdf') {
             $pdf = Pdf::loadView('admin.laporan_pdf', $data);
-            return $pdf->download('laporan_' . $tahun . '_' . $bulan . '.pdf');
+            return $pdf->download('laporan_' . $tahun . '_' . ($bulan ?? 'all') . '.pdf');
         }
 
-        return Excel::download(new LaporanExport($tahun, $bulan), 'laporan_' . $tahun . '_' . $bulan . '.' . $format);
+        return Excel::download(new LaporanExport($tahun, $bulan), 'laporan_' . $tahun . '_' . ($bulan ?? 'all') . '.' . $format);
     }
 }
