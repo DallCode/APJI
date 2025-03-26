@@ -13,15 +13,16 @@
                     <h1 class="fw-bold text-black">Selamat Datang di Dashboard APJI</h1>
                     <p class="text-dark">Asosiasi Pengusaha Jasa Boga Indonesia</p>
                 </div>
-
+                
                 <!-- Statistics Section -->
                 <section class="stats-section py-4">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-md-6 col-lg-5">
+                            <div class="d-flex gap-4 col-md-6 col-lg-5">
+                                <!-- Pengajuan Sertifikat Card -->
                                 <a href="{{ route('pengajuan') }}" class="text-decoration-none">
                                     <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
-                                        style="transition: transform 0.3s ease-in-out; height: 160px;">
+                                        style="transition: transform 0.3s ease-in-out; height: 160px; width: 475px;">
                                         <div class="text-center">
                                             <i class="bx bx-award text-primary"
                                                 style="font-size: 4rem; margin-bottom: 8px;"></i>
@@ -30,11 +31,11 @@
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="col-md-6 col-lg-5">
+
+                                <!-- Kelayakan Usaha Card -->
                                 <a href="{{ route('kelayakanUsaha') }}" class="text-decoration-none">
                                     <div class="card border-0 shadow-lg rounded-4 p-3 d-flex align-items-center justify-content-center"
-                                        style="transition: transform 0.3s ease-in-out; height: 160px;">
+                                        style="transition: transform 0.3s ease-in-out; height: 160px; width: 475px;">
                                         <div class="text-center">
                                             <i class="bx bx-check-shield text-success"
                                                 style="font-size: 4rem; margin-bottom: 8px;"></i>
