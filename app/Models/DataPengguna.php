@@ -14,7 +14,6 @@ class DataPengguna extends Model
         'id_pengguna',
         'id',
         'email',
-        'tipe_member',
         'nama_usaha',
         'alamat',
         'provinsi',

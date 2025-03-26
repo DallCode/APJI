@@ -24,7 +24,7 @@ class PengajuanHalal extends Model
     ];
 
     // Jika tabel ini memiliki kolom created_at dan updated_at, maka ini tetap true.
-    public $timestamps = false; // Atur menjadi true jika tabel memiliki timestamps.
+    public $timestamps = true; // Atur menjadi true jika tabel memiliki timestamps.
 
      // Relasi ke pengajuan_sertifikat
      public function pengguna()
