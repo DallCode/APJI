@@ -8,8 +8,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengajuanSertifikatController;
 use App\Http\Controllers\KelayakanUsahaController;
 use App\Http\Controllers\RegisterController;
+<<<<<<< HEAD
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LaporanController;
+=======
+use App\Http\Controllers\WhatsAppResetController;
+use App\Http\Middleware\PreventBackHistory;
+>>>>>>> Bima
 use App\Models\PengajuanHalal;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,8 +43,16 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 // Rute untuk proses autentikasi (login)
 Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 
+//Rute untuk reset password menggunakan OTP whatssapp
+Route::get('/forgot-password', [WhatsAppResetController::class, 'showForgotForm'])->name('password.forgot');
+Route::post('/send-otp', [WhatsAppResetController::class, 'sendOtp'])->name('password.sendOtp');
+Route::get('/verify-otp', [WhatsAppResetController::class, 'showVerifyOtpForm'])->name('password.verifyOtp');
+Route::post('/verify-otp', [WhatsAppResetController::class, 'verifyOtp'])->name('password.verifyOtp.post');
+Route::get('/reset-password', [WhatsAppResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [WhatsAppResetController::class, 'reset'])->name('password.update');
+
 // Rute untuk halaman admin
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin','prevent-back-history'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/laporan', [LaporanController::class, 'index'])->name('admin.laporan');
     Route::get('/laporan/export', [LaporanController::class, 'export'])->name('laporan.export');
@@ -75,7 +88,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // Rute untuk halaman anggota
-Route::middleware(['auth', 'anggota'])->group(function () {
+Route::middleware(['auth', 'anggota','prevent-back-history'])->group(function () {
     Route::get('/anggota/dashboard', [AnggotaController::class, 'dashboard'])->name('dashboard');
     Route::get('/guide', [GuideController::class, 'index'])->name('anggota.guide');
     Route::get('/pengajuan-sertifikat', [AnggotaController::class, 'pengajuan'])->name('pengajuan');
