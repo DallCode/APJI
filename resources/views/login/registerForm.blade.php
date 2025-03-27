@@ -30,15 +30,6 @@
                 </div>
 
                 <div class="input-group">
-                    <select name="tipe_member" required>
-                        <option value="">Pilih Tipe Member</option>
-                        <option value="Terdaftar">Terdaftar</option>
-                        <option value="Biasa">Biasa</option>
-                    </select>
-                    <i class="fas fa-user-tag"></i>
-                </div>
-
-                <div class="input-group">
                     <input type="email" name="email" placeholder="Email Usaha" required>
                     <i class="fas fa-envelope"></i>
                 </div>
@@ -161,9 +152,12 @@
                 <div class="input-group">
                     <select name="j_usaha" required>
                         <option value="">Jenis Usaha</option>
-                        <option value="Makanan">Makanan</option>
-                        <option value="Minuman">Minuman</option>
-                        <option value="Jasa">Jasa</option>
+                        <option value="Restoran">Restoran</option>
+                        <option value="Warung Makan">Warung Makan</option>
+                        <option value="Kafe & Coffee Shop">Kafe & Coffee Shop</option>
+                        <option value="Food Truck">Food Truck</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Franchise Kuliner">Franchise Kuliner</option>
                     </select>
                     <i class="fas fa-briefcase"></i>
                 </div>

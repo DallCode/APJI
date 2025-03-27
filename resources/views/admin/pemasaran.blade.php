@@ -29,7 +29,18 @@
                         @foreach ($dataPemasaran as $data)
                         <tr>
                             <td>{{ $data->nama_usaha }}</td>
-                            <td>{{ $data->strategi_pemasaran }}</td>
+                            <td class="strategi-pemasaran-column">
+                                <!-- Tombol Lihat Deskripsi Operasional -->
+                                @if($data->strategi_pemasaran)
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" 
+                                        data-bs-target="#strategiModal" 
+                                        data-deskripsi="{{ $data->strategi_pemasaran }}">
+                                    <i class='bx bx-show'></i>
+                                </button>
+                                @else
+                                <span>Tidak Ada</span>
+                                @endif
+                            </td>
                             {{-- <td>{{ $data->keahlian_khusus }}</td> --}}
                              <td id="action-{{ $data->id_pemasaran }}">
                                     @if ($data->status === 'diterima')
@@ -87,6 +98,24 @@
                 </div>                
             </div>
         </main>
+    </div>
+</div>
+
+<!-- Modal Strategi Pemasaran -->
+<div class="modal fade" id="strategiModal" tabindex="-1" aria-labelledby="strategiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="strategiModalLabel">Detail Strategi Pemasaran</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="strategiContent"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -261,6 +290,16 @@
             });
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var strategiModal = document.getElementById('strategiModal');
+    strategiModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var strategiText = button.getAttribute('data-deskripsi'); // Ubah ke 'data-deskripsi'
+        var modalBody = strategiModal.querySelector('#strategiContent');
+        modalBody.textContent = strategiText ? strategiText : "Tidak ada strategi pemasaran yang tersedia.";
+    });
+});
 </script>   
 
 @endsection

@@ -23,7 +23,6 @@ class RegisterController extends Controller
         $validated = $request->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            'tipe_member' => 'required|in:Terdaftar,Biasa',
             'nama_usaha' => 'required',
             'alamat' => 'required',
             'provinsi' => 'required',
@@ -36,8 +35,9 @@ class RegisterController extends Controller
             'no_sku' => 'nullable|unique:data_pengguna,no_sku',
             'no_npwp' => 'nullable|unique:data_pengguna,no_npwp',
             'k_usaha' => 'required|in:Mikro,Kecil,Menengah',
-            'j_usaha' => 'required|in:Makanan,Minuman,Jasa',
+            'j_usaha' => 'required|in:Restoran,Warung Makan,Kafe & Coffee Shop,Food Truck,Catering,Franchise Kuliner',
         ]);
+        // dd($validated);
     
         try {
             // Simpan user terlebih dahulu
@@ -52,7 +52,6 @@ class RegisterController extends Controller
             DataPengguna::create([
                 'id' => $user->id, // Pastikan 'id' di data_pengguna terkait dengan user
                 'email' => $request->email,
-                'tipe_member' => $request->tipe_member,
                 'nama_usaha' => $request->nama_usaha,
                 'alamat' => $request->alamat,
                 'provinsi' => $request->provinsi,
