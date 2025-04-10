@@ -16,6 +16,7 @@
                   <p>{{ $datapengguna }}</p>
               </div>
           </div>
+
           {{-- <div class="card">
               <div class="card-content">
                 <h2>Event Terbaru</h2>
@@ -27,6 +28,7 @@
                 @endif
               </div>
           </div> --}}
+
           <div class="card menunggu">
               <div class="card-content">
                   <h2>Total Pengajuan</h2>
