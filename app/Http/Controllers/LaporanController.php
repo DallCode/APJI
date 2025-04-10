@@ -35,8 +35,10 @@ class LaporanController extends Controller
 
             // Clone query sebelum dihitung
             $sertifikatData[$key] = [
+                'proses' => (clone $query)->where('status', 'menunggu')->count(),
                 'diterima' => (clone $query)->where('status', 'diterima')->count(),
                 'ditolak' => (clone $query)->where('status', 'ditolak')->count(),
+                // 'total' => (clone $query)->whereIn('status', ['ditolak','diterima'])->count(),
                 'total' => $query->count(),
             ];
         }
@@ -55,8 +57,10 @@ class LaporanController extends Controller
             }
 
             $kelayakanData[$key] = [
+                'proses' => (clone $query)->where('status', 'menunggu')->count(),
                 'diterima' => (clone $query)->where('status', 'diterima')->count(),
                 'ditolak' => (clone $query)->where('status', 'ditolak')->count(),
+                 // 'total' => (clone $query)->whereIn('status', ['ditolak','diterima'])->count(),
                 'total' => $query->count(),
             ];
         }

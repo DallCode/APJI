@@ -19,7 +19,6 @@ class AdminController extends Controller
     public function dashboard() {
         $recentUsers = User::latest()->paginate(5); // Pagination 5 data per halaman
         $datapengguna = DataPengguna::count();
-        $keanggotaan = DataPengguna::where('tipe_member', 'Terdaftar')->count();
          // Menghitung total pengajuan dari tiga tabel
         $totalPengajuanHalal = PengajuanHalal::count();
         $totalPengajuanKoki = PengajuanKoki::count();
@@ -33,7 +32,7 @@ class AdminController extends Controller
         $totalPengajuan = $totalPengajuanHalal + $totalPengajuanKoki + $totalPengajuanAsistenKoki;
         $totalKelayakan = $totalKelayakanFinansial + $totalKelayakanOperasional + $totalKelayakanPemasaran;
         
-        return view('admin.dashboard', compact('recentUsers', 'datapengguna', 'keanggotaan', 'totalPengajuan', 'totalKelayakan'));
+        return view('admin.dashboard', compact('recentUsers', 'datapengguna', 'totalPengajuan', 'totalKelayakan'));
     }
 
     public function eventAdmin(Request $request)

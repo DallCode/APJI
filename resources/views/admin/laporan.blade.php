@@ -66,6 +66,7 @@
               <thead>
                   <tr>
                       <th>Jenis</th>
+                      <th>Diproses</th>
                       <th>Disetujui</th>
                       <th>Ditolak</th>
                       <th>Total</th>
@@ -75,6 +76,7 @@
                 @foreach($sertifikatData as $jenis => $data)
                   <tr>
                       <td>{{ $jenis }}</td>
+                      <td>{{ $data['proses'] }}</td>
                       <td>{{ $data['diterima'] }}</td>
                       <td>{{ $data['ditolak'] }}</td>
                       <td>{{ $data['total'] }}</td>
@@ -103,6 +105,7 @@
                 @foreach($kelayakanData as $jenis => $jumlah)
                   <tr>
                     <td>{{ $jenis }}</td>
+                    <td>{{ $data['proses'] }}</td>
                     <td>{{ $data['diterima'] }}</td>
                     <td>{{ $data['ditolak'] }}</td>
                     <td>{{ $data['total'] }}</td>

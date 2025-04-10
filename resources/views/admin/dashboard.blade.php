@@ -16,12 +16,6 @@
                   <p>{{ $datapengguna }}</p>
               </div>
           </div>
-          <div class="card">
-              <div class="card-content">
-                  <h2>Anggota Terverifikasi</h2>
-                  <p>{{ $keanggotaan }}</p>
-              </div>
-          </div>
           <div class="card menunggu">
               <div class="card-content">
                   <h2>Total Pengajuan</h2>
