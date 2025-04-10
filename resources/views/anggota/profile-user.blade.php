@@ -29,12 +29,6 @@
                             <input type="email" name="email" id="email" class="form-control" value="{{ $dataPengguna->email }}">
                         </div>
 
-                        <!-- Tipe Member -->
-                        <div class="form-group">
-                            <label for="tipe_member" class="form-label">Tipe Member</label>
-                            <input type="text" name="tipe_member" id="tipe_member" class="form-control" value="{{ $dataPengguna->tipe_member }}">
-                        </div>
-
                         <!-- Nama Usaha -->
                         <div class="form-group">
                             <label for="nama_usaha" class="form-label">Nama Usaha</label>
