@@ -27,7 +27,18 @@
                         @foreach ($dataOperasional as $data)
                             <tr>
                                 <td>{{ $data->nama_usaha }}</td>
-                                <td>{{ $data->deskripsi_operasional }}</td>
+                                <td class="deskripsi-operasional-column">
+                                    <!-- Tombol Lihat Deskripsi Operasional -->
+                                    @if($data->deskripsi_operasional)
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" 
+                                            data-bs-target="#deskripsiOperasionalModal" 
+                                            data-deskripsi="{{ $data->deskripsi_operasional }}">
+                                        <i class='bx bx-show'></i>
+                                    </button>
+                                    @else
+                                    <span>Tidak Ada</span>
+                                    @endif
+                                </td>
                                 {{-- <td class="pengalaman-column">
                                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#pengalamanModal" data-pengalaman="{{ $data->deskripsi_operasional }}">
                                         <i class="bx bx-show"></i>
@@ -92,6 +103,25 @@
         </main>
     </div>
 </div>
+
+<!-- Modal Deskripsi Operasional -->
+<div class="modal fade" id="deskripsiOperasionalModal" tabindex="-1" aria-labelledby="deskripsiOperasionalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deskripsiOperasionalModalLabel">Deskripsi Operasional</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="deskripsiOperasionalContent">
+                <!-- Isi deskripsi operasional akan dimasukkan di sini -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal Pengalaman Kerja -->
 <div class="modal fade" id="pengalamanModal" tabindex="-1" aria-labelledby="pengalamanModalLabel" aria-hidden="true">
@@ -252,6 +282,16 @@
             });
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+    var deskripsiModal = document.getElementById("deskripsiOperasionalModal");
+    deskripsiModal.addEventListener("show.bs.modal", function (event) {
+        var button = event.relatedTarget;
+        var deskripsi = button.getAttribute("data-deskripsi");
+        var modalBody = document.getElementById("deskripsiOperasionalContent");
+        modalBody.textContent = deskripsi;
+    });
+});
 </script>
 
 @endsection

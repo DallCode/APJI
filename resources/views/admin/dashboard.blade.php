@@ -18,8 +18,13 @@
           </div>
           {{-- <div class="card">
               <div class="card-content">
-                  <h2>Anggota Terverifikasi</h2>
-                  <p>{{ $keanggotaan }}</p>
+                <h2>Event Terbaru</h2>
+                @if ($eventTerbaru)
+                    <p>{{ $eventTerbaru->nama_event }}</p>
+                    <small>Berlaku sampai: {{ \Carbon\Carbon::parse($eventTerbaru->tanggal)->format('d M Y') }}</small>
+                @else
+                    <p>0</p>
+                @endif
               </div>
           </div> --}}
           <div class="card menunggu">

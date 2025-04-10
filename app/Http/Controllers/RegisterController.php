@@ -35,8 +35,9 @@ class RegisterController extends Controller
             'no_sku' => 'nullable|unique:data_pengguna,no_sku',
             'no_npwp' => 'nullable|unique:data_pengguna,no_npwp',
             'k_usaha' => 'required|in:Mikro,Kecil,Menengah',
-            'j_usaha' => 'required|in:Makanan,Minuman,Jasa',
+            'j_usaha' => 'required|in:Restoran,Warung Makan,Kafe & Coffee Shop,Food Truck,Catering,Franchise Kuliner',
         ]);
+        // dd($validated);
     
         try {
             // Simpan user terlebih dahulu

@@ -34,10 +34,10 @@
                         </div>
 
                         <!-- Tipe Member -->
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="tipe_member" class="form-label">Tipe Member</label>
                             <input type="text" name="tipe_member" id="tipe_member" class="form-control" value="{{ $dataPengguna->tipe_member }}">
-                        </div>
+                        </div> --}}
 
                         <!-- Nama Usaha -->
                         <div class="form-group">
