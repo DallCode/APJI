@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengajuanSertifikatController;
 use App\Http\Controllers\KelayakanUsahaController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WhatsAppResetController;
+use App\Http\Middleware\PreventBackHistory;
 use App\Models\PengajuanHalal;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +38,16 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 // Rute untuk proses autentikasi (login)
 Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 
+//Rute untuk reset password menggunakan OTP whatssapp
+Route::get('/forgot-password', [WhatsAppResetController::class, 'showForgotForm'])->name('password.forgot');
+Route::post('/send-otp', [WhatsAppResetController::class, 'sendOtp'])->name('password.sendOtp');
+Route::get('/verify-otp', [WhatsAppResetController::class, 'showVerifyOtpForm'])->name('password.verifyOtp');
+Route::post('/verify-otp', [WhatsAppResetController::class, 'verifyOtp'])->name('password.verifyOtp.post');
+Route::get('/reset-password', [WhatsAppResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [WhatsAppResetController::class, 'reset'])->name('password.update');
+
 // Rute untuk halaman admin
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin','prevent-back-history'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/event', [AdminController::class, 'eventAdmin'])->name('admin.event');
     Route::get('/event-riwayat', [AdminController::class, 'riwayatAdmin'])->name('admin.event-riwayat');
@@ -71,7 +81,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // Rute untuk halaman anggota
-Route::middleware(['auth', 'anggota'])->group(function () {
+Route::middleware(['auth', 'anggota','prevent-back-history'])->group(function () {
     Route::get('/anggota/dashboard', [AnggotaController::class, 'dashboard'])->name('dashboard');
     Route::get('/pengajuan-sertifikat', [AnggotaController::class, 'pengajuan'])->name('pengajuan');
     // Route::get('/ajukan-sertifikat-halal', [PengajuanSertifikatController::class, 'create'])->name('pengajuan.sertifikat-halal.create');
